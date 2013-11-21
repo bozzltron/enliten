@@ -1,0 +1,2 @@
+# enlighten
+### a Sails application
