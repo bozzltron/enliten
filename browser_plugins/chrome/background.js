@@ -2,7 +2,7 @@
 window.response = {};
 
 var places = [
-	{ server:'localhost:1337', extension:'/path/2'}
+	{ server:'localhost:1337', extension:'/path/'}
 ];
 
 // Iterate the things
