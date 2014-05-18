@@ -16,8 +16,7 @@
 
 module.exports = function (grunt) {
 
-
-
+  grunt.loadNpmTasks('grunt-browserify');
   /**
    * CSS files to inject in order
    * (uses Grunt-style wildcard/glob/splat expressions)
@@ -407,16 +406,28 @@ module.exports = function (grunt) {
         files: ['assets/**/*'],
 
         // When assets are changed:
-        tasks: ['compileAssets', 'linkAssets']
+        tasks: ['browserify','compileAssets', 'linkAssets']
+      }
+    },
+
+    browserify: {
+      js: {
+        // A single entry point for our app
+        src: 'assets/js/ang-app.js',
+        // Compile to a single file to add a script tag for in your HTML
+        dest: 'assets/js/app-built.js',
       }
     }
   });
+
+  grunt.loadNpmTasks('grunt-browserify');
 
   // When Sails is lifted:
   grunt.registerTask('default', [
     'compileAssets',
     'linkAssets',
-    'watch'
+    'watch',
+    'browserify'
   ]);
 
   grunt.registerTask('compileAssets', [
