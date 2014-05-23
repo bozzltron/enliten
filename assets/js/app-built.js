@@ -24172,16 +24172,37 @@ angular.module('enlighten', [
   
   // Specify routes to load our partials upon the given URLs
   $routeProvider.when('/', {templateUrl: 'views/home.html'});
-  $routeProvider.when('/path', {templateUrl: 'views/path.html'});
+  $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
+  $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'})
   $routeProvider.otherwise({redirectTo: '/'});
   console.log("Enlighten");
 }]);
 
 
 },{"../bower_components/angular-resource/angular-resource":1,"../bower_components/angular-route/angular-route":2,"../bower_components/angular/angular":3,"./controllers/paths":5,"./services/path":6}],5:[function(require,module,exports){
-angular.module('enlighten.controllers', ['ngResource', 'enlighten.services']).controller('Paths', function ($scope, $resource, getPathService) {
+var module = angular.module('enlighten.controllers', ['ngResource', 'ngRoute', 'enlighten.services'])
+
+module.controller('PathsController', function ($scope, $resource, $routeParams, getPathService) {
 
 	$scope.paths = getPathService.query();
+
+});
+
+module.controller('PathController', function ($scope, $resource, $routeParams, getPathService) {
+
+	$scope.path = getPathService.get($routeParams);
+
+});
+
+module.controller('StepController', function ($scope, $resource, $routeParams, getPathService) {
+
+	var path = getPathService.get($routeParams, function(){
+
+	$scope.path = path;
+	$scope.index = parseInt($routeParams.step, 10);
+	$scope.step = path.steps[parseInt($routeParams.step,10) - 1 ];
+
+	});
 
 });
 },{}],6:[function(require,module,exports){

@@ -1,7 +1,7 @@
-<div ng-controller="Paths">
+<div ng-controller="PathsController">
   <ul>
     <li ng-repeat="path in paths">
-      {{path.name}}
+      <a href="/#/path/{{path.id}}"><h2>{{path.name}}</h2></a>
       <p>{{path.description}}</p>
     </li>
   </ul>
