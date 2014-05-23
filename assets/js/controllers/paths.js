@@ -23,3 +23,9 @@ module.controller('StepController', function ($scope, $resource, $routeParams, g
 	});
 
 });
+
+module.controller('CompleteController', function ($scope, $resource, $routeParams, getPathService) {
+
+	$scope.path = getPathService.get($routeParams);
+
+});
