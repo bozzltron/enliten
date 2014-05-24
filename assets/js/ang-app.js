@@ -7,6 +7,7 @@ require('../bower_components/angular-cookies/angular-cookies');
 
 require("./services/path");
 require("./services/status");
+require("./services/profile");
 require("./controllers/paths");
 require("./controllers/user");
 

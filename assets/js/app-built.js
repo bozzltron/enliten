@@ -24362,6 +24362,7 @@ require('../bower_components/angular-cookies/angular-cookies');
 
 require("./services/path");
 require("./services/status");
+require("./services/profile");
 require("./controllers/paths");
 require("./controllers/user");
 
@@ -24384,62 +24385,69 @@ angular.module('enlighten', [
 }]);
 
 
-},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-resource/angular-resource":2,"../bower_components/angular-route/angular-route":3,"../bower_components/angular/angular":4,"./controllers/paths":6,"./controllers/user":7,"./services/path":8,"./services/status":9}],6:[function(require,module,exports){
+},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-resource/angular-resource":2,"../bower_components/angular-route/angular-route":3,"../bower_components/angular/angular":4,"./controllers/paths":6,"./controllers/user":7,"./services/path":8,"./services/profile":9,"./services/status":10}],6:[function(require,module,exports){
 var module = angular.module('enlighten.controllers', [
 	'ngResource', 
 	'ngRoute', 
 	'enlighten.services.path', 
 	'enlighten.services.status',
-	'ngCookies'
+	'enlighten.services.profile'
 	]);
 
-module.controller('PathsController', function ($scope, $resource, $routeParams, getPathService) {
+module.controller('PathsController', function ($scope, $resource, $routeParams, Path) {
 
-	$scope.paths = getPathService.query();
+	$scope.paths = Path.query();
 
 });
 
-module.controller('PathController', function ($scope, $resource, $routeParams, getPathService, getStatusService) {
+module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status) {
 
-	var path = getPathService.get($routeParams, function(){
+	var path = Path.get($routeParams, function(){
 
 		$scope.path = path;
-		$scope.status = getStatusService.userStatusByPath({pathId:path.id});
+		$scope.status = Status.userStatusByPath({pathId:path.id});
 
 	});
 
 });
 
-module.controller('StepController', function ($scope, $resource, $routeParams, getPathService, getStatusService, $cookies) {
+module.controller('StepController', function ($scope, $resource, $routeParams, Path, Status, Profile) {
 
-	var path = getPathService.get($routeParams, function(){
+	var path = Path.get($routeParams, function(){
 
 		$scope.path = path;
 		$scope.index = parseInt($routeParams.step, 10);
 		$scope.step = path.steps[parseInt($routeParams.step,10) - 1 ];
 
 		// Lookup the users current status
-		var status = getStatusService.userStatusByPath({pathId:path.id}, function(){
+		var status = Status.userStatusByPath({pathId:path.id}, function(){
 
 			// Save the users current status
 			$scope.status = status;
 
+			var profile = Profile.get(function(){
 
-			console.log($cookies);
+				$scope.profile = profile.id;
+				if(profile.id)  {
 
-			// Deterimine where we are updating or inserting
-			if (status.id) {
-				status.step = $routeParams.step;
-				status.update({status: status.id}, status);
-			} else {
-				status = new getStatusService({
-					path: path.id,
-					step: parseInt($routeParams.step, 10),
-					isCompleted: $routeParams.step == path.steps.length
-				});
-				status.$save();
-			}
+					// Deterimine where we are updating or inserting
+					if (status.id) {
+						status.step = parseInt($routeParams.step, 10);
+						status.isCompleted = $routeParams.step == path.steps.length;
+						Status.update({statusId: status.id}, status);
+					} else {
+						status = new Status({
+							path: path.id,
+							step: parseInt($routeParams.step, 10),
+							isCompleted: $routeParams.step == path.steps.length,
+							user: profile.id
+						});
+						status.$save();
+					}
 
+				}
+
+			})
 
 		});
 
@@ -24447,9 +24455,9 @@ module.controller('StepController', function ($scope, $resource, $routeParams, g
 
 });
 
-module.controller('CompleteController', function ($scope, $resource, $routeParams, getPathService) {
+module.controller('CompleteController', function ($scope, $resource, $routeParams, Path) {
 
-	$scope.path = getPathService.get($routeParams);
+	$scope.path = Path.get($routeParams);
 
 });
 
@@ -24464,7 +24472,7 @@ module.controller('LoginController', function ($scope, $resource, $routeParams) 
 		var Login = $resource('/login');
 	     Login.save(user, function(res){
 	       	console.log(arguments);
-	       	
+	       	window.location.hash = "/";
 	     });
 
 	}
@@ -24491,17 +24499,28 @@ module.controller('RegisterController', function ($scope, $resource, $routeParam
 	
 });
 },{}],8:[function(require,module,exports){
-angular.module('enlighten.services.path', ['ngResource'])       
+angular.module('enlighten.services.path', ['ngResource'])    
+
     // GET PATHS 
-    .factory('getPathService', function($resource) {
+    .factory('Path', function($resource) {
         return $resource('/path');
     });
 
 },{}],9:[function(require,module,exports){
+angular.module('enlighten.services.profile', ['ngResource']) 
+
+    // GET PROFILE 
+    .factory('Profile', function($resource) {
+        
+        return $resource('/profile');
+
+    });
+
+},{}],10:[function(require,module,exports){
 angular.module('enlighten.services.status', ['ngResource']) 
 
     // GET STATUS 
-    .factory('getStatusService', function($resource) {
+    .factory('Status', function($resource) {
 
         var status = $resource('/status/:filter/:pathId/:statusId',
         	{},
@@ -24516,7 +24535,7 @@ angular.module('enlighten.services.status', ['ngResource'])
         		update: { 
         			method:'PUT',
         			params: {
-        				statusId: '@status'
+        				statusId: '@id'
         			}
         		}
         	});

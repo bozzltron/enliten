@@ -3,56 +3,63 @@ var module = angular.module('enlighten.controllers', [
 	'ngRoute', 
 	'enlighten.services.path', 
 	'enlighten.services.status',
-	'ngCookies'
+	'enlighten.services.profile'
 	]);
 
-module.controller('PathsController', function ($scope, $resource, $routeParams, getPathService) {
+module.controller('PathsController', function ($scope, $resource, $routeParams, Path) {
 
-	$scope.paths = getPathService.query();
+	$scope.paths = Path.query();
 
 });
 
-module.controller('PathController', function ($scope, $resource, $routeParams, getPathService, getStatusService) {
+module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status) {
 
-	var path = getPathService.get($routeParams, function(){
+	var path = Path.get($routeParams, function(){
 
 		$scope.path = path;
-		$scope.status = getStatusService.userStatusByPath({pathId:path.id});
+		$scope.status = Status.userStatusByPath({pathId:path.id});
 
 	});
 
 });
 
-module.controller('StepController', function ($scope, $resource, $routeParams, getPathService, getStatusService, $cookies) {
+module.controller('StepController', function ($scope, $resource, $routeParams, Path, Status, Profile) {
 
-	var path = getPathService.get($routeParams, function(){
+	var path = Path.get($routeParams, function(){
 
 		$scope.path = path;
 		$scope.index = parseInt($routeParams.step, 10);
 		$scope.step = path.steps[parseInt($routeParams.step,10) - 1 ];
 
 		// Lookup the users current status
-		var status = getStatusService.userStatusByPath({pathId:path.id}, function(){
+		var status = Status.userStatusByPath({pathId:path.id}, function(){
 
 			// Save the users current status
 			$scope.status = status;
 
+			var profile = Profile.get(function(){
 
-			console.log($cookies);
+				$scope.profile = profile.id;
+				if(profile.id)  {
 
-			// Deterimine where we are updating or inserting
-			if (status.id) {
-				status.step = $routeParams.step;
-				status.update({status: status.id}, status);
-			} else {
-				status = new getStatusService({
-					path: path.id,
-					step: parseInt($routeParams.step, 10),
-					isCompleted: $routeParams.step == path.steps.length
-				});
-				status.$save();
-			}
+					// Deterimine where we are updating or inserting
+					if (status.id) {
+						status.step = parseInt($routeParams.step, 10);
+						status.isCompleted = $routeParams.step == path.steps.length;
+						Status.update({statusId: status.id}, status);
+					} else {
+						status = new Status({
+							path: path.id,
+							step: parseInt($routeParams.step, 10),
+							isCompleted: $routeParams.step == path.steps.length,
+							user: profile.id
+						});
+						status.$save();
+					}
 
+				}
+
+			})
 
 		});
 
@@ -60,8 +67,8 @@ module.controller('StepController', function ($scope, $resource, $routeParams, g
 
 });
 
-module.controller('CompleteController', function ($scope, $resource, $routeParams, getPathService) {
+module.controller('CompleteController', function ($scope, $resource, $routeParams, Path) {
 
-	$scope.path = getPathService.get($routeParams);
+	$scope.path = Path.get($routeParams);
 
 });

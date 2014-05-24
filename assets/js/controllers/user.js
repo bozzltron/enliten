@@ -8,7 +8,7 @@ module.controller('LoginController', function ($scope, $resource, $routeParams) 
 		var Login = $resource('/login');
 	     Login.save(user, function(res){
 	       	console.log(arguments);
-	       	
+	       	window.location.hash = "/";
 	     });
 
 	}

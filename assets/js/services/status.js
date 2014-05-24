@@ -1,7 +1,7 @@
 angular.module('enlighten.services.status', ['ngResource']) 
 
     // GET STATUS 
-    .factory('getStatusService', function($resource) {
+    .factory('Status', function($resource) {
 
         var status = $resource('/status/:filter/:pathId/:statusId',
         	{},
@@ -16,7 +16,7 @@ angular.module('enlighten.services.status', ['ngResource'])
         		update: { 
         			method:'PUT',
         			params: {
-        				statusId: '@status'
+        				statusId: '@id'
         			}
         		}
         	});

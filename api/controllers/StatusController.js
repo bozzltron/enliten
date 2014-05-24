@@ -25,7 +25,7 @@ module.exports = {
 			res.json({});
 
 		} else {
-
+	
 			Status.findOne({ user: req.session.user, path:req.params.path }).done(function(err, status) {
 
 			  // we now have a model with instance methods attached

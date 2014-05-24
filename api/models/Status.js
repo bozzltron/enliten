@@ -17,7 +17,7 @@ module.exports = {
     },
     
     path: {
-      type: 'integer',
+      type: 'string',
       required: true,
     },
 
@@ -31,13 +31,6 @@ module.exports = {
       required: true
     }
 
-  },
-
-  beforeCreate: function (attrs, next) {
-    if(req.session.user) {
-      attrs.user = req.session.user;
-    }
-    next();
-  }    
+  }
 
 };
