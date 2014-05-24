@@ -15,7 +15,7 @@ module.exports.session = {
   // Session secret is automatically generated when your new app is created
   // Replace at your own risk in production-- you will invalidate the cookies of your users,
   // forcing them to log in again. 
-  secret: '2dac573f4edf444256d36fd63c3c2026'
+  secret: '2dac573f4edf444256d36fd63c3c2026',
 
 
   // In production, uncomment the following lines to set up a shared redis session store
@@ -45,7 +45,7 @@ module.exports.session = {
   // Optional Values:
   //
   // # Note: url will override other connection settings
-  // url: 'mongodb://user:pass@host:port/database/collection',
+  url: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/enlighten/sessions'
   //
   // username: '',
   // password: '',

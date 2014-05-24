@@ -34,6 +34,36 @@ module.exports.routes = {
   // (This would also work if you had a file at: `/views/home.ejs`)
   '/': {
     view: 'home/index'
+  },
+
+  'post /login': {
+    controller: 'user',
+    action: 'login'
+  },
+
+  'post /register': {
+    controller: 'user',
+    action: 'register'
+  },
+
+  'get /logout': {
+    controller: 'user',
+    action: 'logout'
+  },
+
+  'get /status/path/:path': {
+    controller: 'status',
+    action: 'userPathStatus'
+  },
+
+  'get /session': {
+    controller: 'user',
+    action: 'session'
+  },
+
+  'get /profile': {
+    controller: 'user',
+    action: 'profile'
   }
 
   /*

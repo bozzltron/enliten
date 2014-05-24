@@ -137,6 +137,14 @@ module.exports = function (grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    browserify: {
+      options: {
+        bundleOptions: {
+          debug:true
+        }
+      }
+    },
+
     copy: {
       dev: {
         files: [
@@ -416,6 +424,14 @@ module.exports = function (grunt) {
         src: 'assets/js/ang-app.js',
         // Compile to a single file to add a script tag for in your HTML
         dest: 'assets/js/app-built.js',
+      },
+
+      dist: {
+        options: {
+          bundleOptions: {
+            debug:true
+          }
+        }        
       }
     }
   });

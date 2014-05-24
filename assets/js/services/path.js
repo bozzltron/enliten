@@ -1,6 +1,5 @@
-angular.module('enlighten.services', ['ngResource'])       
+angular.module('enlighten.services.path', ['ngResource'])       
     // GET PATHS 
     .factory('getPathService', function($resource) {
-    	console.log("returning resource");
-        return $resource('/path', {}, {query: {method:"GET", isArray:true}});
+        return $resource('/path');
     });

@@ -1,8 +1,10 @@
 <div ng-controller="PathsController">
-  <ul>
-    <li ng-repeat="path in paths">
-      <a href="/#/path/{{path.id}}"><h2>{{path.name}}</h2></a>
-      <p>{{path.description}}</p>
-    </li>
-  </ul>
+  <table class="table table-striped">
+    <tr ng-repeat="path in paths">
+    	<td>
+	      <a href="/#/path/{{path.id}}"><h2>{{path.name}}</h2></a>
+	      <p>{{path.description}}</p>
+      	</td>
+    </tr>
+  </table>
 </div>

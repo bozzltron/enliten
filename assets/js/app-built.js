@@ -6,6 +6,204 @@
  */
 (function(window, angular, undefined) {'use strict';
 
+/**
+ * @ngdoc module
+ * @name ngCookies
+ * @description
+ *
+ * # ngCookies
+ *
+ * The `ngCookies` module provides a convenient wrapper for reading and writing browser cookies.
+ *
+ *
+ * <div doc-module-components="ngCookies"></div>
+ *
+ * See {@link ngCookies.$cookies `$cookies`} and
+ * {@link ngCookies.$cookieStore `$cookieStore`} for usage.
+ */
+
+
+angular.module('ngCookies', ['ng']).
+  /**
+   * @ngdoc service
+   * @name $cookies
+   *
+   * @description
+   * Provides read/write access to browser's cookies.
+   *
+   * Only a simple Object is exposed and by adding or removing properties to/from this object, new
+   * cookies are created/deleted at the end of current $eval.
+   * The object's properties can only be strings.
+   *
+   * Requires the {@link ngCookies `ngCookies`} module to be installed.
+   *
+   * @example
+   <example>
+     <file name="index.html">
+       <script>
+         function ExampleController($cookies) {
+           // Retrieving a cookie
+           var favoriteCookie = $cookies.myFavorite;
+           // Setting a cookie
+           $cookies.myFavorite = 'oatmeal';
+         }
+       </script>
+     </file>
+   </example>
+   */
+   factory('$cookies', ['$rootScope', '$browser', function ($rootScope, $browser) {
+      var cookies = {},
+          lastCookies = {},
+          lastBrowserCookies,
+          runEval = false,
+          copy = angular.copy,
+          isUndefined = angular.isUndefined;
+
+      //creates a poller fn that copies all cookies from the $browser to service & inits the service
+      $browser.addPollFn(function() {
+        var currentCookies = $browser.cookies();
+        if (lastBrowserCookies != currentCookies) { //relies on browser.cookies() impl
+          lastBrowserCookies = currentCookies;
+          copy(currentCookies, lastCookies);
+          copy(currentCookies, cookies);
+          if (runEval) $rootScope.$apply();
+        }
+      })();
+
+      runEval = true;
+
+      //at the end of each eval, push cookies
+      //TODO: this should happen before the "delayed" watches fire, because if some cookies are not
+      //      strings or browser refuses to store some cookies, we update the model in the push fn.
+      $rootScope.$watch(push);
+
+      return cookies;
+
+
+      /**
+       * Pushes all the cookies from the service to the browser and verifies if all cookies were
+       * stored.
+       */
+      function push() {
+        var name,
+            value,
+            browserCookies,
+            updated;
+
+        //delete any cookies deleted in $cookies
+        for (name in lastCookies) {
+          if (isUndefined(cookies[name])) {
+            $browser.cookies(name, undefined);
+          }
+        }
+
+        //update all cookies updated in $cookies
+        for(name in cookies) {
+          value = cookies[name];
+          if (!angular.isString(value)) {
+            value = '' + value;
+            cookies[name] = value;
+          }
+          if (value !== lastCookies[name]) {
+            $browser.cookies(name, value);
+            updated = true;
+          }
+        }
+
+        //verify what was actually stored
+        if (updated){
+          updated = false;
+          browserCookies = $browser.cookies();
+
+          for (name in cookies) {
+            if (cookies[name] !== browserCookies[name]) {
+              //delete or reset all cookies that the browser dropped from $cookies
+              if (isUndefined(browserCookies[name])) {
+                delete cookies[name];
+              } else {
+                cookies[name] = browserCookies[name];
+              }
+              updated = true;
+            }
+          }
+        }
+      }
+    }]).
+
+
+  /**
+   * @ngdoc service
+   * @name $cookieStore
+   * @requires $cookies
+   *
+   * @description
+   * Provides a key-value (string-object) storage, that is backed by session cookies.
+   * Objects put or retrieved from this storage are automatically serialized or
+   * deserialized by angular's toJson/fromJson.
+   *
+   * Requires the {@link ngCookies `ngCookies`} module to be installed.
+   *
+   * @example
+   */
+   factory('$cookieStore', ['$cookies', function($cookies) {
+
+      return {
+        /**
+         * @ngdoc method
+         * @name $cookieStore#get
+         *
+         * @description
+         * Returns the value of given cookie key
+         *
+         * @param {string} key Id to use for lookup.
+         * @returns {Object} Deserialized cookie value.
+         */
+        get: function(key) {
+          var value = $cookies[key];
+          return value ? angular.fromJson(value) : value;
+        },
+
+        /**
+         * @ngdoc method
+         * @name $cookieStore#put
+         *
+         * @description
+         * Sets a value for given cookie key
+         *
+         * @param {string} key Id for the `value`.
+         * @param {Object} value Value to be stored.
+         */
+        put: function(key, value) {
+          $cookies[key] = angular.toJson(value);
+        },
+
+        /**
+         * @ngdoc method
+         * @name $cookieStore#remove
+         *
+         * @description
+         * Remove given cookie
+         *
+         * @param {string} key Id of the key-value pair to delete.
+         */
+        remove: function(key) {
+          delete $cookies[key];
+        }
+      };
+
+    }]);
+
+
+})(window, window.angular);
+
+},{}],2:[function(require,module,exports){
+/**
+ * @license AngularJS v1.2.16
+ * (c) 2010-2014 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+(function(window, angular, undefined) {'use strict';
+
 var $resourceMinErr = angular.$$minErr('$resource');
 
 // Helper functions and regex to lookup a dotted path on an object
@@ -610,7 +808,7 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 /**
  * @license AngularJS v1.2.16
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -1539,7 +1737,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.0-beta.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -24154,20 +24352,24 @@ var styleDirective = valueFn({
 })(window, document);
 
 !angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}</style>');
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 // This will include ./node_modules/angular/angular.js
 // and give us access to the `angular` global object.
 require('../bower_components/angular/angular');
 require('../bower_components/angular-route/angular-route');
 require('../bower_components/angular-resource/angular-resource');
+require('../bower_components/angular-cookies/angular-cookies');
 
 require("./services/path");
+require("./services/status");
 require("./controllers/paths");
+require("./controllers/user");
 
 // Create your app
 angular.module('enlighten', [
 	'ngRoute', 
-	'enlighten.controllers'
+	'enlighten.controllers',
+	'enlighten.controllers.user'
 	]).config(['$routeProvider', function($routeProvider) {
   
   // Specify routes to load our partials upon the given URLs
@@ -24175,13 +24377,21 @@ angular.module('enlighten', [
   $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
   $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'})
   $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'})
+  $routeProvider.when('/login', {templateUrl: 'views/login.html'})
+  $routeProvider.when('/register', {templateUrl: 'views/register.html'})
   $routeProvider.otherwise({redirectTo: '/'});
   console.log("Enlighten");
 }]);
 
 
-},{"../bower_components/angular-resource/angular-resource":1,"../bower_components/angular-route/angular-route":2,"../bower_components/angular/angular":3,"./controllers/paths":5,"./services/path":6}],5:[function(require,module,exports){
-var module = angular.module('enlighten.controllers', ['ngResource', 'ngRoute', 'enlighten.services'])
+},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-resource/angular-resource":2,"../bower_components/angular-route/angular-route":3,"../bower_components/angular/angular":4,"./controllers/paths":6,"./controllers/user":7,"./services/path":8,"./services/status":9}],6:[function(require,module,exports){
+var module = angular.module('enlighten.controllers', [
+	'ngResource', 
+	'ngRoute', 
+	'enlighten.services.path', 
+	'enlighten.services.status',
+	'ngCookies'
+	]);
 
 module.controller('PathsController', function ($scope, $resource, $routeParams, getPathService) {
 
@@ -24189,19 +24399,49 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 
 });
 
-module.controller('PathController', function ($scope, $resource, $routeParams, getPathService) {
-
-	$scope.path = getPathService.get($routeParams);
-
-});
-
-module.controller('StepController', function ($scope, $resource, $routeParams, getPathService) {
+module.controller('PathController', function ($scope, $resource, $routeParams, getPathService, getStatusService) {
 
 	var path = getPathService.get($routeParams, function(){
 
-	$scope.path = path;
-	$scope.index = parseInt($routeParams.step, 10);
-	$scope.step = path.steps[parseInt($routeParams.step,10) - 1 ];
+		$scope.path = path;
+		$scope.status = getStatusService.userStatusByPath({pathId:path.id});
+
+	});
+
+});
+
+module.controller('StepController', function ($scope, $resource, $routeParams, getPathService, getStatusService, $cookies) {
+
+	var path = getPathService.get($routeParams, function(){
+
+		$scope.path = path;
+		$scope.index = parseInt($routeParams.step, 10);
+		$scope.step = path.steps[parseInt($routeParams.step,10) - 1 ];
+
+		// Lookup the users current status
+		var status = getStatusService.userStatusByPath({pathId:path.id}, function(){
+
+			// Save the users current status
+			$scope.status = status;
+
+
+			console.log($cookies);
+
+			// Deterimine where we are updating or inserting
+			if (status.id) {
+				status.step = $routeParams.step;
+				status.update({status: status.id}, status);
+			} else {
+				status = new getStatusService({
+					path: path.id,
+					step: parseInt($routeParams.step, 10),
+					isCompleted: $routeParams.step == path.steps.length
+				});
+				status.$save();
+			}
+
+
+		});
 
 	});
 
@@ -24213,12 +24453,76 @@ module.controller('CompleteController', function ($scope, $resource, $routeParam
 
 });
 
-},{}],6:[function(require,module,exports){
-angular.module('enlighten.services', ['ngResource'])       
+},{}],7:[function(require,module,exports){
+var module = angular.module('enlighten.controllers.user', ['ngResource', 'ngRoute'])
+
+module.controller('LoginController', function ($scope, $resource, $routeParams) {
+
+	this.submit = function(user) {
+		
+
+		var Login = $resource('/login');
+	     Login.save(user, function(res){
+	       	console.log(arguments);
+	       	
+	     });
+
+	}
+	
+});
+
+
+module.controller('RegisterController', function ($scope, $resource, $routeParams) {
+
+	this.submit = function(user) {
+		
+		if(user.password == user.verifyPassword) {
+			delete user.verifyPassword;
+			var Register = $resource('/register');
+		     Register.save(user, function(res){
+		       	console.log(arguments);
+
+		     });
+	
+		} else {
+			alert("Your passwords do not match");
+		}
+	}
+	
+});
+},{}],8:[function(require,module,exports){
+angular.module('enlighten.services.path', ['ngResource'])       
     // GET PATHS 
     .factory('getPathService', function($resource) {
-    	console.log("returning resource");
-        return $resource('/path', {}, {query: {method:"GET", isArray:true}});
+        return $resource('/path');
     });
 
-},{}]},{},[4])
+},{}],9:[function(require,module,exports){
+angular.module('enlighten.services.status', ['ngResource']) 
+
+    // GET STATUS 
+    .factory('getStatusService', function($resource) {
+
+        var status = $resource('/status/:filter/:pathId/:statusId',
+        	{},
+        	{
+        		userStatusByPath: {
+        			method: 'GET',
+        			params: {
+        				filter: 'path',
+        				pathId: '@path'
+        			}
+        		},
+        		update: { 
+        			method:'PUT',
+        			params: {
+        				statusId: '@status'
+        			}
+        		}
+        	});
+
+        return status;
+    
+    });
+
+},{}]},{},[5])
