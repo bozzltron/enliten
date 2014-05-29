@@ -24388,9 +24388,24 @@ angular.module('enlighten', [
 
 
 },{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-resource/angular-resource":2,"../bower_components/angular-route/angular-route":3,"../bower_components/angular/angular":4,"./controllers/nav":6,"./controllers/paths":7,"./controllers/user":8,"./services/path":9,"./services/profile":10,"./services/status":11}],6:[function(require,module,exports){
-var module = angular.module('enlighten.controllers.nav', ['ngResource', 'ngRoute', 'enlighten.services.profile'])
+var module = angular.module('enlighten.controllers.nav', ['enlighten.services.profile']);
 
-module.controller('NavController', function ($scope, $resource, $routeParams, Profile) {
+module.controller('NavController', function ($scope, Profile, $location) {
+
+	var reload = false;
+	$scope.location = $location;
+	$scope.$watch( 'location.url()', function( url ) {
+
+		if(reload){
+			$scope.profile = Profile.get();
+			reload = false;
+		}
+		
+		if($location.url() == '/login') {
+			reload = true;
+		}
+
+	 });
 
 	$scope.profile = Profile.get();
 	
@@ -24405,7 +24420,7 @@ var module = angular.module('enlighten.controllers', [
 	'enlighten.services.profile'
 	]);
 
-module.controller('PathsController', function ($scope, $resource, $routeParams, Path) {
+module.controller('PathsController', function ($scope, $resource, $routeParams, Path, Status, Profile) {
 
 	$scope.paths = Path.query();
 

@@ -1,5 +1,4 @@
-<div ng-include="" src="'/views/nav.html'"></div>
-<div class="container">
+
 	<div ng-controller="PathController">
 		<a href="#/">Keep Browsing</a>
 	    <h1>{{path.name}}</h1>
@@ -9,4 +8,3 @@
 	    <br />
 	    <a ng-show="status.step && !status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/{{status.step}}">Continue where you left off</a>
 	</div>
-</div>

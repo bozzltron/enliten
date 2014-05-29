@@ -6,7 +6,7 @@ var module = angular.module('enlighten.controllers', [
 	'enlighten.services.profile'
 	]);
 
-module.controller('PathsController', function ($scope, $resource, $routeParams, Path) {
+module.controller('PathsController', function ($scope, $resource, $routeParams, Path, Status, Profile) {
 
 	$scope.paths = Path.query();
 
