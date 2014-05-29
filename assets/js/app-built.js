@@ -24365,27 +24365,38 @@ require("./services/status");
 require("./services/profile");
 require("./controllers/paths");
 require("./controllers/user");
+require("./controllers/nav");
 
 // Create your app
 angular.module('enlighten', [
 	'ngRoute', 
 	'enlighten.controllers',
-	'enlighten.controllers.user'
+	'enlighten.controllers.user',
+  'enlighten.controllers.nav'
 	]).config(['$routeProvider', function($routeProvider) {
-  
-  // Specify routes to load our partials upon the given URLs
-  $routeProvider.when('/', {templateUrl: 'views/home.html'});
-  $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
-  $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'})
-  $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'})
-  $routeProvider.when('/login', {templateUrl: 'views/login.html'})
-  $routeProvider.when('/register', {templateUrl: 'views/register.html'})
-  $routeProvider.otherwise({redirectTo: '/'});
-  console.log("Enlighten");
+    console.log("route provider");
+    // Specify routes to load our partials upon the given URLs
+    $routeProvider.when('/', {templateUrl: 'views/home.html'});
+    $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
+    $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'})
+    $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'})
+    $routeProvider.when('/login', {templateUrl: 'views/login.html'})
+    $routeProvider.when('/register', {templateUrl: 'views/register.html'})
+    $routeProvider.otherwise({redirectTo: '/'});
+    console.log("Enlighten");
 }]);
 
 
-},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-resource/angular-resource":2,"../bower_components/angular-route/angular-route":3,"../bower_components/angular/angular":4,"./controllers/paths":6,"./controllers/user":7,"./services/path":8,"./services/profile":9,"./services/status":10}],6:[function(require,module,exports){
+},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-resource/angular-resource":2,"../bower_components/angular-route/angular-route":3,"../bower_components/angular/angular":4,"./controllers/nav":6,"./controllers/paths":7,"./controllers/user":8,"./services/path":9,"./services/profile":10,"./services/status":11}],6:[function(require,module,exports){
+var module = angular.module('enlighten.controllers.nav', ['ngResource', 'ngRoute', 'enlighten.services.profile'])
+
+module.controller('NavController', function ($scope, $resource, $routeParams, Profile) {
+
+	$scope.profile = Profile.get();
+	
+});
+
+},{}],7:[function(require,module,exports){
 var module = angular.module('enlighten.controllers', [
 	'ngResource', 
 	'ngRoute', 
@@ -24461,8 +24472,8 @@ module.controller('CompleteController', function ($scope, $resource, $routeParam
 
 });
 
-},{}],7:[function(require,module,exports){
-var module = angular.module('enlighten.controllers.user', ['ngResource', 'ngRoute'])
+},{}],8:[function(require,module,exports){
+var module = angular.module('enlighten.controllers.user', ['ngResource', 'ngRoute', 'enlighten.services.profile'])
 
 module.controller('LoginController', function ($scope, $resource, $routeParams) {
 
@@ -24470,9 +24481,10 @@ module.controller('LoginController', function ($scope, $resource, $routeParams) 
 		
 
 		var Login = $resource('/login');
+		console.log($scope.user);
 	     Login.save(user, function(res){
-	       	console.log(arguments);
-	       	window.location.hash = "/";
+	     	console.log(arguments);
+	     	window.location.hash="/";
 	     });
 
 	}
@@ -24498,7 +24510,7 @@ module.controller('RegisterController', function ($scope, $resource, $routeParam
 	}
 	
 });
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 angular.module('enlighten.services.path', ['ngResource'])    
 
     // GET PATHS 
@@ -24506,7 +24518,7 @@ angular.module('enlighten.services.path', ['ngResource'])
         return $resource('/path');
     });
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 angular.module('enlighten.services.profile', ['ngResource']) 
 
     // GET PROFILE 
@@ -24516,7 +24528,7 @@ angular.module('enlighten.services.profile', ['ngResource'])
 
     });
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 angular.module('enlighten.services.status', ['ngResource']) 
 
     // GET STATUS 

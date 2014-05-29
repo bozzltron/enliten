@@ -10,22 +10,24 @@ require("./services/status");
 require("./services/profile");
 require("./controllers/paths");
 require("./controllers/user");
+require("./controllers/nav");
 
 // Create your app
 angular.module('enlighten', [
 	'ngRoute', 
 	'enlighten.controllers',
-	'enlighten.controllers.user'
+	'enlighten.controllers.user',
+  'enlighten.controllers.nav'
 	]).config(['$routeProvider', function($routeProvider) {
-  
-  // Specify routes to load our partials upon the given URLs
-  $routeProvider.when('/', {templateUrl: 'views/home.html'});
-  $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
-  $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'})
-  $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'})
-  $routeProvider.when('/login', {templateUrl: 'views/login.html'})
-  $routeProvider.when('/register', {templateUrl: 'views/register.html'})
-  $routeProvider.otherwise({redirectTo: '/'});
-  console.log("Enlighten");
+    console.log("route provider");
+    // Specify routes to load our partials upon the given URLs
+    $routeProvider.when('/', {templateUrl: 'views/home.html'});
+    $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
+    $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'})
+    $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'})
+    $routeProvider.when('/login', {templateUrl: 'views/login.html'})
+    $routeProvider.when('/register', {templateUrl: 'views/register.html'})
+    $routeProvider.otherwise({redirectTo: '/'});
+    console.log("Enlighten");
 }]);
 

@@ -1,4 +1,4 @@
-var module = angular.module('enlighten.controllers.user', ['ngResource', 'ngRoute'])
+var module = angular.module('enlighten.controllers.user', ['ngResource', 'ngRoute', 'enlighten.services.profile'])
 
 module.controller('LoginController', function ($scope, $resource, $routeParams) {
 
@@ -6,9 +6,10 @@ module.controller('LoginController', function ($scope, $resource, $routeParams) 
 		
 
 		var Login = $resource('/login');
+		console.log($scope.user);
 	     Login.save(user, function(res){
-	       	console.log(arguments);
-	       	window.location.hash = "/";
+	     	console.log(arguments);
+	     	window.location.hash="/";
 	     });
 
 	}

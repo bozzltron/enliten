@@ -1,29 +1,32 @@
-<div ng-controller="StepController">
-    <h1>Step {{index}} of {{path.name}}</h1>
-    <h2>{{step.title}}</h2>
-    <p class="lead">{{step.notes}}</p>
-    <a href="{{step.url}}">{{step.title}}</a>
-    <br />
-  	<a ng-hide="profile" href="/#/login">Login To Track Your Progress</a>
+<div ng-include="" src="'/views/nav.html'"></div>
+<div class="container">
+	<div ng-controller="StepController">
+	    <h1>Step {{index}} of {{path.name}}</h1>
+	    <h2>{{step.title}}</h2>
+	    <p class="lead">{{step.notes}}</p>
+	    <a href="{{step.url}}">{{step.title}}</a>
+	    <br />
+	  	<a ng-hide="profile" href="/#/login">Login To Track Your Progress</a>
 
-	<footer>
-	    <div class="navbar navbar-fixed-bottom">
-	        <div class="container">
-				<div class="col-xs-1">
-					<h1><a href="/#/path/{{path.id}}{{ index == 1 ? '' : '/step/' + (index - 1) }}"><i class="fa fa-arrow-left"></i></a></h1>
-				</div>
-
-				<div class="col-xs-10">
-					<div class="progress">
-					  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ (index / path.steps.length) * 100 }}%;">
-					    <span class="sr-only">{{ (index / path.steps.length) * 100 }}% Complete</span>
-					  </div>
+		<footer>
+		    <div class="navbar navbar-fixed-bottom">
+		        <div class="container">
+					<div class="col-xs-1">
+						<h1><a href="/#/path/{{path.id}}{{ index == 1 ? '' : '/step/' + (index - 1) }}"><i class="fa fa-arrow-left"></i></a></h1>
 					</div>
-				</div>
 
-				<div class="col-xs-1"><h1><a href="/#/path/{{path.id}}/step/{{ index == path.steps.length ? 'complete' : index + 1}}"><i class="fa fa-arrow-right"></i></a></h1></div>
-	        </div>
-	    </div>
-	</footer>
+					<div class="col-xs-10">
+						<div class="progress">
+						  <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{ (index / path.steps.length) * 100 }}%;">
+						    <span class="sr-only">{{ (index / path.steps.length) * 100 }}% Complete</span>
+						  </div>
+						</div>
+					</div>
 
+					<div class="col-xs-1"><h1><a href="/#/path/{{path.id}}/step/{{ index == path.steps.length ? 'complete' : index + 1}}"><i class="fa fa-arrow-right"></i></a></h1></div>
+		        </div>
+		    </div>
+		</footer>
+
+	</div>
 </div>

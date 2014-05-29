@@ -1,0 +1,22 @@
+<div id="mainnav" class="navbar navbar-inverse navbar-fixed-top" role="navigation" ng-controller="NavController">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Enlighten</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li ng-show="profile.username"><a href="#">{{profile.username}}</a>
+          <li ng-show="profile.username"><a href="/logout">Logout</a>
+          <li ng-hide="profile.username"><a href="#/login">Sign In</a></li>
+          <li ng-hide="profile.username"><a href="#/register">Sign Up</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+</div>

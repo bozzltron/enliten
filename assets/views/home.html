@@ -1,10 +1,13 @@
-<div ng-controller="PathsController">
-  <table class="table table-striped">
-    <tr ng-repeat="path in paths">
-    	<td>
-	      <a href="/#/path/{{path.id}}"><h2>{{path.name}}</h2></a>
-	      <p>{{path.description}}</p>
-      	</td>
-    </tr>
-  </table>
+<div ng-include="" src="'/views/nav.html'"></div>
+<div class="container">
+	<div ng-controller="PathsController">
+	  <table class="table table-striped">
+	    <tr ng-repeat="path in paths">
+	    	<td>
+		      <a href="/#/path/{{path.id}}"><h2>{{path.name}}</h2></a>
+		      <p>{{path.description}}</p>
+	      	</td>
+	    </tr>
+	  </table>
+	</div>
 </div>
