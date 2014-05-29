@@ -11,7 +11,7 @@ module.controller('NavController', function ($scope, Profile, $location) {
 			reload = false;
 		}
 		
-		if($location.url() == '/login') {
+		if($location.url() == '/login' || $location.url() == '/logout') {
 			reload = true;
 		}
 

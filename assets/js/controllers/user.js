@@ -47,3 +47,20 @@ module.controller('RegisterController', function ($scope, $resource, $routeParam
 	}
 	
 });
+
+module.controller('LogoutController', function ($scope, $resource, $routeParams, flash) {
+
+	var Logout = $resource('/logout');
+
+     Logout.get(function(res){
+     	
+     	if(res.status == "failure") {
+     		flash.error = res.message;
+     	} else {
+     		flash.success = res.message;
+     		window.location.hash="/";
+     	}
+
+     });
+	
+});

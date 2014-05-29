@@ -73,7 +73,7 @@ module.exports = {
 
 	logout: function(req, res) {
 		req.session.user = null;
-		res.redirect('/');
+		res.json({status:"ok", message:"You successfully logged out!"});
 	},
 
 	session: function(req, res) {

@@ -26,10 +26,12 @@ angular.module('enlighten', [
     // Specify routes to load our partials upon the given URLs
     $routeProvider.when('/', {templateUrl: 'views/home.html'});
     $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
-    $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'})
-    $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'})
-    $routeProvider.when('/login', {templateUrl: 'views/login.html'})
-    $routeProvider.when('/register', {templateUrl: 'views/register.html'})
+    $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'});
+    $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'});
+    $routeProvider.when('/login', {templateUrl: 'views/login.html'});
+    $routeProvider.when('/logout', {templateUrl: 'views/logout.html'});
+    $routeProvider.when('/register', {templateUrl: 'views/register.html'});
+    $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
     $routeProvider.otherwise({redirectTo: '/'});
     console.log("Enlighten");
 }]);

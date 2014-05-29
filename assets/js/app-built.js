@@ -24631,10 +24631,12 @@ angular.module('enlighten', [
     // Specify routes to load our partials upon the given URLs
     $routeProvider.when('/', {templateUrl: 'views/home.html'});
     $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
-    $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'})
-    $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'})
-    $routeProvider.when('/login', {templateUrl: 'views/login.html'})
-    $routeProvider.when('/register', {templateUrl: 'views/register.html'})
+    $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'});
+    $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'});
+    $routeProvider.when('/login', {templateUrl: 'views/login.html'});
+    $routeProvider.when('/logout', {templateUrl: 'views/logout.html'});
+    $routeProvider.when('/register', {templateUrl: 'views/register.html'});
+    $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
     $routeProvider.otherwise({redirectTo: '/'});
     console.log("Enlighten");
 }]);
@@ -24654,7 +24656,7 @@ module.controller('NavController', function ($scope, Profile, $location) {
 			reload = false;
 		}
 		
-		if($location.url() == '/login') {
+		if($location.url() == '/login' || $location.url() == '/logout') {
 			reload = true;
 		}
 
@@ -24788,6 +24790,23 @@ module.controller('RegisterController', function ($scope, $resource, $routeParam
 			alert("Your passwords do not match");
 		}
 	}
+	
+});
+
+module.controller('LogoutController', function ($scope, $resource, $routeParams, flash) {
+
+	var Logout = $resource('/logout');
+
+     Logout.get(function(res){
+     	
+     	if(res.status == "failure") {
+     		flash.error = res.message;
+     	} else {
+     		flash.success = res.message;
+     		window.location.hash="/";
+     	}
+
+     });
 	
 });
 },{}],10:[function(require,module,exports){
