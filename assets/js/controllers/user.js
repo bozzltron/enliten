@@ -1,15 +1,21 @@
 var module = angular.module('enlighten.controllers.user', ['ngResource', 'ngRoute', 'enlighten.services.profile'])
 
-module.controller('LoginController', function ($scope, $resource, $routeParams) {
+module.controller('LoginController', function ($scope, $resource, $routeParams, flash) {
 
 	this.submit = function(user) {
 		
 
 		var Login = $resource('/login');
-		console.log($scope.user);
+	
 	     Login.save(user, function(res){
-	     	console.log(arguments);
-	     	window.location.hash="/";
+
+	     	if(res.status == "failure") {
+	     		flash.error = res.message;
+	     	} else {
+	     		flash.success = res.message;
+	     		window.location.hash="/";
+	     	}
+
 	     });
 
 	}
@@ -17,7 +23,7 @@ module.controller('LoginController', function ($scope, $resource, $routeParams) 
 });
 
 
-module.controller('RegisterController', function ($scope, $resource, $routeParams) {
+module.controller('RegisterController', function ($scope, $resource, $routeParams, flash) {
 
 	this.submit = function(user) {
 		
@@ -25,7 +31,13 @@ module.controller('RegisterController', function ($scope, $resource, $routeParam
 			delete user.verifyPassword;
 			var Register = $resource('/register');
 		     Register.save(user, function(res){
-		       	console.log(arguments);
+
+		     	if(res.status == "failure") {
+		     		flash.error = res.message;
+		     	} else {
+		     		flash.success = res.message;
+		     		window.location.hash="/login";
+		     	}
 
 		     });
 	

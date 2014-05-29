@@ -197,6 +197,256 @@ angular.module('ngCookies', ['ng']).
 })(window, window.angular);
 
 },{}],2:[function(require,module,exports){
+/**! 
+ * @license angular-flash v0.1.13
+ * Copyright (c) 2013 William L. Bunselmeyer. https://github.com/wmluke/angular-flash
+ * License: MIT
+ */
+/* global angular */
+
+(function () {
+    'use strict';
+
+    var subscriberCount = 0;
+
+    var Flash = function (options) {
+        var _options = angular.extend({
+            id: null,
+            subscribers: {},
+            classnames: {
+                error: [],
+                warn: [],
+                info: [],
+                success: []
+            }
+        }, options);
+
+        var _self = this;
+        var _success;
+        var _info;
+        var _warn;
+        var _error;
+        var _type;
+
+        function _notify(type, message) {
+            angular.forEach(_options.subscribers, function (subscriber) {
+                var matchesType = !subscriber.type || subscriber.type === type;
+                var matchesId = (!_options.id && !subscriber.id) || subscriber.id === _options.id;
+                if (matchesType && matchesId) {
+                    subscriber.cb(message, type);
+                }
+            });
+        }
+
+        this.clean = function () {
+            _success = null;
+            _info = null;
+            _warn = null;
+            _error = null;
+            _type = null;
+        };
+
+        this.subscribe = function (subscriber, type, id) {
+            subscriberCount += 1;
+            _options.subscribers[subscriberCount] = {
+                cb: subscriber,
+                type: type,
+                id: id
+            };
+            return subscriberCount;
+        };
+
+        this.unsubscribe = function (handle) {
+            delete _options.subscribers[handle];
+        };
+
+        this.to = function (id) {
+            var options = angular.copy(_options);
+            options.id = id;
+            return new Flash(options);
+        };
+
+        Object.defineProperty(this, 'success', {
+            get: function () {
+                return _success;
+            },
+            set: function (message) {
+                _success = message;
+                _type = 'success';
+                _notify(_type, message);
+            }
+        });
+
+        Object.defineProperty(this, 'info', {
+            get: function () {
+                return _info;
+            },
+            set: function (message) {
+                _info = message;
+                _type = 'info';
+                _notify(_type, message);
+            }
+        });
+
+        Object.defineProperty(this, 'warn', {
+            get: function () {
+                return _warn;
+            },
+            set: function (message) {
+                _warn = message;
+                _type = 'warn';
+                _notify(_type, message);
+            }
+        });
+
+        Object.defineProperty(this, 'error', {
+            get: function () {
+                return _error;
+            },
+            set: function (message) {
+                _error = message;
+                _type = 'error';
+                _notify(_type, message);
+            }
+        });
+
+        Object.defineProperty(this, 'type', {
+            get: function () {
+                return _type;
+            }
+        });
+
+        Object.defineProperty(this, 'message', {
+            get: function () {
+                return _type ? _self[_type] : null;
+            }
+        });
+
+        Object.defineProperty(this, 'classnames', {
+            get: function () {
+                return _options.classnames;
+            }
+        });
+
+        Object.defineProperty(this, 'id', {
+            get: function () {
+                return _options.id;
+            }
+        });
+    };
+
+    angular.module('angular-flash.service', [])
+        .provider('flash', function () {
+            var _self = this;
+            this.errorClassnames = ['alert-error'];
+            this.warnClassnames = ['alert-warn'];
+            this.infoClassnames = ['alert-info'];
+            this.successClassnames = ['alert-success'];
+
+            this.$get = function () {
+                return new Flash({
+                    classnames: {
+                        error: _self.errorClassnames,
+                        warn: _self.warnClassnames,
+                        info: _self.infoClassnames,
+                        success: _self.successClassnames
+                    }
+                });
+            };
+        });
+
+}());
+
+/* global angular */
+
+(function () {
+    'use strict';
+
+    function isBlank(str) {
+        if (str === null || str === undefined) {
+            str = '';
+        }
+        return (/^\s*$/).test(str);
+    }
+
+    function flashAlertDirective(flash, $timeout) {
+        return {
+            scope: true,
+            link: function ($scope, element, attr) {
+                var timeoutHandle, subscribeHandle;
+
+                $scope.flash = {};
+
+                $scope.hide = function () {
+                    removeAlertClasses();
+                    if (!isBlank(attr.activeClass)) {
+                        element.removeClass(attr.activeClass);
+                    }
+                };
+
+                $scope.$on('$destroy', function () {
+                    flash.clean();
+                    flash.unsubscribe(subscribeHandle);
+                });
+
+                function removeAlertClasses() {
+                    var classnames = [].concat(flash.classnames.error, flash.classnames.warn, flash.classnames.info, flash.classnames.success);
+                    angular.forEach(classnames, function (clazz) {
+                        element.removeClass(clazz);
+                    });
+                }
+
+                function show(message, type) {
+                    if (timeoutHandle) {
+                        $timeout.cancel(timeoutHandle);
+                    }
+
+                    $scope.flash.type = type;
+                    $scope.flash.message = message;
+                    removeAlertClasses();
+                    angular.forEach(flash.classnames[type], function (clazz) {
+                        element.addClass(clazz);
+                    });
+
+                    if (!isBlank(attr.activeClass)) {
+                        element.addClass(attr.activeClass);
+                    }
+
+                    if (!message) {
+                        $scope.hide();
+                        return;
+                    }
+
+                    var delay = Number(attr.duration || 5000);
+                    if (delay > 0) {
+                        timeoutHandle = $timeout($scope.hide, delay);
+                    }
+                }
+
+                subscribeHandle = flash.subscribe(show, attr.flashAlert, attr.id);
+
+                /**
+                 * Fixes timing issues: display the last flash message sent before this directive subscribed.
+                 */
+
+                if (attr.flashAlert && flash[attr.flashAlert]) {
+                    show(flash[attr.flashAlert], attr.flashAlert);
+                }
+
+                if (!attr.flashAlert && flash.message) {
+                    show(flash.message, flash.type);
+                }
+
+            }
+        };
+    }
+
+    angular.module('angular-flash.flash-alert-directive', ['angular-flash.service'])
+        .directive('flashAlert', ['flash', '$timeout', flashAlertDirective]);
+
+}());
+
+},{}],3:[function(require,module,exports){
 /**
  * @license AngularJS v1.2.16
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -808,7 +1058,7 @@ angular.module('ngResource', ['ng']).
 
 })(window, window.angular);
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /**
  * @license AngularJS v1.2.16
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -1737,7 +1987,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
 })(window, window.angular);
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /**
  * @license AngularJS v1.3.0-beta.7
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -24352,13 +24602,14 @@ var styleDirective = valueFn({
 })(window, document);
 
 !angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}</style>');
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 // This will include ./node_modules/angular/angular.js
 // and give us access to the `angular` global object.
 require('../bower_components/angular/angular');
 require('../bower_components/angular-route/angular-route');
 require('../bower_components/angular-resource/angular-resource');
 require('../bower_components/angular-cookies/angular-cookies');
+require('../bower_components/angular-flash/dist/angular-flash');
 
 require("./services/path");
 require("./services/status");
@@ -24372,9 +24623,11 @@ angular.module('enlighten', [
 	'ngRoute', 
 	'enlighten.controllers',
 	'enlighten.controllers.user',
-  'enlighten.controllers.nav'
+  'enlighten.controllers.nav',
+  'angular-flash.service', 
+  'angular-flash.flash-alert-directive'
 	]).config(['$routeProvider', function($routeProvider) {
-    console.log("route provider");
+
     // Specify routes to load our partials upon the given URLs
     $routeProvider.when('/', {templateUrl: 'views/home.html'});
     $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
@@ -24387,7 +24640,7 @@ angular.module('enlighten', [
 }]);
 
 
-},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-resource/angular-resource":2,"../bower_components/angular-route/angular-route":3,"../bower_components/angular/angular":4,"./controllers/nav":6,"./controllers/paths":7,"./controllers/user":8,"./services/path":9,"./services/profile":10,"./services/status":11}],6:[function(require,module,exports){
+},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-flash/dist/angular-flash":2,"../bower_components/angular-resource/angular-resource":3,"../bower_components/angular-route/angular-route":4,"../bower_components/angular/angular":5,"./controllers/nav":7,"./controllers/paths":8,"./controllers/user":9,"./services/path":10,"./services/profile":11,"./services/status":12}],7:[function(require,module,exports){
 var module = angular.module('enlighten.controllers.nav', ['enlighten.services.profile']);
 
 module.controller('NavController', function ($scope, Profile, $location) {
@@ -24411,7 +24664,7 @@ module.controller('NavController', function ($scope, Profile, $location) {
 	
 });
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 var module = angular.module('enlighten.controllers', [
 	'ngResource', 
 	'ngRoute', 
@@ -24487,19 +24740,25 @@ module.controller('CompleteController', function ($scope, $resource, $routeParam
 
 });
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var module = angular.module('enlighten.controllers.user', ['ngResource', 'ngRoute', 'enlighten.services.profile'])
 
-module.controller('LoginController', function ($scope, $resource, $routeParams) {
+module.controller('LoginController', function ($scope, $resource, $routeParams, flash) {
 
 	this.submit = function(user) {
 		
 
 		var Login = $resource('/login');
-		console.log($scope.user);
+	
 	     Login.save(user, function(res){
-	     	console.log(arguments);
-	     	window.location.hash="/";
+
+	     	if(res.status == "failure") {
+	     		flash.error = res.message;
+	     	} else {
+	     		flash.success = res.message;
+	     		window.location.hash="/";
+	     	}
+
 	     });
 
 	}
@@ -24507,7 +24766,7 @@ module.controller('LoginController', function ($scope, $resource, $routeParams) 
 });
 
 
-module.controller('RegisterController', function ($scope, $resource, $routeParams) {
+module.controller('RegisterController', function ($scope, $resource, $routeParams, flash) {
 
 	this.submit = function(user) {
 		
@@ -24515,7 +24774,13 @@ module.controller('RegisterController', function ($scope, $resource, $routeParam
 			delete user.verifyPassword;
 			var Register = $resource('/register');
 		     Register.save(user, function(res){
-		       	console.log(arguments);
+
+		     	if(res.status == "failure") {
+		     		flash.error = res.message;
+		     	} else {
+		     		flash.success = res.message;
+		     		window.location.hash="/login";
+		     	}
 
 		     });
 	
@@ -24525,7 +24790,7 @@ module.controller('RegisterController', function ($scope, $resource, $routeParam
 	}
 	
 });
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 angular.module('enlighten.services.path', ['ngResource'])    
 
     // GET PATHS 
@@ -24533,7 +24798,7 @@ angular.module('enlighten.services.path', ['ngResource'])
         return $resource('/path');
     });
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 angular.module('enlighten.services.profile', ['ngResource']) 
 
     // GET PROFILE 
@@ -24543,7 +24808,7 @@ angular.module('enlighten.services.profile', ['ngResource'])
 
     });
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 angular.module('enlighten.services.status', ['ngResource']) 
 
     // GET STATUS 
@@ -24571,4 +24836,4 @@ angular.module('enlighten.services.status', ['ngResource'])
     
     });
 
-},{}]},{},[5])
+},{}]},{},[6])
