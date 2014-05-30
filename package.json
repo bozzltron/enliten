@@ -11,7 +11,8 @@
     "optimist": "0.3.4",
     "bcrypt": "^0.7.8",
     "sails-mongo": "^0.9.8",
-    "mongodb": "^1.4.5"
+    "mongodb": "^1.4.5",
+    "underscore": "^1.6.0"
   },
   "scripts": {
     "start": "node app.js",

@@ -16,6 +16,7 @@
  */
 
 var ObjectId = require('mongodb').ObjectID;
+var _ = require('underscore');
 
 module.exports = {
     
@@ -51,6 +52,56 @@ module.exports = {
 
 		}
 	
+	},
+
+	paths: function (req, res) {
+
+		if(!req.session.user) {
+
+			Path.find({}).done(function(err, paths) {
+
+				// we now have a model with instance methods attached
+				if(err) res.json({status:"ok", message: err});
+
+				res.json(paths);
+
+			});
+
+		} else {
+	
+			Path.find({}).done(function(err, paths) {
+
+			  	// we now have a model with instance methods attached
+			 	if(err) res.json({status:"ok", message: err});
+
+				Status.find({user: req.session.user, isCompleted:true}).done(function(err, completed) {
+
+					if(err) res.json({status:"ok", message: err});
+
+					var complete = [];
+					completed.forEach(function(path){
+						complete.push( path.path );
+					});
+					console.log(complete);
+
+					paths.forEach(function(path){
+						console.log(path.id);
+						if(_.contains(complete, path.id)){
+							console.log("completed");
+							path.isCompleted = true;
+						}
+					});
+
+					res.json(paths);
+
+				});
+
+			});
+
+
+
+		}
+
 	},
 
   /**

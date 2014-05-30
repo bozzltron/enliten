@@ -69,6 +69,11 @@ module.exports.routes = {
   'get /path/completed': {
     controller: 'path',
     action: 'pathsCompleted'
+  },
+
+  'get /path': {
+    controller: 'path',
+    action: 'paths'
   }
 
   /*
