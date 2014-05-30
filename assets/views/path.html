@@ -1,10 +1,11 @@
 
 	<div ng-controller="PathController">
-		<a href="#/">Keep Browsing</a>
+		<a href="#/">< Keep Browsing</a> | <a href="#/login">Sign in to track your progress</a>
 	    <h1>{{path.name}}</h1>
 	    <p>{{path.description}}</p>
 	    <a ng-hide="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">Get started</a>
 	    <a ng-show="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">You already completed this path.  Go again?</a>
 	    <br />
 	    <a ng-show="status.step && !status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/{{status.step}}">Continue where you left off</a>
+
 	</div>

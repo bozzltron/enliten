@@ -15,10 +15,43 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var ObjectId = require('mongodb').ObjectID;
+
 module.exports = {
     
   
+	pathsCompleted: function (req, res) {
 
+		if(!req.session.user) {
+
+			res.json({});
+
+		} else {
+	
+			Status.find({user: req.session.user, isCompleted:true}).done(function(err, completed) {
+
+				if(err) res.json({status:"ok", message: err});
+
+				var paths = [];
+				completed.forEach(function(path){
+					paths.push( new ObjectId(path.path) );
+				});
+		
+				console.log(paths);
+				Path.find({ _id: paths}).done(function(err, status) {
+
+				  // we now have a model with instance methods attached
+				  if(err) res.json({status:"ok", message: err});
+
+				  res.json(status);
+
+				});
+
+			});
+
+		}
+	
+	},
 
   /**
    * Overrides for the settings in `config/controllers.js`

@@ -24743,7 +24743,12 @@ module.controller('CompleteController', function ($scope, $resource, $routeParam
 });
 
 },{}],9:[function(require,module,exports){
-var module = angular.module('enlighten.controllers.user', ['ngResource', 'ngRoute', 'enlighten.services.profile'])
+var module = angular.module('enlighten.controllers.user', [
+		'ngResource', 
+		'ngRoute', 
+		'enlighten.services.profile',
+		'enlighten.services.path' 
+		])
 
 module.controller('LoginController', function ($scope, $resource, $routeParams, flash) {
 
@@ -24809,12 +24814,29 @@ module.controller('LogoutController', function ($scope, $resource, $routeParams,
      });
 	
 });
+
+module.controller('ProfileController', function ($scope, $resource, $routeParams, Profile, Path, flash) {
+
+	$scope.profile = Profile.get();
+	$scope.completed = Path.completed();
+	
+});
 },{}],10:[function(require,module,exports){
 angular.module('enlighten.services.path', ['ngResource'])    
 
     // GET PATHS 
     .factory('Path', function($resource) {
-        return $resource('/path');
+        return $resource('/path/:filter',
+        	{},
+        	{
+        		completed: {
+        			method: 'GET',
+        			params: {
+        				filter: 'completed',
+        			},
+        			isArray:true
+        		},
+        	});
     });
 
 },{}],11:[function(require,module,exports){

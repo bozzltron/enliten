@@ -64,6 +64,11 @@ module.exports.routes = {
   'get /profile': {
     controller: 'user',
     action: 'profile'
+  },
+
+  'get /path/completed': {
+    controller: 'path',
+    action: 'pathsCompleted'
   }
 
   /*
