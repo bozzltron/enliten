@@ -1,22 +1,35 @@
 	
-	<div ng-controller="EditorController as editCtrl">
-	  <h2 ng-show="profile.username">Create a path</h2>
-	  <form ng-show="profile.username" class="form" ng-submit="editCtrl.submit(path)">
-	  	<div class="form-group">
-	  		<label>Name</label>
-	  		<input class="form-control" required="" type="text" ng-model="path.name" />
-	  	</div>
-	  	<div class="form-group">
-	  		<label>Description</label>
-	  		<textarea class="form-control" required="" ng-model="path.description"></textarea>
-	  	</div>	  	
-	  	<div class="form-group">
-	  		<a class="btn btn-warning" href="#/path/{{path.id}}">Preview</button>
-	  		<button class="btn btn-success" type="submit">Publish</button>
-	  		<em>Allow others to find this path.</em>
-	  	</div>
-	  </form>
-	  <div ng-hide="profile.username">
-	 	<h2>You must <a href="#/login">Login</a> or <a href="#/register">Register</a> to create a path.</h2>
-	  </div>	
+	<div ng-controller="EditorSummaryController as editCtrl">
+	  	
+		<div ng-show="profile.username">
+			<h1>Summary</h1>
+
+			<h3>Name</h3>
+			<p>{{path.name}}</p>
+			<h3>Description</h3>
+			<p>{{path.description}}</p>
+
+			<a class="btn btn-default" href="#/editor/info/{{path.id}}">Edit path information</a>
+
+			<h3 ng-show="path.steps">Steps </h3>
+			<table class="table table-striped">
+				<tr ng-repeat="step in path.steps">
+					<td>{{step.name}}</td>
+					<td>{{step.description}}</td>	
+					<td>{{step.url}}</td>
+					<td><a href="#/editor/step/{{$index}}/{{path.id}}">edit</a></td>
+				</tr>
+			</table>
+			<div ng-hide="path.steps">No steps <br /><br /></div>
+			<div class="form-group">
+				<a class="btn btn-success" target="_blank" href="#/editor/step/{{path.steps.length + 1}}/{{path.id}}">Add more steps</a>
+				<a class="btn btn-warning" target="_blank" href="#/path/{{path.id}}">Preview</a>
+				<button class="btn btn-default">Publish</button>
+				<em>Allow others to find this path.</em>
+			</div>
+		</div>
+
+		<div ng-hide="profile.username">
+			<h2>You must <a href="#/login">Login</a> or <a href="#/register">Register</a> to create a path.</h2>
+		</div>	
 	</div>

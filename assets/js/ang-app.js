@@ -34,10 +34,14 @@ angular.module('enlighten', [
     $routeProvider.when('/logout', {templateUrl: 'views/logout.html'});
     $routeProvider.when('/register', {templateUrl: 'views/register.html'});
     $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
-    $routeProvider.when('/editor/info', {templateUrl: 'views/editor/info.html'});
-    $routeProvider.when('/editor/step/', {templateUrl: 'views/editor/step.html'});
-    $routeProvider.when('/editor/summary/', {templateUrl: 'views/editor/summary.html'});
+    $routeProvider.when('/editor/info/:path', {templateUrl: 'views/editor/info.html'});
+    $routeProvider.when('/editor/step/:step/:path', {templateUrl: 'views/editor/step.html'});
+    $routeProvider.when('/editor/summary/:path', {templateUrl: 'views/editor/summary.html'});
     $routeProvider.otherwise({redirectTo: '/'});
     console.log("Enlighten");
-}]);
+}]).config(function($sceProvider) {
+  // Completely disable SCE.  For demonstration purposes only!
+  // Do not use in new projects.
+  $sceProvider.enabled(false);
+});
 

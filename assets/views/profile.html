@@ -1,6 +1,21 @@
 
 <div ng-controller="ProfileController">
 	<h1>{{profile.username}}</h1>
+
+	<h2>My paths</h2>
+	<p ng-show="my.length == 0">You have no paths</p> 
+	<table class="table table-striped">
+		<tr ng-repeat="path in my">
+			<td>
+				<a href="/#/path/{{path.id}}"><h2>{{path.name}}</h2></a>
+				<p>{{path.description}}</p>
+			</td>
+			<td>
+				<a href="#/editor/summary/{{path.id}}">edit</a>
+			</td>
+		</tr>
+	</table>	
+
 	<h2>{{completed.length}} completed path(s)</h2>
 	  <table class="table table-striped">
 	    <tr ng-repeat="path in completed">

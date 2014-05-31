@@ -29,7 +29,8 @@ module.controller('StepController', function ($scope, $resource, $routeParams, P
 
 		$scope.path = path;
 		$scope.index = parseInt($routeParams.step, 10);
-		$scope.step = path.steps[parseInt($routeParams.step,10) - 1 ];
+		$scope.step = path.steps[ $scope.index - 1 ];
+		console.log($scope.step);
 
 		// Lookup the users current status
 		var status = Status.userStatusByPath({pathId:path.id}, function(){

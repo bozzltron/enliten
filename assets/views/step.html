@@ -1,9 +1,18 @@
 
-	<div ng-controller="StepController">
-	    <h1>Step {{index}} of {{path.name}}</h1>
-	    <h2>{{step.title}}</h2>
-	    <p class="lead">{{step.notes}}</p>
-	    <a href="{{step.url}}">{{step.title}}</a>
+	<div class="page-step" ng-controller="StepController">
+	    <div class="row">
+	    	<div class="col-md-4">
+	    		<h3>Step {{index}} of {{path.name}}</h3>
+	    		<h3>{{step.name}}</h3>
+	    		<p class="lead">
+	    			{{step.description}}
+	    		</p>
+	    	</div>
+	    	<div class="col-md-8">
+	    		<iframe src="{{step.url}}"></iframe>
+	    	</div>
+	    </div>
+	   
 	    <br />
 	  	<a ng-hide="profile" href="/#/login">Login To Track Your Progress</a>
 

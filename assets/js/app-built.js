@@ -24639,48 +24639,112 @@ angular.module('enlighten', [
     $routeProvider.when('/logout', {templateUrl: 'views/logout.html'});
     $routeProvider.when('/register', {templateUrl: 'views/register.html'});
     $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
-    $routeProvider.when('/editor/info', {templateUrl: 'views/editor/info.html'});
-    $routeProvider.when('/editor/step/', {templateUrl: 'views/editor/step.html'});
-    $routeProvider.when('/editor/summary/', {templateUrl: 'views/editor/summary.html'});
+    $routeProvider.when('/editor/info/:path', {templateUrl: 'views/editor/info.html'});
+    $routeProvider.when('/editor/step/:step/:path', {templateUrl: 'views/editor/step.html'});
+    $routeProvider.when('/editor/summary/:path', {templateUrl: 'views/editor/summary.html'});
     $routeProvider.otherwise({redirectTo: '/'});
     console.log("Enlighten");
-}]);
+}]).config(function($sceProvider) {
+  // Completely disable SCE.  For demonstration purposes only!
+  // Do not use in new projects.
+  $sceProvider.enabled(false);
+});
 
 
 },{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-flash/dist/angular-flash":2,"../bower_components/angular-resource/angular-resource":3,"../bower_components/angular-route/angular-route":4,"../bower_components/angular/angular":5,"./controllers/editor":7,"./controllers/nav":8,"./controllers/paths":9,"./controllers/user":10,"./services/path":11,"./services/profile":12,"./services/status":13}],7:[function(require,module,exports){
-var module = angular.module('enlighten.controllers.editor', ['enlighten.services.profile', 'enlighten.services.path']);
+var module = angular.module('enlighten.controllers.editor', ['enlighten.services.profile', 'enlighten.services.path', 'ngRoute']);
 
-module.controller('EditorController', function ($scope, Profile, Path) {
+module.controller('EditorController', function ($scope, Profile, Path, $routeParams, flash) {
 
 	$scope.profile = Profile.get();
 	
+	if($routeParams.path) {
+		$scope.path = Path.get({id:$routeParams.path});
+	}
+
+	// Handle the initial creation of the path
 	this.submit = function(path) {
 
-		Path.save(path, function(res){
+		if($routeParams.path) {
 
-			window.location.hash = '#/editor/' + res.id + '/step/1';
+			path.user = $scope.profile.id;
+			Path.update(path, function(res){
+				window.location.hash = '#/editor/summary/' + res.id;
+				flash.success = "Your path has been saved.";
+			});
 
+		} else {
+
+			path.user = $scope.profile.id;
+			Path.save(path, function(res){
+				window.location.hash = '#/editor/step/1/' + res.id;
+				flash.success = "Your path has been saved.";
+			});
+
+		}
+
+	};
+
+});
+
+module.controller('EditorStepController', function ($scope, Profile, Path, $routeParams, flash) {
+
+	$scope.profile = Profile.get();
+	$scope.index = parseInt($routeParams.step,10);
+	$scope.path = Path.get({id:$routeParams.path}, function(){
+
+		// Load existing path
+		if($scope.path.steps[$scope.index - 1]) {
+			$scope.step = $scope.path[$scope.index - 1];
+		}
+	});
+
+
+	// Handle step create/edit
+	this.submit = function(step) {
+
+		if(!$scope.path.steps){
+			$scope.path.steps = [];
+		}
+
+		$scope.path.steps[$scope.index - 1] = step;
+
+		Path.update($scope.path, function(res){
+
+			var step = parseInt($scope.index, 10) + 1;
+			window.location.hash = '#/editor/step/' + step +  '/' + $scope.path.id;
+			flash.success = "Your step has been saved.";
+
+		});
+
+	};
+
+	this.preview = function(url){
+		document.getElementById("iframe").src = url;
+	};
+
+});
+
+module.controller('EditorSummaryController', function ($scope, Profile, Path, $routeParams, flash) {
+
+	$scope.profile = Profile.get();
+
+	if($routeParams.path) {
+		$scope.path = Path.get({id:$routeParams.path});
+	}
+	
+	// Handle the initial creation of the path
+	this.submit = function(path) {
+
+		path.published = true;
+		Path.update(path, function(res){
+			flash.success = "Your path has been published.";
 		});
 
 	};
 
 });
 
-module.controller('EditorStepController', function ($scope, Profile, Path) {
-
-	$scope.profile = Profile.get();
-	
-	this.submit = function(path) {
-
-		Path.save(path, function(res){
-
-			window.location.hash = '#/editor/' + res.id + '/step/1';
-
-		});
-
-	};
-
-});
 },{}],8:[function(require,module,exports){
 
 var module = angular.module('enlighten.controllers.nav', ['enlighten.services.profile']);
@@ -24738,7 +24802,8 @@ module.controller('StepController', function ($scope, $resource, $routeParams, P
 
 		$scope.path = path;
 		$scope.index = parseInt($routeParams.step, 10);
-		$scope.step = path.steps[parseInt($routeParams.step,10) - 1 ];
+		$scope.step = path.steps[ $scope.index - 1 ];
+		console.log($scope.step);
 
 		// Lookup the users current status
 		var status = Status.userStatusByPath({pathId:path.id}, function(){
@@ -24803,7 +24868,7 @@ module.controller('LoginController', function ($scope, $resource, $routeParams, 
 	     		flash.error = res.message;
 	     	} else {
 	     		flash.success = res.message;
-	     		window.location.hash="/";
+	     		window.location.hash="/profile";
 	     	}
 
 	     });
@@ -24859,6 +24924,7 @@ module.controller('ProfileController', function ($scope, $resource, $routeParams
 
 	$scope.profile = Profile.get();
 	$scope.completed = Path.completed();
+	$scope.my = Path.my();
 	
 });
 },{}],11:[function(require,module,exports){
@@ -24876,6 +24942,19 @@ angular.module('enlighten.services.path', ['ngResource'])
         			},
         			isArray:true
         		},
+                update: { 
+                    method:'PUT',
+                    params: {
+                        statusId: '@id'
+                    }
+                },
+                my: {
+                    method: 'GET',
+                    params: {
+                        filter: 'my'
+                    },
+                    isArray: true
+                }            
         	});
     });
 

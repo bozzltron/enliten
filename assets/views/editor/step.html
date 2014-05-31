@@ -1,25 +1,42 @@
 
-	<div ng-controller="EditStepController">
-	  <h2>Create step {{index}} for {{path.name}}</h2>
-	  <form ng-show="set.name" class="form" ng-submit="EditorController.submit(path)">
-	  	<div class="form-group">
-	  		<label>Name</label>
-	  		<input class="form-control" required="" type="text" ng-model="path.name" />
-	  	</div>
-	  	<div class="form-group">
-	  		<label>Description</label>
-	  		<textarea class="form-control" required="" ng-model="step.description"></textarea>
-	  	</div>
-	  	<div class="form-group">
-	  		<label>Destination</label>
-	  		<textarea class="form-control" required="" ng-model="step.url"></textarea>
-	  	</div>	  		  	
-	  	<div class="form-group">
-	  		<input class="btn" type="submit" value="Save" />  
-	  		<a class="btn btn-danger" href="#/editor/done?path={{path.id}}">Done</a>
-	  	</div>
-	  </form>
-	  <div ng-hide="profile.username">
-	 	<h2>You must <a href="#/login">Login</a> or <a href="#/register">Register</a></h2>
-	  </div>	
+	<div class="editor-step" ng-controller="EditorStepController as editCtrl">
+
+		<h2>Create step {{index}} for {{path.name}}</h2>
+
+		<form ng-show="profile.username" class="form" ng-submit="editCtrl.submit(step)">
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label>What do you call this step? <em>optional</em></label>
+						<input class="form-control" required="" type="text" ng-model="step.name" />
+					</div>	
+					<div class="form-group">
+						<label>What are you talking about?  Enter a url.</label>
+						<input class="form-control" type="text" required="" ng-model="step.url" />			
+					</div>	
+					<div class="form-group">
+						<button ng-click="editCtrl.preview(step.url)" class="btn btn-default">Preview</button>
+					</div>
+					<div class="form-group">
+						<label>What do you want to say about it?</label>
+						<textarea col="20" row="20" class="form-control" required="" ng-model="step.description"></textarea>
+					</div>															
+				</div>
+				<div class="col-md-8">
+					<iframe id="iframe"></iframe>
+				</div>
+			</div>
+  		  	
+			<div class="form-group">
+				<input class="btn btn-success" type="submit" value="Save and add another step" />  
+				<a class="btn btn-danger" href="#/editor/summary/{{path.id}}">Save and be done</a>
+			</div>
+
+		</form>
+
+		<div ng-hide="profile.username">
+			<h2>You must <a href="#/login">Login</a> or <a href="#/register">Register</a></h2>
+		</div>	
+
 	</div>

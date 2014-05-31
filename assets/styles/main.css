@@ -45,3 +45,15 @@ footer .progress {
  margin:0 0 0 20px;
  float:right;
 }
+
+.editor-step iframe{
+	width:100%;
+	height:100%;
+	border:none;
+	min-height:400px;
+}
+
+.page-step iframe{
+	width:100%;
+	height:500px;
+}

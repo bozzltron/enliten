@@ -12,5 +12,18 @@ angular.module('enlighten.services.path', ['ngResource'])
         			},
         			isArray:true
         		},
+                update: { 
+                    method:'PUT',
+                    params: {
+                        statusId: '@id'
+                    }
+                },
+                my: {
+                    method: 'GET',
+                    params: {
+                        filter: 'my'
+                    },
+                    isArray: true
+                }            
         	});
     });

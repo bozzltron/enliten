@@ -18,7 +18,7 @@ module.controller('LoginController', function ($scope, $resource, $routeParams, 
 	     		flash.error = res.message;
 	     	} else {
 	     		flash.success = res.message;
-	     		window.location.hash="/";
+	     		window.location.hash="/profile";
 	     	}
 
 	     });
@@ -74,5 +74,6 @@ module.controller('ProfileController', function ($scope, $resource, $routeParams
 
 	$scope.profile = Profile.get();
 	$scope.completed = Path.completed();
+	$scope.my = Path.my();
 	
 });

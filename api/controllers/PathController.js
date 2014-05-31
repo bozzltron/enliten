@@ -104,6 +104,25 @@ module.exports = {
 
 	},
 
+	my: function (req, res) {
+
+		if(req.session.user) {
+
+			Path.find({user:req.session.user}).done(function(err, paths) {
+
+				// we now have a model with instance methods attached
+				if(err) res.json({status:"ok", message: err});
+
+				res.json(paths);
+
+			});
+
+		} else {
+			res.json([]);
+		}
+
+	},
+
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to PathController)

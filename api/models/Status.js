@@ -10,9 +10,8 @@ module.exports = {
 
   attributes: {
   	
-	user: {
+	  user: {
       type: 'string',
-      unique: true,
       required: true
     },
     
