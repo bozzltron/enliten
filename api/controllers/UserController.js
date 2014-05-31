@@ -15,6 +15,8 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var crypto = require('crypto');
+
 module.exports = {
 
 	login: function (req, res) {
@@ -82,14 +84,23 @@ module.exports = {
 
 	profile: function(req, res){
 
-		console.log("profile session", req.session.user);
+		var md5 = crypto.createHash("md5");
+		
 		if(req.session.user) {
 		    User.findOne(req.session.user).done(function (err, user) {
 		      if (err) res.json({ status:"failure", message: 'DB error' }, 500);
 
 		      if (user) {
+
+		      	// Don't send a password over the wire!
 		      	delete user.password;
+		 		
+		 		// Hash the email for gravatar
+		 		md5.update(user.email, 'utf8');
+		 		user.hash = md5.digest('hex');
+
 		 		res.json(user);
+
 		      } else {
 		      	res.json({status:'failure', message:'User not found!'});
 		      }

@@ -1,5 +1,5 @@
 
-	<div ng-controller="EditorController">
+	<div ng-controller="EditStepController">
 	  <h2>Create step {{index}} for {{path.name}}</h2>
 	  <form ng-show="set.name" class="form" ng-submit="EditorController.submit(path)">
 	  	<div class="form-group">
@@ -15,7 +15,8 @@
 	  		<textarea class="form-control" required="" ng-model="step.url"></textarea>
 	  	</div>	  		  	
 	  	<div class="form-group">
-	  		<input class="btn" type="submit" value="Save" />  <button class="btn btn-default" type="submit">Cancel</button>
+	  		<input class="btn" type="submit" value="Save" />  
+	  		<a class="btn btn-danger" href="#/editor/done?path={{path.id}}">Done</a>
 	  	</div>
 	  </form>
 	  <div ng-hide="profile.username">

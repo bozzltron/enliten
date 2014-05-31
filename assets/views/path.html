@@ -1,6 +1,7 @@
 
 	<div ng-controller="PathController">
-		<a href="#/"><i class="fa fa-step-backward"></i> Keep Browsing</a> | <a href="#/login">Sign in to track your progress</a>
+		<a href="#/"><i class="fa fa-step-backward"></i> Keep Browsing</a> 
+		<span ng-show="profile.username"> | <a href="#/login">Sign in to track your progress</a> </span>
 	    <h1>{{path.name}}</h1>
 	    <p>{{path.description}}</p>
 	    <a ng-hide="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">Get started</a>

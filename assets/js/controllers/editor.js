@@ -8,7 +8,23 @@ module.controller('EditorController', function ($scope, Profile, Path) {
 
 		Path.save(path, function(res){
 
-			console.log(arguments);
+			window.location.hash = '#/editor/' + res.id + '/step/1';
+
+		});
+
+	};
+
+});
+
+module.controller('EditorStepController', function ($scope, Profile, Path) {
+
+	$scope.profile = Profile.get();
+	
+	this.submit = function(path) {
+
+		Path.save(path, function(res){
+
+			window.location.hash = '#/editor/' + res.id + '/step/1';
 
 		});
 

@@ -39,3 +39,9 @@ footer .progress {
 	color:#fff;
 	background-color: #a567d6;
 }
+
+.gravatar {
+ width:50px;
+ margin:0 0 0 20px;
+ float:right;
+}

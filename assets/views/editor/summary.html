@@ -1,4 +1,4 @@
-
+	
 	<div ng-controller="EditorController as editCtrl">
 	  <h2 ng-show="profile.username">Create a path</h2>
 	  <form ng-show="profile.username" class="form" ng-submit="editCtrl.submit(path)">
@@ -11,7 +11,9 @@
 	  		<textarea class="form-control" required="" ng-model="path.description"></textarea>
 	  	</div>	  	
 	  	<div class="form-group">
-	  		<input class="btn btn-warning" type="submit" value="Save" />  <button class="btn btn-default" type="submit">Cancel</button>
+	  		<a class="btn btn-warning" href="#/path/{{path.id}}">Preview</button>
+	  		<button class="btn btn-success" type="submit">Publish</button>
+	  		<em>Allow others to find this path.</em>
 	  	</div>
 	  </form>
 	  <div ng-hide="profile.username">

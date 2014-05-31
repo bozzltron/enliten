@@ -24640,7 +24640,8 @@ angular.module('enlighten', [
     $routeProvider.when('/register', {templateUrl: 'views/register.html'});
     $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
     $routeProvider.when('/editor/info', {templateUrl: 'views/editor/info.html'});
-    $routeProvider.when('/editor/step/:index', {templateUrl: 'views/editor/step.html'});
+    $routeProvider.when('/editor/step/', {templateUrl: 'views/editor/step.html'});
+    $routeProvider.when('/editor/summary/', {templateUrl: 'views/editor/summary.html'});
     $routeProvider.otherwise({redirectTo: '/'});
     console.log("Enlighten");
 }]);
@@ -24657,7 +24658,7 @@ module.controller('EditorController', function ($scope, Profile, Path) {
 
 		Path.save(path, function(res){
 
-			console.log(arguments);
+			window.location.hash = '#/editor/' + res.id + '/step/1';
 
 		});
 
@@ -24665,6 +24666,21 @@ module.controller('EditorController', function ($scope, Profile, Path) {
 
 });
 
+module.controller('EditorStepController', function ($scope, Profile, Path) {
+
+	$scope.profile = Profile.get();
+	
+	this.submit = function(path) {
+
+		Path.save(path, function(res){
+
+			window.location.hash = '#/editor/' + res.id + '/step/1';
+
+		});
+
+	};
+
+});
 },{}],8:[function(require,module,exports){
 
 var module = angular.module('enlighten.controllers.nav', ['enlighten.services.profile']);
@@ -24850,7 +24866,7 @@ angular.module('enlighten.services.path', ['ngResource'])
 
     // GET PATHS 
     .factory('Path', function($resource) {
-        return $resource('/path/:filter',
+        return $resource('/path/:filter/:id',
         	{},
         	{
         		completed: {

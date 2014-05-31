@@ -35,7 +35,8 @@ angular.module('enlighten', [
     $routeProvider.when('/register', {templateUrl: 'views/register.html'});
     $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
     $routeProvider.when('/editor/info', {templateUrl: 'views/editor/info.html'});
-    $routeProvider.when('/editor/step/:index', {templateUrl: 'views/editor/step.html'});
+    $routeProvider.when('/editor/step/', {templateUrl: 'views/editor/step.html'});
+    $routeProvider.when('/editor/summary/', {templateUrl: 'views/editor/summary.html'});
     $routeProvider.otherwise({redirectTo: '/'});
     console.log("Enlighten");
 }]);

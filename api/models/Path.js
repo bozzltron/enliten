@@ -10,10 +10,22 @@ module.exports = {
 
   attributes: {
   	
-  	/* e.g.
-  	nickname: 'string'
-  	*/
+	name: {
+      type: 'string',
+      unique: true,
+      required: true
+    },
     
+    description: {
+      type: 'string',
+      required: true
+    },
+
+    url: {
+      type: 'string'	
+    }
+
+
   }
 
 };
