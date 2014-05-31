@@ -24639,6 +24639,7 @@ angular.module('enlighten', [
     $routeProvider.when('/logout', {templateUrl: 'views/logout.html'});
     $routeProvider.when('/register', {templateUrl: 'views/register.html'});
     $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
+    $routeProvider.when('/editor/info/', {templateUrl: 'views/editor/info.html'});
     $routeProvider.when('/editor/info/:path', {templateUrl: 'views/editor/info.html'});
     $routeProvider.when('/editor/step/:step/:path', {templateUrl: 'views/editor/step.html'});
     $routeProvider.when('/editor/summary/:path', {templateUrl: 'views/editor/summary.html'});
