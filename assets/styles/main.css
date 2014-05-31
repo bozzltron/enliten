@@ -28,3 +28,14 @@ footer .progress {
 .alert-message {
 	margin:0;
 }
+
+.navbar-collapse a.btn {
+ margin:7px 0 0 20px;
+ padding:7px;
+ color:#fff;
+}
+
+.navbar-default .navbar-nav > li > a.btn {
+	color:#fff;
+	background-color: #a567d6;
+}

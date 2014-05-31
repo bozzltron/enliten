@@ -1,6 +1,7 @@
+
 var module = angular.module('enlighten.controllers.nav', ['enlighten.services.profile']);
 
-module.controller('NavController', function ($scope, Profile, $location) {
+module.controller('NavController', function ($scope, Profile,  $location) {
 
 	var reload = false;
 	$scope.location = $location;
@@ -18,5 +19,5 @@ module.controller('NavController', function ($scope, Profile, $location) {
 	 });
 
 	$scope.profile = Profile.get();
-	
+
 });

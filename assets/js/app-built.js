@@ -24617,6 +24617,7 @@ require("./services/profile");
 require("./controllers/paths");
 require("./controllers/user");
 require("./controllers/nav");
+require("./controllers/editor");
 
 // Create your app
 angular.module('enlighten', [
@@ -24624,6 +24625,7 @@ angular.module('enlighten', [
 	'enlighten.controllers',
 	'enlighten.controllers.user',
   'enlighten.controllers.nav',
+  'enlighten.controllers.editor',
   'angular-flash.service', 
   'angular-flash.flash-alert-directive'
 	]).config(['$routeProvider', function($routeProvider) {
@@ -24637,15 +24639,37 @@ angular.module('enlighten', [
     $routeProvider.when('/logout', {templateUrl: 'views/logout.html'});
     $routeProvider.when('/register', {templateUrl: 'views/register.html'});
     $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
+    $routeProvider.when('/editor/info', {templateUrl: 'views/editor/info.html'});
+    $routeProvider.when('/editor/step/:index', {templateUrl: 'views/editor/step.html'});
     $routeProvider.otherwise({redirectTo: '/'});
     console.log("Enlighten");
 }]);
 
 
-},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-flash/dist/angular-flash":2,"../bower_components/angular-resource/angular-resource":3,"../bower_components/angular-route/angular-route":4,"../bower_components/angular/angular":5,"./controllers/nav":7,"./controllers/paths":8,"./controllers/user":9,"./services/path":10,"./services/profile":11,"./services/status":12}],7:[function(require,module,exports){
+},{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-flash/dist/angular-flash":2,"../bower_components/angular-resource/angular-resource":3,"../bower_components/angular-route/angular-route":4,"../bower_components/angular/angular":5,"./controllers/editor":7,"./controllers/nav":8,"./controllers/paths":9,"./controllers/user":10,"./services/path":11,"./services/profile":12,"./services/status":13}],7:[function(require,module,exports){
+var module = angular.module('enlighten.controllers.editor', ['enlighten.services.profile', 'enlighten.services.path']);
+
+module.controller('EditorController', function ($scope, Profile, Path) {
+
+	$scope.profile = Profile.get();
+	
+	this.submit = function(path) {
+
+		Path.save(path, function(res){
+
+			console.log(arguments);
+
+		});
+
+	};
+
+});
+
+},{}],8:[function(require,module,exports){
+
 var module = angular.module('enlighten.controllers.nav', ['enlighten.services.profile']);
 
-module.controller('NavController', function ($scope, Profile, $location) {
+module.controller('NavController', function ($scope, Profile,  $location) {
 
 	var reload = false;
 	$scope.location = $location;
@@ -24663,10 +24687,10 @@ module.controller('NavController', function ($scope, Profile, $location) {
 	 });
 
 	$scope.profile = Profile.get();
-	
+
 });
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 var module = angular.module('enlighten.controllers', [
 	'ngResource', 
 	'ngRoute', 
@@ -24742,7 +24766,7 @@ module.controller('CompleteController', function ($scope, $resource, $routeParam
 
 });
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var module = angular.module('enlighten.controllers.user', [
 		'ngResource', 
 		'ngRoute', 
@@ -24821,7 +24845,7 @@ module.controller('ProfileController', function ($scope, $resource, $routeParams
 	$scope.completed = Path.completed();
 	
 });
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 angular.module('enlighten.services.path', ['ngResource'])    
 
     // GET PATHS 
@@ -24839,7 +24863,7 @@ angular.module('enlighten.services.path', ['ngResource'])
         	});
     });
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 angular.module('enlighten.services.profile', ['ngResource']) 
 
     // GET PROFILE 
@@ -24849,7 +24873,7 @@ angular.module('enlighten.services.profile', ['ngResource'])
 
     });
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 angular.module('enlighten.services.status', ['ngResource']) 
 
     // GET STATUS 

@@ -12,6 +12,7 @@ require("./services/profile");
 require("./controllers/paths");
 require("./controllers/user");
 require("./controllers/nav");
+require("./controllers/editor");
 
 // Create your app
 angular.module('enlighten', [
@@ -19,6 +20,7 @@ angular.module('enlighten', [
 	'enlighten.controllers',
 	'enlighten.controllers.user',
   'enlighten.controllers.nav',
+  'enlighten.controllers.editor',
   'angular-flash.service', 
   'angular-flash.flash-alert-directive'
 	]).config(['$routeProvider', function($routeProvider) {
@@ -32,6 +34,8 @@ angular.module('enlighten', [
     $routeProvider.when('/logout', {templateUrl: 'views/logout.html'});
     $routeProvider.when('/register', {templateUrl: 'views/register.html'});
     $routeProvider.when('/profile', {templateUrl: 'views/profile.html'});
+    $routeProvider.when('/editor/info', {templateUrl: 'views/editor/info.html'});
+    $routeProvider.when('/editor/step/:index', {templateUrl: 'views/editor/step.html'});
     $routeProvider.otherwise({redirectTo: '/'});
     console.log("Enlighten");
 }]);
