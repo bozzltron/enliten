@@ -1,8 +1,9 @@
 
 	<div ng-controller="PathController">
-	
+
+
 		<span ng-show="profile.username"> | <a href="#/login">Sign in to track your progress</a> </span>
-	    <h1>{{path.name}}</h1>
+	    <h1>{{path.name}} <i ng-show="status.isCompleted" class="fa fa-check-square-o"></i></h1>
 	    <p>{{path.description}}</p>
 
 		<a ng-hide="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">Get started</a>
@@ -15,7 +16,7 @@
 			<tr ng-repeat="step in path.steps">
 				<td>{{$index+1}}</td>
 				<td>{{step.name}}</td>
-				<td>{{step.description}}</td>	
+				<td>{{step.description}}</td>
 			</tr>
 		</table>
 
