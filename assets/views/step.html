@@ -31,7 +31,10 @@
 						</div>
 					</div>
 
-					<div class="col-xs-1"><h1><a href="/#/path/{{path.id}}/step/{{ index == path.steps.length ? 'complete' : index + 1}}"><i class="fa fa-arrow-right"></i></a></h1></div>
+					<div class="col-xs-1">
+						<h1><a href="/#/path/{{path.id}}{{ index == path.steps.length ? '' : '/step/' + (index + 1)}}"><i class="fa fa-arrow-right"></i></a>
+						</h1>
+					</div>
 		        </div>
 		    </div>
 		</footer>
