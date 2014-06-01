@@ -4,6 +4,16 @@
 		<span ng-show="profile.username"> | <a href="#/login">Sign in to track your progress</a> </span>
 	    <h1>{{path.name}}</h1>
 	    <p>{{path.description}}</p>
+
+		<h3 ng-show="path.steps">{{path.steps.length}} steps </h3>
+		<table class="table table-striped">
+			<tr ng-repeat="step in path.steps">
+				<td>{{$index+1}}</td>
+				<td>{{step.name}}</td>
+				<td>{{step.description}}</td>	
+			</tr>
+		</table>
+
 	    <a ng-hide="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">Get started</a>
 	    <a ng-show="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">You already completed this path.  Go again?</a>
 	    <br />
