@@ -29,15 +29,10 @@ footer .progress {
 	margin:0;
 }
 
-.navbar-collapse a.btn {
- margin:7px 0 0 20px;
- padding:7px;
+.navbar-collapse button {
+ display:inline-block;
+ margin-left:10px;
  color:#fff;
-}
-
-.navbar-default .navbar-nav > li > a.btn {
-	color:#fff;
-	background-color: #a567d6;
 }
 
 .gravatar {

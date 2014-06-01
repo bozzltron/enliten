@@ -12,8 +12,16 @@
 						<input class="form-control" required="" type="text" ng-model="step.name" />
 					</div>	
 					<div class="form-group">
-						<label>What are you talking about?  Enter a url.</label>
-						<input class="form-control" type="text" required="" ng-model="step.url" />			
+						<label>What kind of content is this?</label>
+						<select class="form-control" ng-model="step.type" placeholder="Content type">
+							<option>Photo</option>
+							<option>Embed code</option>
+							<option>Url</option>
+						</select>	
+					</div>
+					<div class="form-group">
+						<label>What are you talking about?  Enter your {{step.type}}.</label>
+						<input class="form-control" type="text" required="" ng-model="step.url" />		
 					</div>	
 					<div class="form-group">
 						<button ng-click="editCtrl.preview(step.url)" class="btn btn-default">Preview</button>
@@ -24,13 +32,14 @@
 					</div>															
 				</div>
 				<div class="col-md-8">
-					<iframe id="iframe"></iframe>
+					<div id="preview"></div>
 				</div>
 			</div>
   		  	
 			<div class="form-group">
-				<input class="btn btn-success" type="submit" value="Save and add another step" />  
-				<a class="btn btn-danger" href="#/editor/summary/{{path.id}}">Save and be done</a>
+				<a href="#/editor/info/{{path.id}}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit name and description</a> 
+				<button class="btn btn-success" type="submit"><i class="fa fa-plus-circle"></i> Save and add another step</button>  
+				<a class="btn btn-danger" href="#/editor/summary/{{path.id}}"><i class="fa fa-flag-checkered"></i> Save and be done</a>
 			</div>
 
 		</form>

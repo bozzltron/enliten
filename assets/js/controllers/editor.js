@@ -66,7 +66,15 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 	};
 
 	this.preview = function(url){
-		document.getElementById("iframe").src = url;
+
+		if($scope.step.type == "Photo") {
+			$("#preview").html('<img src="' + $scope.step.url + '" />');
+		} else if ($scope.step.type == "Url") {
+			$("#preview").html('<iframe src="' + $scope.step.url + '" ></iframe>');
+		} else if ($scope.step.type == "Embed code") {
+			$("#preview").html($step.step.url);
+		}
+
 	};
 
 });

@@ -18,6 +18,17 @@ module.controller('NavController', function ($scope, Profile,  $location) {
 
 	 });
 
+	$scope.go = function ( path ) {
+	  $location.path( path );
+	};
+
+	$('.navbar .navbar-close').click(function() {
+	    var navbar_toggle = $('.navbar-toggle');
+	    if (navbar_toggle.is(':visible')) {
+	        navbar_toggle.trigger('click');
+	    }
+	});
+
 	$scope.profile = Profile.get();
 
 });

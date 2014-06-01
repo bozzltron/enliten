@@ -24721,7 +24721,15 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 	};
 
 	this.preview = function(url){
-		document.getElementById("iframe").src = url;
+
+		if($scope.step.type == "Photo") {
+			$("#preview").html('<img src="' + $scope.step.url + '" />');
+		} else if ($scope.step.type == "Url") {
+			$("#preview").html('<iframe src="' + $scope.step.url + '" ></iframe>');
+		} else if ($scope.step.type == "Embed code") {
+			$("#preview").html($step.step.url);
+		}
+
 	};
 
 });
@@ -24766,6 +24774,17 @@ module.controller('NavController', function ($scope, Profile,  $location) {
 		}
 
 	 });
+
+	$scope.go = function ( path ) {
+	  $location.path( path );
+	};
+
+	$('.navbar .navbar-close').click(function() {
+	    var navbar_toggle = $('.navbar-toggle');
+	    if (navbar_toggle.is(':visible')) {
+	        navbar_toggle.trigger('click');
+	    }
+	});
 
 	$scope.profile = Profile.get();
 
