@@ -1,3 +1,3 @@
 module.exports = {
-    appName : 'Enliten'
+    appName : 'Enliten.io'
 };
