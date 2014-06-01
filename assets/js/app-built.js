@@ -24818,7 +24818,7 @@ module.controller('PathController', function ($scope, $resource, $routeParams, P
 
 module.controller('StepController', function ($scope, $resource, $routeParams, Path, Status, Profile) {
 
-	var path = Path.get($routeParams, function(){
+	var path = Path.get({id:$routeParams.id}, function(){
 
 		$scope.path = path;
 		$scope.index = parseInt($routeParams.step, 10);
