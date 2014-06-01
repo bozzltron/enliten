@@ -41,7 +41,7 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 
 		// Load existing path
 		if($scope.path.steps[$scope.index - 1]) {
-			$scope.step = $scope.path[$scope.index - 1];
+			$scope.step = $scope.path.steps[$scope.index - 1];
 		}
 	});
 
