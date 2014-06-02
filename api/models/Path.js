@@ -10,7 +10,7 @@ module.exports = {
 
   attributes: {
   	
-	name: {
+	  name: {
       type: 'string',
       unique: true,
       required: true
@@ -25,6 +25,10 @@ module.exports = {
       type: 'string'	
     }
 
+    user: {
+      type: 'string',
+      required: true
+    },
 
   }
 

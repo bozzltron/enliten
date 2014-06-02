@@ -9,7 +9,8 @@
 	    		</p>
 	    	</div>
 	    	<div class="col-md-8">
-	    		<iframe src="{{step.url}}"></iframe>
+	    		<iframe ng-show="step.type != 'Embed code'" src="{{step.url}}"></iframe>
+	    		<div ng-show="step.type == 'Embed code'" ng-bind-html="step.url" ></div>
 	    	</div>
 	    </div>
 	   

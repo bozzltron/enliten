@@ -24695,7 +24695,7 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 	$scope.path = Path.get({id:$routeParams.path}, function(){
 
 		// Load existing path
-		if($scope.path.steps[$scope.index - 1]) {
+		if($scope.path.steps && $scope.path.steps[$scope.index - 1]) {
 			$scope.step = $scope.path.steps[$scope.index - 1];
 		}
 	});
@@ -24727,7 +24727,7 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 		} else if ($scope.step.type == "Url") {
 			$("#preview").html('<iframe src="' + $scope.step.url + '" ></iframe>');
 		} else if ($scope.step.type == "Embed code") {
-			$("#preview").html($step.step.url);
+			$("#preview").html($scope.step.url);
 		}
 
 	};
@@ -24745,7 +24745,12 @@ module.controller('EditorSummaryController', function ($scope, Profile, Path, $r
 	// Handle the initial creation of the path
 	this.submit = function(path) {
 
-		path.published = true;
+		if(!path.published) {
+			path.published = true;
+		} else {
+			path.published = false;
+		}
+		
 		Path.update(path, function(res){
 			flash.success = "Your path has been published.";
 		});
