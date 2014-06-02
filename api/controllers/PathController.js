@@ -58,7 +58,7 @@ module.exports = {
 
 		if(!req.session.user) {
 
-			Path.find({}).done(function(err, paths) {
+			Path.find({published:true}).done(function(err, paths) {
 
 				// we now have a model with instance methods attached
 				if(err) res.json({status:"ok", message: err});
@@ -69,7 +69,7 @@ module.exports = {
 
 		} else {
 	
-			Path.find({}).done(function(err, paths) {
+			Path.find({published:true}).done(function(err, paths) {
 
 			  	// we now have a model with instance methods attached
 			 	if(err) res.json({status:"ok", message: err});
