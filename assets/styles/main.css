@@ -70,3 +70,22 @@ footer .progress {
 		width: auto;
 	}
 }	
+
+.fa-arrow-left {
+  position:relative;
+  left:10px;
+}
+.fa-arrow-right {
+  position:relative;
+  right:10px;
+}
+.step-nav {
+ border-radius:40px;
+ position:fixed;
+ top:50%;
+ background-color:#eee;
+padding:10px 20px;
+ font-size:40px;
+}
+.step-nav-left { left:-30px; }
+.step-nav-right { right:-30px;}
