@@ -25,10 +25,10 @@ module.exports = {
       type: 'string'	
     }
 
-    user: {
-      type: 'string',
-      required: true
-    },
+    // user: {
+    //   type: 'string',
+    //   required: true
+    // }
 
   }
 
