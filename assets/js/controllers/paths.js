@@ -12,7 +12,9 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 
 });
 
-module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status, $location, flash) {
+module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status, Profile, $location, flash) {
+
+	$scope.profile = Profile.get();
 
 	var path = Path.get($routeParams, function(){
 
