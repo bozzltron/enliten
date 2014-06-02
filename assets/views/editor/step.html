@@ -6,7 +6,7 @@
 		<form ng-show="profile.username" class="form" ng-submit="editCtrl.submit(step)">
 
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-6">
 					<div class="form-group">
 						<label>What do you call this step? <em>optional</em></label>
 						<input class="form-control" required="" type="text" ng-model="step.name" />
@@ -31,7 +31,7 @@
 						<textarea col="20" row="20" class="form-control" required="" ng-model="step.description"></textarea>
 					</div>															
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-6">
 					<div id="preview"></div>
 				</div>
 			</div>

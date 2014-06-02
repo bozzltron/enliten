@@ -90,3 +90,7 @@ footer .progress {
 }
 .step-nav-left { left:-30px; }
 .step-nav-right { right:-30px;}
+
+.editor-step textarea.form-control {
+	height:250px;
+}
