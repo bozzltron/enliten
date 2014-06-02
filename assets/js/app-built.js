@@ -24633,6 +24633,7 @@ angular.module('enlighten', [
     // Specify routes to load our partials upon the given URLs
     $routeProvider.when('/', {templateUrl: 'views/home.html'});
     $routeProvider.when('/path/:id', {templateUrl: 'views/path.html'});
+    $routeProvider.when('/path/:id/:completed', {templateUrl: 'views/path.html'});
     $routeProvider.when('/path/:id/step/complete', {templateUrl: 'views/complete.html'});
     $routeProvider.when('/path/:id/step/:step', {templateUrl: 'views/step.html'});
     $routeProvider.when('/login', {templateUrl: 'views/login.html'});
@@ -24810,12 +24811,16 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 
 });
 
-module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status) {
+module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status, $location, flash) {
 
 	var path = Path.get($routeParams, function(){
 
 		$scope.path = path;
 		$scope.status = Status.userStatusByPath({pathId:path.id});
+
+		if($routeParams.completed == "completed") {
+			flash.success = "Congratulations!  You completed " + $scope.path.name;
+		}
 
 	});
 

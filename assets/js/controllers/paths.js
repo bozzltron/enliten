@@ -12,12 +12,16 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 
 });
 
-module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status) {
+module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status, $location, flash) {
 
 	var path = Path.get($routeParams, function(){
 
 		$scope.path = path;
 		$scope.status = Status.userStatusByPath({pathId:path.id});
+
+		if($routeParams.completed == "completed") {
+			flash.success = "Congratulations!  You completed " + $scope.path.name;
+		}
 
 	});
 
