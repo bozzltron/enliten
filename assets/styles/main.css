@@ -84,8 +84,9 @@ footer .progress {
  position:fixed;
  top:50%;
  background-color:#eee;
-padding:10px 20px;
+ padding:10px 20px;
  font-size:40px;
+ opacity:0.8;
 }
 .step-nav-left { left:-30px; }
 .step-nav-right { right:-30px;}
