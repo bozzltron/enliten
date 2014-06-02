@@ -1,7 +1,7 @@
 	
 	<div ng-controller="EditorSummaryController as editCtrl">
 	  	
-		<div ng-show="profile.username">
+		<div ng-show="profile.username && (profile.id == path.user)">
 			<h1>Summary</h1>
 
 			<h3>Name</h3>
@@ -31,7 +31,9 @@
 			</form>
 
 		</div>
-
+	  	<div ng-hide="profile.id == path.user">
+	  		<h2>You can only edit paths that you have created.</h2>
+	  	</div>
 		<div ng-hide="profile.username">
 			<h2>You must <a href="#/login">Login</a> or <a href="#/register">Register</a> to create a path.</h2>
 		</div>	

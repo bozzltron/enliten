@@ -3,7 +3,7 @@
 
 		<h2>Create step {{index}} for {{path.name}}</h2>
 
-		<form ng-show="profile.username" class="form" ng-submit="editCtrl.submit(step)">
+		<form ng-show="profile.username && (profile.id == path.user)" class="form" ng-submit="editCtrl.submit(step)">
 
 			<div class="row">
 				<div class="col-md-6">
@@ -43,7 +43,9 @@
 			</div>
 
 		</form>
-
+		<div ng-hide="profile.id == path.user">
+		  	<h2>You can only edit paths that you have created.</h2>
+		</div>
 		<div ng-hide="profile.username">
 			<h2>You must <a href="#/login">Login</a> or <a href="#/register">Register</a></h2>
 		</div>	

@@ -53,7 +53,7 @@ module.exports = {
 	      if (err) res.json({ error: 'DB error' }, 500);
 
 	      if (user) {
-	      	req.json({status:"failure", message:"This user already exists"});
+	      	res.json({status:"failure", message:"This email is already in use"});
 	      } else {
 	      	console.log(req.body);
 	      	User.create(req.body).done(function(err, user) {
@@ -64,8 +64,7 @@ module.exports = {
 
 			  // The User was created successfully!
 			  }else {
-			  	delete user.password;
-			  	res.json(user);
+			  	res.json({status:"ok", message:"You successfully registered.  Now you can login."});
 			  }
 			});
 
