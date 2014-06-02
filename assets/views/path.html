@@ -4,7 +4,6 @@
 
 		<span ng-show="profile.username"> | <a href="#/login">Sign in to track your progress</a> </span>
 	    <h1>{{path.name}} <i ng-show="status.isCompleted" class="fa fa-check-square-o"></i></h1>
-	    <p>by {{profile.username}}</p>
 	    <p>{{path.description}}</p>
 
 	    <a ng-show="profile.id == path.user" class="btn btn-warning" href="/#/editor/summary/{{path.id}}">Edit</a>
