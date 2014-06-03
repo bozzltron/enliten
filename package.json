@@ -24,6 +24,7 @@
   "license": "",
   "devDependencies": {
     "browserify": "^3.46.1",
-    "grunt-browserify": "^2.0.8"
+    "grunt-browserify": "^2.0.8",
+    "frisby": "^0.8.1"
   }
 }
