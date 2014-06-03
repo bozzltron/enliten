@@ -43,3 +43,9 @@ nbproject
 # local config
 ########################
 config/local.js
+
+########################
+# Sublime Text
+########################
+*.sublime-project
+*.sublime-workspace
