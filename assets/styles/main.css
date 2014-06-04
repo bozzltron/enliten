@@ -94,3 +94,27 @@ footer .progress {
 .editor-step textarea.form-control {
 	height:250px;
 }
+
+.vertical {
+	text-align:center;
+	font-size:3em;
+}
+
+.vertical .step {
+	margin:300px 0;
+}
+
+.vertical iframe {
+	width:100%;
+	border:none;
+	height:400px;
+}
+
+.vertical .img img {margin:auto; text-align:center;}
+
+.vertical .border {
+	border-top:#eee 2px solid;
+	border-bottom:#eee 2px solid;
+	max-height:500px;
+	overflow: scroll;	
+}

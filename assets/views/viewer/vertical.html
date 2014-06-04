@@ -1,0 +1,32 @@
+
+	<div class="vertical" ng-controller="PathController">
+
+	    <h1>{{path.name}} <i ng-show="status.isCompleted" class="fa fa-check-square-o"></i></h1>
+	    
+	    <p>{{path.description}}</p>
+
+		<span ng-show="profile.username"><a href="#/login">Sign in to track your progress</a> </span>
+
+
+	    <br />
+	    <a ng-show="status.step && !status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/{{status.step}}">Continue where you left off</a>
+
+		
+		<div class="step" ng-repeat="step in path.steps">
+		
+			<h2>{{step.name}}</h3>
+
+			<p class="lead">{{step.description}}</p>
+
+			<div class="border">
+	    		<iframe ng-show="step.type != 'Embed code' && step.type !=  'Photo'" src="{{step.url}}"></iframe>
+				<div ng-show="step.type == 'Embed code'" ng-bind-html="step.url" ></div>
+				<div ng-show="step.type == 'Photo'" class="img"><img ng-src="{{step.url}}" /></div>
+			</div>
+		</div>
+	
+
+		<h2>Share your thoughts</h2>
+	    <div ng-include="" src="'/views/disqus.html'"></div>
+
+	</div>
