@@ -8,8 +8,7 @@ module.exports = function(options) {
 	util.getSession(function(res){
 
 		util.create(res, options, function(res){
-			
-			console.log("create response", res);
+
 			util.readAll(res, options, function(res){
 
 				util.read(res, options, function(res){

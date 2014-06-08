@@ -49,27 +49,33 @@ module.exports = {
 
 	register: function (req, res) {
 
-	    User.findOneByEmail(req.body.email).done(function (err, user) {
-	      if (err) res.json({ error: 'DB error' }, 500);
+		if(req.body.email) {
 
-	      if (user) {
-	      	res.json({status:"failure", message:"This email is already in use"});
-	      } else {
-	      	console.log(req.body);
-	      	User.create(req.body).done(function(err, user) {
+		    User.findOneByEmail(req.body.email).done(function (err, user) {
+		      if (err) res.json({ error: 'DB error' }, 500);
 
-			  // Error handling
-			  if (err) {
-			    res.json({status:"failure", message:err});
+		      if (user) {
+		      	res.json({status:"failure", message:"This email is already in use"});
+		      } else {
+		      	console.log(req.body);
+		      	User.create(req.body).done(function(err, user) {
 
-			  // The User was created successfully!
-			  }else {
-			  	res.json({status:"ok", message:"You successfully registered.  Now you can login."});
-			  }
-			});
+				  // Error handling
+				  if (err) {
+				    res.json({status:"failure", message:err});
 
-	      }
-	    });
+				  // The User was created successfully!
+				  }else {
+				  	res.json({status:"ok", message:"You successfully registered.  Now you can login."});
+				  }
+				});
+
+		      }
+		    });
+
+		} else {
+			res.json({status:"failure", message:"You must provide and email address."});
+		}
 	},
 
 	logout: function(req, res) {

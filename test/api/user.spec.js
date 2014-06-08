@@ -3,7 +3,7 @@ var crud = require("./crud");
 var frisby = require("frisby");
 var config = require("./config");
 
-// Mocha test
+// Jasmine test
 describe('user', function(){
 
   it('should prevent POST', function() {
@@ -55,11 +55,11 @@ describe('user', function(){
 
     frisby.create('Allow user registeration')
       .post(config.server + '/register')
-        .expectStatus(500)
+        .expectStatus(200)
     .toss()
 
   })
-
+  
   it('should allow profile', function(){
 
     frisby.create('Allow user profile')
@@ -73,6 +73,15 @@ describe('user', function(){
 
     frisby.create('Allow user session')
       .get(config.server + '/session')
+        .expectStatus(200)
+    .toss()
+
+  })
+
+  it('should allow logout', function(){
+
+    frisby.create('Allow user logout')
+      .get(config.server + '/logout')
         .expectStatus(200)
     .toss()
 

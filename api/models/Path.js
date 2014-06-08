@@ -23,12 +23,12 @@ module.exports = {
 
     url: {
       type: 'string'	
-    }
+    },
 
-    // user: {
-    //   type: 'string',
-    //   required: true
-    // }
+    user: {
+      type: 'string',
+      required: true
+    }
 
   }
 

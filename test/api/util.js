@@ -7,26 +7,41 @@ module.exports = {
 	// Gets a Paydia session
 	getSession: function(cb){
 	
-	  	// Get a session
-	    frisby.create('Login user')
-	      .post(config.server + "/auth",{
-			"type":  "employee",
-			"username":  config.username,
-		    "password":  config.password,
-			"role":  "web"
-	      }, {json: true})
-	      .expectStatus(200)
-	      .expectJSONTypes({
-		    "header_name": String,
-		    "header_token": String,
-		    "expires": String,
-		    "uri": String,
-		    "employee": String
-		  })
-		  .expectHeaderContains('Content-Type', 'json')
-		  .inspectBody()
-		  .afterJSON(cb)
-	    .toss();
+		// Get a session
+		frisby.create('Login user')
+			.post(config.server + "/login",{
+				"username":  config.username,
+				"password":  config.password,
+			}, {json: true})
+			.expectStatus(200)
+			.expectHeaderContains('Content-Type', 'json')
+			.expectJSONTypes({
+				status: String,
+				message: String
+			})
+			.after(function(){
+
+				setTimeout(function(){
+
+				frisby.create('Get profile')
+					.get(config.server + '/profile')
+					.expectStatus(200)		
+					.expectJSONTypes({
+						username: String,
+						email: String,
+						createdAt: String,
+						updatedAt: String,
+						id: String,
+						hash: String
+					})
+					.afterJSON(cb)
+				.toss();
+
+				}, 500);
+
+
+			})
+		.toss();
 
 	},
 
@@ -43,18 +58,13 @@ module.exports = {
 	// Create
 	create: function(res, options, cb) {
 
-	  	// Set the auth header
-	  	frisby.globalSetup({ 
-		  request: {
-		    headers: { 'PAYDIA_AUTH_WEB': res.header_token }
-		  }
-		});
+		options.postData.user = res.id;
 
 	    frisby.create('Create a ' + options.module)
-	      .post(config.server + '/' + options.module, options.postData, {json: true})
-		  .expectStatus(201)
-		  .inspectBody()
-		  .after(cb)
+	     	.post(config.server + '/' + options.module, options.postData, {json: true})
+		 	.expectStatus(201)
+		 	.inspectBody()
+		 	.after(cb)
 	    .toss();	  	
 
 	},
@@ -76,20 +86,14 @@ module.exports = {
 	// Read one 
 	read: function(res, options, cb) {
 
-		var item = _.where(res[options.readAllQuery.array], {name:options.readAllQuery.key});
-		
-		if(item.length > 0 ) {
-
-		    frisby.create('Read a ' + options.module )
-		      .get(config.server + item[0].uri, {json: true})
-		      .expectStatus(200)
-			  .expectHeaderContains('Content-Type', 'json')
-			  .expectJSONTypes(options.validateReadTypes)
-			  .inspectBody()
-			  .afterJSON(cb)
-		    .toss();	
-
-		}
+		frisby.create('Read a ' + options.module )
+			.get(config.server + '/path/' + options.createdId, {json: true})
+			.expectStatus(200)
+			.expectHeaderContains('Content-Type', 'json')
+			.expectJSONTypes(options.validateReadTypes)
+			.inspectBody()
+			.afterJSON(cb)
+		.toss();	
 
 	},
 

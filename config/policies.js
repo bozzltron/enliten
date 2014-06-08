@@ -16,7 +16,29 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': true
+  '*': true,
+
+  PathController : {
+
+  	pathsCompleted: 'isAuthenticated',
+  	
+  	my: 'isAuthenticated',
+
+  	findAll: true,
+
+  	find: true,
+
+  	create: 'isAuthenticated',
+
+  	update: 'isAuthenticated',
+
+  	destroy: 'isAuthenticated'
+
+  },
+
+  StatusController: {
+  	'*': 'isAuthenticated'
+  }
 
   /*
 	// Here's an example of adding some policies to a controller
