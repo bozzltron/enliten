@@ -1,7 +1,7 @@
 
 	<div ng-controller="EditorController as editCtrl">
 	  <h2 ng-show="profile.username">Create a path</h2>
-	  <form ng-show="profile.username && (profile.id == path.user)" class="form" ng-submit="editCtrl.submit(path)">
+	  <form ng-show="profile.username && ((profile.id == path.user) || path.id == null)" class="form" ng-submit="editCtrl.submit(path)">
 	  	<div class="form-group">
 	  		<label>Name</label>
 	  		<input class="form-control" required="" type="text" ng-model="path.name" />
@@ -17,7 +17,7 @@
 	  		<button ng-hide="path.id" class="btn btn-default" type="submit">Cancel</button>
 	  	</div>
 	  </form>
-	  <div ng-hide="profile.id == path.user">
+	  <div ng-hide="profile.id == path.user || path.id == null">
 	  	<h2>You can only edit paths that you have created.</h2>
 	  </div>
 	  <div ng-hide="profile.username">
