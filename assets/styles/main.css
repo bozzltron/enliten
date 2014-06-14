@@ -49,8 +49,14 @@ footer .progress {
 }
 
 .page-step iframe{
+	display:inline-block;
+	margin:auto;
 	width:100%;
-	height:700px;
+}
+
+.type-iframe {
+	height:500px;
+	width:100%;
 }
 
 @media (min-width: 1200px) {
@@ -68,6 +74,9 @@ footer .progress {
 @media (min-width: 768px) {
 	.container {
 		width: auto;
+	}
+	.type-iframe {
+		height:700px;
 	}
 }	
 

@@ -2,16 +2,16 @@
 	<div ng-controller="PathController">
 
 
-		<span ng-show="profile.username"> | <a href="#/login">Sign in to track your progress</a> </span>
+		<span ng-hide="profile.username"> | <a href="#/login">Sign in to track your progress</a> </span>
 	    <h1>{{path.name}} <i ng-show="status.isCompleted" class="fa fa-check-square-o"></i></h1>
 	    <p>{{path.description}}</p>
 
-	    <a ng-show="profile.id == path.user" class="btn btn-warning" href="/#/editor/summary/{{path.id}}">Edit</a>
-		<a ng-hide="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">Get started</a>
-	    <a ng-show="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">You already completed this path.  Go again?</a>
-
-	    <br />
-	    <a ng-show="status.step && !status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/{{status.step}}">Continue where you left off</a>
+	    <div class="btn-group">
+		    <a ng-show="profile.id == path.user" class="btn btn-warning" href="/#/editor/summary/{{path.id}}">Edit</a>
+			<a ng-hide="status.isCompleted" class="btn btn-success" href="/#/path/{{path.id}}/step/1">Get started</a>
+		    <a ng-show="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">You already completed this path.  Go again?</a>
+	   		<a ng-show="status.step && !status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/{{status.step}}">Continue where you left off</a>
+	    </div>
 
 		<h3 ng-show="path.steps">{{path.steps.length}} steps </h3>
 		<table class="table table-striped">

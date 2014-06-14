@@ -5,6 +5,7 @@ require('../bower_components/angular-route/angular-route');
 require('../bower_components/angular-resource/angular-resource');
 require('../bower_components/angular-cookies/angular-cookies');
 require('../bower_components/angular-flash/dist/angular-flash');
+require('../bower_components/angular-animate/angular-animate');
 
 require("./services/path");
 require("./services/status");
@@ -22,7 +23,8 @@ angular.module('enlighten', [
   'enlighten.controllers.nav',
   'enlighten.controllers.editor',
   'angular-flash.service', 
-  'angular-flash.flash-alert-directive'
+  'angular-flash.flash-alert-directive',
+  'ngAnimate'
 	]).config(['$routeProvider', function($routeProvider) {
 
     // Specify routes to load our partials upon the given URLs
