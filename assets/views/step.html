@@ -8,8 +8,9 @@
 	    			{{step.description}}
 	    		</p>
 	    	</div>
-	    	<div class="col-md-8">
-	    		<iframe ng-show="step.type != 'Embed code'" src="{{step.url}}"></iframe>
+	    	<div class="col-md-8 text-center">
+	    		<iframe width="99.6%" height="100%" ng-show="step.type == 'Url'" src="{{step.url}}" class="img-thumbnail"></iframe>
+	    		<a href="{{step.url}}"><img ng-show="step.type == 'Photo'" ng-src="{{step.url}}" class="img-thumbnail img-responsive"></img></a>
 	    		<div ng-show="step.type == 'Embed code'" ng-bind-html="step.url" ></div>
 	    	</div>
 	    </div>
