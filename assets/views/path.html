@@ -1,8 +1,6 @@
 
 	<div ng-controller="PathController">
 
-
-		<span ng-hide="profile.username"> | <a href="#/login">Sign in to track your progress</a> </span>
 	    <h1>{{path.name}} <i ng-show="status.isCompleted" class="fa fa-check-square-o"></i></h1>
 	    <p>{{path.description}}</p>
 
@@ -13,14 +11,32 @@
 	   		<a ng-show="status.step && !status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/{{status.step}}">Continue where you left off</a>
 	    </div>
 
-		<h3 ng-show="path.steps">{{path.steps.length}} steps </h3>
-		<table class="table table-striped">
-			<tr ng-repeat="step in path.steps">
-				<td>{{$index+1}}</td>
-				<td>{{step.name}}</td>
-				<td>{{step.description}}</td>
-			</tr>
-		</table>
+	    <hr />
+
+		<div class="panel-group" ng-show="path.steps">
+		  <div class="panel panel-default">
+		    <div class="panel-heading">
+		      <h4 class="panel-title">
+		        <a data-toggle="collapse" data-target="#steps">
+		          {{path.steps.length}} steps
+		        </a>
+		      </h4>
+		    </div>
+		    <div class="panel-collapse collapse" id="steps">
+		      <div  class="panel-body">
+		        <table class="table table-striped">
+					<tr ng-repeat="step in path.steps">
+						<td>{{$index+1}}</td>
+						<td>{{step.name}}</td>
+						<td>{{step.description}}</td>
+					</tr>
+				</table>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<span ng-hide="profile.username"><a href="#/login">Sign in to track your progress</a> </span>
 
 		<h2>Share your thoughts</h2>
 	    <div ng-include="" src="'/views/disqus.html'"></div>

@@ -26464,8 +26464,6 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 
 	$scope.paths = Path.query(function(paths){
 
-		console.log(paths);
-
 		for( var i = 0; i < $scope.paths.length; i++ ) {
 
 			$scope.thumbnail = "";
@@ -26481,8 +26479,6 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 			}
 
 		}
-
-		console.log($scope.paths);
 
 	});
 
@@ -26500,6 +26496,8 @@ module.controller('PathController', function ($scope, $resource, $routeParams, P
 		if($routeParams.completed == "completed") {
 			flash.success = "Congratulations!  You completed " + $scope.path.name;
 		}
+
+		//$('.panel-title').click(function(){ $(".panel-body").collapse('toggle'); });
 
 	});
 
