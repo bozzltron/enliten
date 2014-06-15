@@ -77,6 +77,23 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 
 	};
 
+	this.deleteStep = function() {
+
+		var answer = confirm(" Are you sure you want to delete this step ?");
+		if (answer){
+			// Remove this step
+			$scope.path.steps.splice($scope.index - 1, 1);
+
+			// Persist to the server
+			Path.update($scope.path, function(res){
+
+				window.location.hash = '#/editor/summary/' + $scope.path.id;
+				flash.success = "The step has been remove.";
+
+			});
+		}
+	};
+
 });
 
 module.controller('EditorSummaryController', function ($scope, Profile, Path, $routeParams, flash) {

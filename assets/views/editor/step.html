@@ -36,10 +36,11 @@
 				</div>
 			</div>
   		  	
-			<div class="form-group">
+			<div class="button-group">
 				<a href="#/editor/info/{{path.id}}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit name and description</a> 
 				<button class="btn btn-success" type="submit"><i class="fa fa-plus-circle"></i> Save and add another step</button>  
-				<a class="btn btn-danger" href="#/editor/summary/{{path.id}}"><i class="fa fa-flag-checkered"></i> Save and be done</a>
+				<a class="btn btn-danger" ng-click="editCtrl.deleteStep()"><i class="fa fa-plus-circle"></i> Delete step</a>  
+				<a class="btn btn-primary" href="#/editor/summary/{{path.id}}"><i class="fa fa-flag-checkered"></i> View Summary</a>
 			</div>
 
 		</form>
