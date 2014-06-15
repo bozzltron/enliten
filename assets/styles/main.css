@@ -59,6 +59,16 @@ footer .progress {
 	width:100%;
 }
 
+.complete-icon {
+	position:absolute;
+	top:10px;
+	right:10px;
+	font-size:30px;
+	color:#a567d6;
+	background-color:#fff;
+ 	padding:2px 5px 1px 5px;	
+}
+
 @media (min-width: 1200px) {
 	.container {
 		width: auto;
@@ -78,7 +88,15 @@ footer .progress {
 	.type-iframe {
 		height:700px;
 	}
+
 }	
+
+@media (min-width: 550px) {
+	.complete-icon {
+		background-color:transparent;
+ 		padding:0;
+	}
+}
 
 .fa-arrow-left {
   position:relative;
@@ -126,4 +144,14 @@ footer .progress {
 	border-bottom:#eee 2px solid;
 	max-height:500px;
 	overflow: scroll;	
+}
+
+.first-image{
+	max-height:150px;
+	overflow:hidden;
+	display:block;
+}
+
+td {
+	position:relative;
 }

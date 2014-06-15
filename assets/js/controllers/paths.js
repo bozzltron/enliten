@@ -8,7 +8,29 @@ var module = angular.module('enlighten.controllers', [
 
 module.controller('PathsController', function ($scope, $resource, $routeParams, Path, Status, Profile) {
 
-	$scope.paths = Path.query();
+	$scope.paths = Path.query(function(paths){
+
+		console.log(paths);
+
+		for( var i = 0; i < $scope.paths.length; i++ ) {
+
+			$scope.thumbnail = "";
+			var j = 0;
+			while( $scope.paths[i].firstImage == "" || j < $scope.paths[i].steps.length ) {
+				if( $scope.paths[i].steps[j].type == "Photo") {
+					$scope.paths[i].firstImage =  $scope.paths[i].steps[j].url;
+				} else if( $scope.paths[i].steps[j].type == "Url" ) {
+					$scope.paths[i].firstImage = "http://api.imago.in/get_image?website=" + $scope.paths[i].steps[j].url + "&width=500&height=350&format=image";
+				}
+
+				j++;
+			}
+
+		}
+
+		console.log($scope.paths);
+
+	});
 
 });
 
