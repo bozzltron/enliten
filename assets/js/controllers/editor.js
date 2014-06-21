@@ -1,4 +1,9 @@
-var module = angular.module('enlighten.controllers.editor', ['enlighten.services.profile', 'enlighten.services.path', 'ngRoute']);
+var module = angular.module('enlighten.controllers.editor', [
+	'enlighten.services.profile', 
+	'enlighten.services.path', 
+	'ngRoute', 
+	'ui'
+	]);
 
 module.controller('EditorController', function ($scope, Profile, Path, $routeParams, flash) {
 
@@ -103,7 +108,28 @@ module.controller('EditorSummaryController', function ($scope, Profile, Path, $r
 	if($routeParams.path) {
 		$scope.path = Path.get({id:$routeParams.path});
 	}
+
+	this.save = function(path) {
+
+		Path.update(path, function(res){
+			flash.success = "Your path has been update.";
+		});
+
+	};
 	
+	this.delete = function(path) {
+
+		var answer = confirm("Are you sure you want to delete this path?");
+
+		if(answer) {
+			Path.delete(path, function(res){
+				flash.success = "Your path has been deleted.";
+				window.location.hash = '#/profile/';
+			});
+		}
+
+	};
+
 	// Handle the initial creation of the path
 	this.submit = function(path) {
 
