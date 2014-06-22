@@ -7,7 +7,7 @@
 	    <div class="btn-group">
 		    <a ng-show="profile.id == path.user" class="btn btn-warning" href="/#/editor/summary/{{path.id}}">Edit</a>
 			<a ng-hide="status.isCompleted" class="btn btn-success" href="/#/path/{{path.id}}/step/1">Get started</a>
-		    <a ng-show="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">You already completed this path.  Go again?</a>
+		    <a ng-show="status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/1">Go again?</a>
 	   		<a ng-show="status.step && !status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/{{status.step}}">Continue where you left off</a>
 	    </div>
 

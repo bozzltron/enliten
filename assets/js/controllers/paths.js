@@ -8,13 +8,15 @@ var module = angular.module('enlighten.controllers', [
 
 module.controller('PathsController', function ($scope, $resource, $routeParams, Path, Status, Profile) {
 
+	$("body").css({"background": ""});
+
 	$scope.paths = Path.query(function(paths){
 
 		for( var i = 0; i < $scope.paths.length; i++ ) {
 
 			$scope.thumbnail = "";
 			var j = 0;
-			while( $scope.paths[i].firstImage == "" || j < $scope.paths[i].steps.length ) {
+			while( $scope.paths[i].firstImage == null && j < $scope.paths[i].steps.length ) {
 				if( $scope.paths[i].steps[j].type == "Photo") {
 					$scope.paths[i].firstImage =  $scope.paths[i].steps[j].url;
 				} else if( $scope.paths[i].steps[j].type == "Url" ) {
@@ -31,6 +33,8 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 });
 
 module.controller('PathController', function ($scope, $resource, $routeParams, Path, Status, Profile, $location, flash) {
+
+	$("body").css({"background": ""});
 
 	$scope.profile = Profile.get();
 
@@ -57,6 +61,9 @@ module.controller('StepController', function ($scope, $resource, $routeParams, P
 		$scope.index = parseInt($routeParams.step, 10);
 		$scope.step = path.steps[ $scope.index - 1 ];
 		console.log($scope.step);
+
+		// Set background
+		$("body").css("background-image", "url('" + $scope.path.background + "')");
 
 		// Lookup the users current status
 		var status = Status.userStatusByPath({pathId:path.id}, function(){
