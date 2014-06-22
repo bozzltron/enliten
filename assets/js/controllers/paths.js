@@ -16,7 +16,7 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 
 			$scope.thumbnail = "";
 			var j = 0;
-			while( $scope.paths[i].firstImage == null && j < $scope.paths[i].steps.length ) {
+			while( $scope.paths[i].firstImage == null || j < $scope.paths[i].steps.length ) {
 				if( $scope.paths[i].steps[j].type == "Photo") {
 					$scope.paths[i].firstImage =  $scope.paths[i].steps[j].url;
 				} else if( $scope.paths[i].steps[j].type == "Url" ) {
