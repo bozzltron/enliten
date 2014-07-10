@@ -12,7 +12,8 @@
     "bcrypt": "^0.7.8",
     "sails-mongo": "^0.9.8",
     "mongodb": "^1.4.5",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "url-to-screenshot": "^0.4.1"
   },
   "scripts": {
     "start": "node app.js",
