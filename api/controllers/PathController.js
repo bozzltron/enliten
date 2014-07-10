@@ -134,11 +134,7 @@ module.exports = {
           
           if (err) res.json({status:"failure", message: err});
         
-          //res.type("image/png");
-          res.set({
-          	'Expires': new Date(Date.now() + 345600000).toUTCString(),
-          	'Content-Type': 'image/png'
-          });
+          res.type("image/png");
           res.send(img);
         	
       });
