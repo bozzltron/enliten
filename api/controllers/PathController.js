@@ -133,8 +133,7 @@ module.exports = {
         .capture(function(err, img) {
           
           if (err) res.json({status:"failure", message: err});
-        
-          res.type("image/png");
+       
           res.send(img);
         	
       });
