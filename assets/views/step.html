@@ -8,11 +8,11 @@
 	    		</p>
 	    	</div>
 	    	<div class="col-md-8 text-center">
-	    		<a href="{{step.url}}"><img ng-show="step.type == 'Photo'" ng-src="{{step.url}}" class="img-thumbnail img-responsive" /></a>
-	    		<div ng-show="step.type == 'Embed code'" ng-bind-html="step.url" clas="img-thumbnail" ></div>
+	    		<img ng-if="step.type == 'Photo'" ng-src="{{step.url}}" class="img-thumbnail img-responsive" />
+	    		<div ng-if="step.type == 'Embed code'" ng-bind-html="step.url" clas="img-thumbnail" ></div>
 	    		<!-- <iframe width="99.6%" ng-show="step.type == 'Url'" src="{{step.url}}" class="img-thumbnail type-iframe"></iframe> -->
-	    		<a ng-show="step.type == 'Url'" ng-href="{{step.url}}">
-					<img ng-show="step.type == 'Url'" class="img-thumbnail img-responsive" ng-src="/path/preview/?url={{step.url}}"/>
+	    		<a ng-if="step.type == 'Url'" ng-href="{{step.url}}">
+					<img ng-if="step.type == 'Url'" class="img-thumbnail img-responsive" ng-src="/path/preview/?url={{step.url}}"/>
 				</a>
 	    		<!-- <a href="{{step.url}}" ng-show="step.type == 'Url'"  class="btn btn-primary">Open in new tab</a> -->
 	    	</div>

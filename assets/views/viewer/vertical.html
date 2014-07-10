@@ -21,18 +21,18 @@
 			</div>	
 			<div class="col-sm-8">	
 				
-				<a ng-show="step.type == 'Url'" ng-href="{{step.url}}">
-					<img ng-show="step.type == 'Url'" class="img-thumbnail img-responsive" ng-src="/path/preview/?url={{step.url}}"/>
+				<a ng-if="step.type == 'Url'" ng-href="{{step.url}}">
+					<img ng-if="step.type == 'Url'" class="img-thumbnail img-responsive" ng-src="/path/preview/?url={{step.url}}"/>
 				</a>
 				
-				<div ng-show="step.type == 'Embed code'" ng-bind-html="step.url" ></div>
-				<img ng-show="step.type == 'Photo'" class="img-thumbnail img-responsive" ng-src="{{step.url}}" />
+				<div ng-if="step.type == 'Embed code'" ng-bind-html="step.url" ></div>
+				<img ng-if="step.type == 'Photo'" class="img-thumbnail img-responsive" ng-src="{{step.url}}" />
 			 	<hr />
 
 			</div>
 		</div>
 
-		<span ng-show="profile.username"><a href="#/login">Sign in to track your progress</a> </span>
+		<span ng-if="profile.username"><a href="#/login">Sign in to track your progress</a> </span>
 
 		<h2>Share your thoughts</h2>
 	    <div ng-include="" src="'/views/disqus.html'"></div>
