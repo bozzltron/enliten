@@ -133,12 +133,13 @@ module.exports = {
         .capture(function(err, img) {
           
           if (err) res.json({status:"failure", message: err});
-
-          var prefix = 'data:image/png;base64,';
-          var data = img.toString('base64');
-          var datauri = prefix + data;
         
-          res.json({ status:"ok", datauri : datauri});
+          //res.type("image/png");
+          res.set({
+          	'Expires': new Date(Date.now() + 345600000).toUTCString(),
+          	'Content-Type': 'image/png'
+          });
+          res.send(img);
         	
       });
 		
