@@ -8,9 +8,12 @@
 	    		</p>
 	    	</div>
 	    	<div class="col-md-8 text-center">
-	    		<a href="{{step.url}}"><img ng-show="step.type == 'Photo'" ng-src="{{step.url}}" class="img-thumbnail img-responsive"></img></a>
+	    		<a href="{{step.url}}"><img ng-show="step.type == 'Photo'" ng-src="{{step.url}}" class="img-thumbnail img-responsive" /></a>
 	    		<div ng-show="step.type == 'Embed code'" ng-bind-html="step.url" clas="img-thumbnail" ></div>
-	    		<iframe width="99.6%" ng-show="step.type == 'Url'" src="{{step.url}}" class="img-thumbnail type-iframe"></iframe>
+	    		<!-- <iframe width="99.6%" ng-show="step.type == 'Url'" src="{{step.url}}" class="img-thumbnail type-iframe"></iframe> -->
+	    		<a ng-show="step.type == 'Url'" ng-href="{{step.url}}">
+					<img ng-show="step.type == 'Url'" class="img-thumbnail img-responsive" ng-src="http://api.page2images.com/directlink?p2i_url={{step.url}}&p2i_device=6&p2i_screen=1024x768&p2i_size=1024x0&p2i_fullpage=1&p2i_key={{page2ImageApiKey}}"/>
+				</a>
 	    		<a href="{{step.url}}" ng-show="step.type == 'Url'"  class="btn btn-primary">Open in new tab</a>
 	    	</div>
 	    </div>

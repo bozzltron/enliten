@@ -20,7 +20,7 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 				if( $scope.paths[i].steps[j].type == "Photo") {
 					$scope.paths[i].firstImage =  $scope.paths[i].steps[j].url;
 				} else if( $scope.paths[i].steps[j].type == "Url" ) {
-					$scope.paths[i].firstImage = "https://imago.herokuapp.com/get_image?website=" + $scope.paths[i].steps[j].url + "&width=500&height=350&format=image";
+					$scope.paths[i].firstImage = "https://imago.herokuapp.com/get_image?website=" + $scope.paths[i].steps[j].url + "&width=150&height=100&format=image";
 				}
 
 				j++;
@@ -56,6 +56,8 @@ module.controller('PathController', function ($scope, $resource, $routeParams, P
 module.controller('VertPathController', function ($scope, $resource, $routeParams, Path, Status, Profile, $location, flash) {
 
 	$scope.profile = Profile.get();
+
+	$scope.page2ImageApiKey = window.location.href.indexOf("localhost") != -1 ? "10a18c9aa1e1736e" : "d24fc87b01725375";
 
 	$scope.currentStep = 0;
 
@@ -118,10 +120,16 @@ module.controller('StepController', function ($scope, $resource, $routeParams, P
 
 	var path = Path.get({id:$routeParams.id}, function(){
 
+		$scope.page2ImageApiKey = window.location.href.indexOf("localhost") != -1 ? "10a18c9aa1e1736e" : "d24fc87b01725375";
 		$scope.path = path;
 		$scope.index = parseInt($routeParams.step, 10);
 		$scope.step = path.steps[ $scope.index - 1 ];
 		console.log($scope.step);
+
+		$(document).ready(function(){
+			var p2i = new page2images();
+			p2i.thumbnail('p2image');
+		});
 
 		// Set background
 		$("body").css("background-image", "url('" + $scope.path.background + "')");

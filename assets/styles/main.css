@@ -107,7 +107,7 @@ footer .progress {
 	
 }
 
-.vertical .step {
+.vertical .step, .vertical-intro{
 	min-height:120vh;
 }
 
@@ -127,9 +127,13 @@ footer .progress {
 }
 
 .vertical-step-menu {
-	position: fixed;
+
 }
 
+.vertical-intro-icon  {
+	font-size: 20em;
+    margin:auto;
+}
 
 .first-image{
 	max-height:150px;
