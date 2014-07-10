@@ -26197,9 +26197,11 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 		$scope.page2ImageApiKey = window.location.href.indexOf("localhost") != -1 ? "10a18c9aa1e1736e" : "d24fc87b01725375";
 
 		if($scope.step.type == "Photo") {
-			$("#preview").html('<img class="img-thumbnail img-responsive" src="' + $scope.step.url + '" />');
+			$("#preview").html('<img src="' + $scope.step.url + '" />');
 		} else if ($scope.step.type == "Url") {
-			$("#preview").html('<img id="p2image" class="img-thumbnail img-responsive" src="/path/preview/?url='+$scope.step.url+'" />');
+			$("#preview").html('<img id="p2image" class="img-thumbnail img-responsive" src="http://api.page2images.com/directlink?p2i_url='+$scope.step.url+'&p2i_device=6&p2i_screen=1024x768&p2i_size=1024x0&p2i_fullpage=1&p2i_imageformat=png&p2i_key='+$scope.page2ImageApiKey+'" />');
+			var p2i = new page2images();
+			p2i.thumbnail('p2image');
 		} else if ($scope.step.type == "Embed code") {
 			$("#preview").html($scope.step.url);
 		}
@@ -26442,7 +26444,7 @@ module.controller('StepController', function ($scope, $resource, $routeParams, P
 		});
 
 		// Set background
-		$("body").css("background", "url('" + $scope.path.background + "') center no-repeat");
+		$("body").css("background-image", "url('" + $scope.path.background + "')");
 
 		// Lookup the users current status
 		var status = Status.userStatusByPath({pathId:path.id}, function(){

@@ -132,7 +132,7 @@ module.controller('StepController', function ($scope, $resource, $routeParams, P
 		});
 
 		// Set background
-		$("body").css("background", "url('" + $scope.path.background + "') center no-repeat");
+		$("body").css("background-image", "url('" + $scope.path.background + "')");
 
 		// Lookup the users current status
 		var status = Status.userStatusByPath({pathId:path.id}, function(){

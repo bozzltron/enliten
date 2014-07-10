@@ -133,8 +133,13 @@ module.exports = {
         .capture(function(err, img) {
           
           if (err) res.json({status:"failure", message: err});
-       
-          res.send(img);
+
+
+          var prefix = 'data:image/png;base64,';
+          var data = img.toString('base64');
+          var datauri = prefix + data;
+        
+          res.json({ status:"ok", datauri : datauri});
         	
       });
 		
