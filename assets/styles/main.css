@@ -25,8 +25,9 @@ footer .progress {
 	text-align: center;
 }
 
-.alert-message {
+.alert {
 	margin:0;
+	position: fixed;
 }
 
 .navbar-collapse button {
@@ -39,6 +40,14 @@ footer .progress {
  width:50px;
  margin:0 0 0 20px;
  float:right;
+}
+
+.page-home h3{
+	margin:10px 0;
+}
+
+.page-home .well {
+	margin:0;
 }
 
 .editor-step iframe{
@@ -69,35 +78,6 @@ footer .progress {
  	padding:2px 5px 1px 5px;	
 }
 
-@media (min-width: 1200px) {
-	.container {
-		
-	}
-}
-
-@media (min-width: 992px) {
-	.container {
-		
-	}
-}
-
-@media (min-width: 768px) {
-	.container {
-
-	}
-	.type-iframe {
-		height:700px;
-	}
-
-}	
-
-@media (min-width: 550px) {
-	.complete-icon {
-		background-color:transparent;
- 		padding:0;
-	}
-}
-
 .fa-arrow-left {
   position:relative;
   left:10px;
@@ -123,12 +103,12 @@ footer .progress {
 }
 
 .vertical {
-	text-align:center;
-	font-size:3em;
+	
+	
 }
 
 .vertical .step {
-	margin:300px 0;
+	min-height:120vh;
 }
 
 .vertical iframe {
@@ -145,6 +125,11 @@ footer .progress {
 	max-height:500px;
 	overflow: scroll;	
 }
+
+.vertical-step-menu {
+	position: fixed;
+}
+
 
 .first-image{
 	max-height:150px;
@@ -192,6 +177,40 @@ td {
 
 }
 
+@media (min-width: 1200px) {
+	.container {
+		
+	}
+}
 
+@media (min-width: 992px) {
+	.container {
+		
+	}
+}
+
+@media (min-width: 768px) {
+	.container {
+
+	}
+	.type-iframe {
+		height:700px;
+	}
+
+}	
+
+@media (min-width: 550px) {
+	.complete-icon {
+		background-color:transparent;
+ 		padding:0;
+	}
+
+}
+
+@media (max-width: 768px) {
+	.vertical-step-menu {
+		position: relative;
+	}
+}
 
 

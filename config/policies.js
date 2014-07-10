@@ -24,6 +24,8 @@ module.exports.policies = {
   	
   	my: 'isAuthenticated',
 
+  	preview: 'isAuthenticated',
+
   	findAll: true,
 
   	find: true,

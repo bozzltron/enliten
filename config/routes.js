@@ -79,6 +79,11 @@ module.exports.routes = {
   'get /path/my': {
     controller: 'path',
     action: 'my'
+  },
+
+  'get /path/preview': {
+    controller: 'path',
+    action: 'preview'
   }
 
   /*

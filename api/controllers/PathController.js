@@ -111,7 +111,7 @@ module.exports = {
 			Path.find({user:req.session.user}).done(function(err, paths) {
 
 				// we now have a model with instance methods attached
-				if(err) res.json({status:"ok", message: err});
+				if(err) res.json({status:"failure", message: err});
 
 				res.json(paths);
 
@@ -121,6 +121,27 @@ module.exports = {
 			res.json([]);
 		}
 
+	},
+
+	preview: function (req, res) {
+
+      var screenshot = require('url-to-screenshot');
+   
+      screenshot(req.query.url)
+        .width(800)
+        .height(600)
+        .capture(function(err, img) {
+          
+          if (err) res.json({status:"failure", message: err});
+
+          var prefix = 'data:image/png;base64,';
+          var data = img.toString('base64');
+          var datauri = prefix + data;
+        
+          res.json({ status:"ok", datauri : datauri});
+        	
+      });
+		
 	},
 
   /**

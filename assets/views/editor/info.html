@@ -11,7 +11,12 @@
 	  		<label>Description</label>
 	  		<textarea class="form-control" required="" ng-model="path.description"></textarea>
 	  		<p>Give a good idea of what someones going to get out of this.</p>
-	  	</div>	  	
+	  	</div>	
+	  	<div class="form-group">
+	  		<label>Background Image Url</label>
+	  		<input class="form-control" ng-model="path.background" />
+	  		<p>Use a background image to draw your audience in, set the mood, and be visually appealing.</p>
+	  	</div>		  	  	
 	  	<div class="form-group">
 	  		<input class="btn btn-warning" type="submit" value="Save" />  
 	  		<button ng-hide="path.id" class="btn btn-default" type="submit">Cancel</button>

@@ -20,7 +20,7 @@ module.controller('PathsController', function ($scope, $resource, $routeParams, 
 				if( $scope.paths[i].steps[j].type == "Photo") {
 					$scope.paths[i].firstImage =  $scope.paths[i].steps[j].url;
 				} else if( $scope.paths[i].steps[j].type == "Url" ) {
-					$scope.paths[i].firstImage = "http://api.imago.in/get_image?website=" + $scope.paths[i].steps[j].url + "&width=500&height=350&format=image";
+					$scope.paths[i].firstImage = "https://imago.herokuapp.com/get_image?website=" + $scope.paths[i].steps[j].url + "&width=500&height=350&format=image";
 				}
 
 				j++;
@@ -50,6 +50,67 @@ module.controller('PathController', function ($scope, $resource, $routeParams, P
 		//$('.panel-title').click(function(){ $(".panel-body").collapse('toggle'); });
 
 	});
+
+});
+
+module.controller('VertPathController', function ($scope, $resource, $routeParams, Path, Status, Profile, $location, flash) {
+
+	$scope.profile = Profile.get();
+
+	$scope.currentStep = 0;
+
+	$scope.scroll = function(){
+		
+		if($scope.nextStep == null) { 
+			$scope.nextStepIndex = 0;
+			$scope.steps = $(".step");
+			$scope.nextStep = $scope.steps[$scope.nextStepIndex];
+			$scope.updating = false;
+			$scope.nextTop = $($scope.nextStep).offset().top;
+		}
+
+		if($scope.nextStep){
+
+			if($(window).scrollTop() >= $scope.nextTop) {
+				
+				if(!$scope.updating) {	
+					$scope.updating = true;
+
+					$scope.nextStepIndex++;
+					$scope.currentStep = $scope.nextStepIndex;
+					console.log("change to step" + $scope.nextStepIndex);
+					$scope.nextStep = $scope.steps.length == $scope.nextStepIndex ? false : $scope.steps[$scope.nextStepIndex];
+					$scope.nextTop = $scope.nextStep != false ? $($scope.nextStep).offset().top : 0;
+
+					$scope.updating = false;
+				}
+
+			}
+
+		} 
+
+	};
+
+	$scope.ready = function(){
+		$(window).scroll($.proxy($scope.scroll, $scope));
+	};
+
+	$scope.getPath = function(){
+
+		$scope.path = path;
+	
+		if($scope.profile.username) {
+			$scope.status = Status.userStatusByPath({pathId:path.id});
+		}
+
+		// Smart scrolling
+		if($scope.path.steps.length > 1) {
+			$(document).ready($.proxy($scope.ready, $scope));
+		}
+
+	};
+
+	var path = Path.get($routeParams, $.proxy($scope.getPath, $scope));
 
 });
 
