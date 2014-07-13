@@ -62,7 +62,7 @@ module.controller('VertPathController', function ($scope, $resource, $routeParam
 	$scope.page2ImageSize = $(window).width() <= 550 ? "300x300" : "1024x768";
 	$scope.currentStep = 0;
 
-	$scope.scroll = function(){
+	this.scroll = function(){
 		
 		if($scope.nextStep == null) { 
 			$scope.nextStepIndex = 0;
@@ -94,8 +94,8 @@ module.controller('VertPathController', function ($scope, $resource, $routeParam
 
 	};
 
-	$scope.ready = function(){
-		$(window).scroll($.proxy($scope.scroll, $scope));
+	this.ready = function(){
+		$(window).scroll($.proxy(this.scroll, this));
 	};
 
 	this.getPath = function(){
