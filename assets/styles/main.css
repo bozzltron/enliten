@@ -107,8 +107,12 @@ footer .progress {
 	
 }
 
-.vertical .step, .vertical-intro{
-	min-height:120vh;
+.vertical-intro{
+	margin-bottom:100px;
+}
+
+.vertical .step {
+	margin-bottom:100px;
 }
 
 .vertical iframe {
