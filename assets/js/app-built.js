@@ -26410,7 +26410,7 @@ module.controller('VertPathController', function ($scope, $resource, $routeParam
 		$(window).scroll($.proxy($scope.scroll, $scope));
 	};
 
-	$scope.getPath = function(){
+	this.getPath = function(){
 
 		$scope.path = path;
 	
@@ -26425,7 +26425,7 @@ module.controller('VertPathController', function ($scope, $resource, $routeParam
 
 	};
 
-	var path = Path.get($routeParams, $.proxy($scope.getPath, $scope));
+	var path = Path.get($routeParams, $.proxy(this.getPath, this));
 
 });
 
