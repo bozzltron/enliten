@@ -107,9 +107,9 @@ module.controller('VertPathController', function ($scope, $resource, $routeParam
 		}
 
 		// Smart scrolling
-		if($scope.path.steps.length > 1) {
-			$(document).ready($.proxy($scope.ready, $scope));
-		}
+		//if($scope.path.steps.length > 1) {
+		//	$(document).ready($.proxy($scope.ready, $scope));
+		//}
 
 	};
 
