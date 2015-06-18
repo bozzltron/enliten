@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
  * @license AngularJS v1.2.16
  * (c) 2010-2014 Google, Inc. http://angularjs.org
@@ -26194,16 +26194,18 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 
 	this.preview = function(url){
 
-		$scope.page2ImageApiKey = window.location.href.indexOf("localhost") != -1 ? "10a18c9aa1e1736e" : "d24fc87b01725375";
 		
 		if($scope.step.type == "Photo") {
 			$("#preview").html('<img src="' + $scope.step.url + '" />');
+			$scope.step.datauri = null;
 		} else if ($scope.step.type == "Url") {
-			$("#preview").html('<img id="p2image" class="img-thumbnail img-responsive" src="http://api.page2images.com/directlink?p2i_url='+$scope.step.url+'&p2i_device=6&p2i_screen=1024x768&p2i_size=1024x768&p2i_imageformat=png&p2i_key='+$scope.page2ImageApiKey+'" />');
-			var p2i = new page2images();
-			p2i.thumbnail('p2image');
+			$.get("/path/preview?url=" + $scope.step.url, function(datauri){
+				$scope.step.datauri = datauri;
+				$("#preview").html('<img class="img-thumbnail img-responsive" src="' + datauri + '" />');
+			});
 		} else if ($scope.step.type == "Embed code") {
 			$("#preview").html($scope.step.url);
+			$scope.step.datauri = null;
 		}
 
 	};
@@ -26639,4 +26641,4 @@ angular.module('enlighten.services.status', ['ngResource'])
     
     });
 
-},{}]},{},[7])
+},{}]},{},[7]);

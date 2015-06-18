@@ -22,7 +22,7 @@ module.exports = {
 	login: function (req, res) {
 	    var bcrypt = require('bcrypt');
 
-	    User.findOne({username: req.body.username}).done(function (err, user) {
+	    User.findOne({username: req.body.username}).exec(function (err, user) {
 	    	console.log("login user", user);
 	      if (err) res.json({ status:"failure", message: 'DB error' }, 500);
 
@@ -51,14 +51,14 @@ module.exports = {
 
 		if(req.body.email) {
 
-		    User.findOneByEmail(req.body.email).done(function (err, user) {
+		    User.findOneByEmail(req.body.email).exec(function (err, user) {
 		      if (err) res.json({ error: 'DB error' }, 500);
 
 		      if (user) {
 		      	res.json({status:"failure", message:"This email is already in use"});
 		      } else {
 		      	console.log(req.body);
-		      	User.create(req.body).done(function(err, user) {
+		      	User.create(req.body).exec(function(err, user) {
 
 				  // Error handling
 				  if (err) {
@@ -92,7 +92,7 @@ module.exports = {
 		var md5 = crypto.createHash("md5");
 		
 		if(req.session.user) {
-		    User.findOne(req.session.user).done(function (err, user) {
+		    User.findOne(req.session.user).exec(function (err, user) {
 		      if (err) res.json({ status:"failure", message: 'DB error' }, 500);
 
 		      if (user) {

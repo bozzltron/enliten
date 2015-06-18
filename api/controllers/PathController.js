@@ -15,7 +15,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
-var ObjectId = require('mongodb').ObjectID;
+
 var _ = require('underscore');
 
 module.exports = {
@@ -29,17 +29,17 @@ module.exports = {
 
 		} else {
 	
-			Status.find({user: req.session.user, isCompleted:true}).done(function(err, completed) {
+			Status.find({user: req.session.user, isCompleted:true}).exec(function(err, completed) {
 
 				if(err) res.json({status:"ok", message: err});
 
 				var paths = [];
 				completed.forEach(function(path){
-					paths.push( new ObjectId(path.path) );
+					paths.push( path.id );
 				});
 		
 				console.log(paths);
-				Path.find({ _id: paths}).done(function(err, status) {
+				Path.find({ id: paths}).exec(function(err, status) {
 
 				  // we now have a model with instance methods attached
 				  if(err) res.json({status:"ok", message: err});
@@ -58,7 +58,7 @@ module.exports = {
 
 		if(!req.session.user) {
 
-			Path.find({published:true}).done(function(err, paths) {
+			Path.find({published:true}).exec(function(err, paths) {
 
 				// we now have a model with instance methods attached
 				if(err) res.json({status:"ok", message: err});
@@ -69,12 +69,12 @@ module.exports = {
 
 		} else {
 	
-			Path.find({published:true}).done(function(err, paths) {
+			Path.find({published:true}).exec(function(err, paths) {
 
 			  	// we now have a model with instance methods attached
 			 	if(err) res.json({status:"ok", message: err});
 
-				Status.find({user: req.session.user, isCompleted:true}).done(function(err, completed) {
+				Status.find({user: req.session.user, isCompleted:true}).exec(function(err, completed) {
 
 					if(err) res.json({status:"ok", message: err});
 
@@ -108,7 +108,7 @@ module.exports = {
 
 		if(req.session.user) {
 
-			Path.find({user:req.session.user}).done(function(err, paths) {
+			Path.find({user:req.session.user}).exec(function(err, paths) {
 
 				// we now have a model with instance methods attached
 				if(err) res.json({status:"failure", message: err});
@@ -125,23 +125,22 @@ module.exports = {
 
 	preview: function (req, res) {
 
-      var screenshot = require('url-to-screenshot');
-   
-      screenshot(req.query.url)
-        .width(800)
-        .height(600)
-        .capture(function(err, img) {
-          
-          if (err) res.json({status:"failure", message: err});
+		var https = require("https");
+		var fullUrl = "https://screech-capture.herokuapp.com/query?height=500&width=1280&url=" + req.query.url;
+		var datauri = "";
+		https.get(fullUrl, function(getres) {
 
+		  getres.on('data', function(d) {
+		    datauri += d;
+		  });
 
-          var prefix = 'data:image/png;base64,';
-          var data = img.toString('base64');
-          var datauri = prefix + data;
-        
-          res.json({ status:"ok", datauri : datauri});
-        	
-      });
+  		  getres.on('end', function(d) {
+		    res.send(datauri);
+		  });
+
+		}).on('error', function(e) {
+		  res.send({status:"failure", message: "Got error: " + e.message});
+		});
 		
 	},
 
