@@ -17,10 +17,11 @@
 
 
 var _ = require('underscore');
+var request = require('request');
 
 module.exports = {
-    
-  
+
+
 	pathsCompleted: function (req, res) {
 
 		if(!req.session.user) {
@@ -28,7 +29,7 @@ module.exports = {
 			res.json({});
 
 		} else {
-	
+
 			Status.find({user: req.session.user, isCompleted:true}).exec(function(err, completed) {
 
 				if(err) res.json({status:"ok", message: err});
@@ -37,7 +38,7 @@ module.exports = {
 				completed.forEach(function(path){
 					paths.push( path.id );
 				});
-		
+
 				console.log(paths);
 				Path.find({ id: paths}).exec(function(err, status) {
 
@@ -51,7 +52,7 @@ module.exports = {
 			});
 
 		}
-	
+
 	},
 
 	paths: function (req, res) {
@@ -68,7 +69,7 @@ module.exports = {
 			});
 
 		} else {
-	
+
 			Path.find({published:true}).exec(function(err, paths) {
 
 			  	// we now have a model with instance methods attached
@@ -126,29 +127,37 @@ module.exports = {
 	preview: function (req, res) {
 
 		var https = require("https");
-		var fullUrl = "https://screech-capture.herokuapp.com/query?height=500&width=1280&url=" + req.query.url;
+		var fullUrl = "https://enliten-resizer.herokuapp.com/query?&url=" + req.query.url;
 		var datauri = "";
-		https.get(fullUrl, function(getres) {
 
-		  getres.on('data', function(d) {
-		    datauri += d;
-		  });
+		request({uri:fullUrl, encoding:null}, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
 
-  		  getres.on('end', function(d) {
-		    res.send(datauri);
-		  });
+                var data_uri_prefix = "data:" + response.headers["content-type"] + ";base64,";
+                //data:image/png;base64,
+                //console.log('body', body);
+                var buf = new Buffer(body, 'binary');
+                var image = buf.toString('base64');
 
-		}).on('error', function(e) {
-		  res.send({status:"failure", message: "Got error: " + e.message});
-		});
-		
+                image = data_uri_prefix + image;
+
+                //res.set('Content-Type', 'image/png');
+                res.send(image);
+
+          }
+        });
+
 	},
 
   /**
    * Overrides for the settings in `config/controllers.js`
    * (specific to PathController)
    */
-  _config: {}
+  _config: {
+      rest:true,
+	  shortcuts:true,
+	  actions:true
+  }
 
-  
+
 };

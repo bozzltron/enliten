@@ -26121,16 +26121,16 @@ angular.module('enlighten', [
 
 },{"../bower_components/angular-cookies/angular-cookies":1,"../bower_components/angular-flash/dist/angular-flash":2,"../bower_components/angular-resource/angular-resource":3,"../bower_components/angular-route/angular-route":4,"../bower_components/angular-ui/build/angular-ui":5,"../bower_components/angular/angular":6,"./controllers/editor":8,"./controllers/nav":9,"./controllers/paths":10,"./controllers/user":11,"./services/path":12,"./services/profile":13,"./services/status":14}],8:[function(require,module,exports){
 var module = angular.module('enlighten.controllers.editor', [
-	'enlighten.services.profile', 
-	'enlighten.services.path', 
-	'ngRoute', 
+	'enlighten.services.profile',
+	'enlighten.services.path',
+	'ngRoute',
 	'ui'
 	]);
 
 module.controller('EditorController', function ($scope, Profile, Path, $routeParams, flash) {
 
 	$scope.profile = Profile.get();
-	
+
 	if($routeParams.path) {
 		$scope.path = Path.get({id:$routeParams.path});
 	}
@@ -26194,11 +26194,12 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 
 	this.preview = function(url){
 
-		
+
 		if($scope.step.type == "Photo") {
 			$("#preview").html('<img src="' + $scope.step.url + '" />');
 			$scope.step.datauri = null;
 		} else if ($scope.step.type == "Url") {
+			$("#preview").html('<i class="fa fa-cog fa-spin"></i>');
 			$.get("/path/preview?url=" + $scope.step.url, function(datauri){
 				$scope.step.datauri = datauri;
 				$("#preview").html('<img class="img-thumbnail img-responsive" src="' + datauri + '" />');
@@ -26244,7 +26245,7 @@ module.controller('EditorSummaryController', function ($scope, Profile, Path, $r
 		});
 
 	};
-	
+
 	this.delete = function(path) {
 
 		var answer = confirm("Are you sure you want to delete this path?");
@@ -26266,7 +26267,7 @@ module.controller('EditorSummaryController', function ($scope, Profile, Path, $r
 		} else {
 			path.published = false;
 		}
-		
+
 		Path.update(path, function(res){
 			flash.success = "Your path has been published.";
 		});

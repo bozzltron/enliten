@@ -4,7 +4,7 @@ var frisby = require("frisby");
 var config = require("./config");
 
 // Jasmine test
-describe('user', function(){
+describe('User', function(){
 
   it('should prevent POST', function() {
 

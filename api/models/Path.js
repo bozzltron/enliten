@@ -8,28 +8,28 @@
 
 module.exports = {
 
-  attributes: {
-  	
-	  name: {
-      type: 'string',
-      unique: true,
-      required: true
-    },
-    
-    description: {
-      type: 'string',
-      required: true
-    },
+    attributes: {
 
-    url: {
-      type: 'string'	
-    },
+        name: {
+          type: 'string',
+          unique: true,
+          required: true
+        },
 
-    user: {
-      type: 'string',
-      required: true
+        description: {
+          type: 'string',
+          required: true
+        },
+
+        url: {
+          type: 'string'
+        },
+
+        user: {
+          type: 'string',
+          required: true
+        }
+
     }
-
-  }
 
 };

@@ -1,14 +1,14 @@
 var module = angular.module('enlighten.controllers.editor', [
-	'enlighten.services.profile', 
-	'enlighten.services.path', 
-	'ngRoute', 
+	'enlighten.services.profile',
+	'enlighten.services.path',
+	'ngRoute',
 	'ui'
 	]);
 
 module.controller('EditorController', function ($scope, Profile, Path, $routeParams, flash) {
 
 	$scope.profile = Profile.get();
-	
+
 	if($routeParams.path) {
 		$scope.path = Path.get({id:$routeParams.path});
 	}
@@ -72,11 +72,12 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 
 	this.preview = function(url){
 
-		
+
 		if($scope.step.type == "Photo") {
 			$("#preview").html('<img src="' + $scope.step.url + '" />');
 			$scope.step.datauri = null;
 		} else if ($scope.step.type == "Url") {
+			$("#preview").html('<i class="fa fa-cog fa-spin"></i> Capturing screenshot...');
 			$.get("/path/preview?url=" + $scope.step.url, function(datauri){
 				$scope.step.datauri = datauri;
 				$("#preview").html('<img class="img-thumbnail img-responsive" src="' + datauri + '" />');
@@ -122,7 +123,7 @@ module.controller('EditorSummaryController', function ($scope, Profile, Path, $r
 		});
 
 	};
-	
+
 	this.delete = function(path) {
 
 		var answer = confirm("Are you sure you want to delete this path?");
@@ -144,7 +145,7 @@ module.controller('EditorSummaryController', function ($scope, Profile, Path, $r
 		} else {
 			path.published = false;
 		}
-		
+
 		Path.update(path, function(res){
 			flash.success = "Your path has been published.";
 		});
