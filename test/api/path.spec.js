@@ -14,9 +14,9 @@ describe('Path', function() {
                 description: "test",
             })
             .expectStatus(403)
-            .toss()
+            .toss();
 
-    })
+    });
 
     it('should access Read(s) without session', function() {
 
@@ -24,18 +24,18 @@ describe('Path', function() {
             .get(config.server + '/path')
             .expectStatus(200)
             .afterJSON(function(data) {
-
+                console.log('data', data);
                 var id = data[0].id;
 
                 frisby.create('Read a path without session')
                     .get(config.server + '/path/' + id)
                     .expectStatus(200)
-                    .toss()
+                    .toss();
 
             })
-            .toss()
+            .toss();
 
-    })
+    });
 
     it('should prevent updates without session', function() {
 

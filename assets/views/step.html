@@ -12,11 +12,11 @@
 	    		<div ng-if="step.type == 'Embed code'" ng-bind-html="step.url" clas="img-thumbnail" ></div>
 	    		<!-- <iframe width="99.6%" ng-show="step.type == 'Url'" src="{{step.url}}" class="img-thumbnail type-iframe"></iframe> -->
 	    		<a ng-if="step.type == 'Url'" ng-href="{{step.url}}">
-					<img ng-if="step.type == 'Url'" class="img-thumbnail img-responsive" ng-src="http://api.page2images.com/directlink?p2i_url={{step.url}}&p2i_device=6&p2i_screen=1024x768&p2i_size={{page2ImageSize}}&p2i_key={{page2ImageApiKey}}"/>
+					<img ng-if="step.type == 'Url'" class="img-thumbnail img-responsive" ng-src="{{step.datauri}}"/>
 				</a>
 	    	</div>
 	    </div>
-	   
+
 	    <br />
 	  	<a ng-hide="profile" href="/#/login">Login To Track Your Progress</a>
 
@@ -30,7 +30,7 @@
 		    <div class="navbar navbar-fixed-bottom">
 		        <div class="container">
 					<div class="col-xs-1">
-						
+
 					</div>
 
 					<div class="col-xs-10">
@@ -42,7 +42,7 @@
 					</div>
 
 					<div class="col-xs-1">
-						
+
 					</div>
 		        </div>
 		    </div>

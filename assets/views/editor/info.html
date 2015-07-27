@@ -6,19 +6,14 @@
 	  		<label>Name</label>
 	  		<input class="form-control" required="" type="text" ng-model="path.name" />
 	  		<p>Help others find your path with descriptive name.</p>
-	  	</div>  	
+	  	</div>
 	  	<div class="form-group">
 	  		<label>Description</label>
 	  		<textarea class="form-control" required="" ng-model="path.description"></textarea>
 	  		<p>Give a good idea of what someones going to get out of this.</p>
-	  	</div>	
+	  	</div>			  	  	
 	  	<div class="form-group">
-	  		<label>Background Image Url</label>
-	  		<input class="form-control" ng-model="path.background" />
-	  		<p>Use a background image to draw your audience in, set the mood, and be visually appealing.</p>
-	  	</div>		  	  	
-	  	<div class="form-group">
-	  		<input class="btn btn-warning" type="submit" value="Save" />  
+	  		<input class="btn btn-warning" type="submit" value="Save" />
 	  		<button ng-hide="path.id" class="btn btn-default" type="submit">Cancel</button>
 	  	</div>
 	  </form>
@@ -27,5 +22,5 @@
 	  </div>
 	  <div ng-hide="profile.username">
 	 	<h2>You must <a href="#/login">Login</a> or <a href="#/register">Register</a> to create a path.</h2>
-	  </div>	
+	  </div>
 	</div>

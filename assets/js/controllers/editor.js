@@ -43,6 +43,7 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 	$scope.profile = Profile.get();
 	$scope.index = parseInt($routeParams.step,10);
 	$scope.path = Path.get({id:$routeParams.path}, function(){
+	console.log('path', $scope.path);
 
 		// Load existing path
 		if($scope.path.steps && $scope.path.steps[$scope.index - 1]) {
@@ -59,7 +60,7 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 		}
 
 		$scope.path.steps[$scope.index - 1] = step;
-
+		console.log("update", $scope.path);
 		Path.update($scope.path, function(res){
 
 			var step = parseInt($scope.index, 10) + 1;

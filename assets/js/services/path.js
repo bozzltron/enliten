@@ -1,29 +1,26 @@
-angular.module('enlighten.services.path', ['ngResource'])    
+angular.module('enlighten.services.path', ['ngResource'])
 
-    // GET PATHS 
+    // GET PATHS
     .factory('Path', function($resource) {
-        return $resource('/path/:filter/:id',
-        	{},
+        return $resource('/path/:id/',
+        	{'id':'@id'},
         	{
         		completed: {
         			method: 'GET',
         			params: {
-        				filter: 'completed',
+        				id: 'completed',
         			},
         			isArray:true
         		},
-                update: { 
-                    method:'PUT',
-                    params: {
-                        statusId: '@id'
-                    }
+                update: {
+                    method:'Put'
                 },
                 my: {
                     method: 'GET',
                     params: {
-                        filter: 'my'
+                        id: 'my'
                     },
                     isArray: true
-                }            
+                }
         	});
     });
