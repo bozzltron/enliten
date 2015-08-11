@@ -22,78 +22,107 @@
 
 module.exports.routes = {
 
-  /***************************************************************************
-  *                                                                          *
-  * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
-  * etc. depending on your default view engine) your home page.              *
-  *                                                                          *
-  * (Alternatively, remove this and add an `index.html` file in your         *
-  * `assets` directory)                                                      *
-  *                                                                          *
-  ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Make the view located at `views/homepage.ejs` (or `views/homepage.jade`, *
+     * etc. depending on your default view engine) your home page.              *
+     *                                                                          *
+     * (Alternatively, remove this and add an `index.html` file in your         *
+     * `assets` directory)                                                      *
+     *                                                                          *
+     ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
+    'get /': {
+        controller: 'path',
+        action: 'home'
+    },
 
-  'post /login': {
-    controller: 'user',
-    action: 'login'
-  },
+    'get /admin': {
+        view: 'admin',
+    },
 
-  'post /register': {
-    controller: 'user',
-    action: 'register'
-  },
+    'get /builder': {
+        view: 'builder'
+    },
 
-  'get /logout': {
-    controller: 'user',
-    action: 'logout'
-  },
+    'post /login': {
+        controller: 'user',
+        action: 'login'
+    },
 
-  'get /status/path/:path': {
-    controller: 'status',
-    action: 'userPathStatus'
-  },
+    'post /register': {
+        controller: 'user',
+        action: 'register'
+    },
 
-  'get /session': {
-    controller: 'user',
-    action: 'session'
-  },
+    'get /logout': {
+        controller: 'user',
+        action: 'logout'
+    },
 
-  'get /profile': {
-    controller: 'user',
-    action: 'profile'
-  },
+    'get /status/path/:path': {
+        controller: 'status',
+        action: 'userPathStatus'
+    },
 
-  'get /path/completed': {
-    controller: 'path',
-    action: 'pathsCompleted'
-  },
+    'get /session': {
+        controller: 'user',
+        action: 'session'
+    },
 
-  'get /path': {
-    controller: 'path',
-    action: 'paths'
-  },
+    'get /profile': {
+        controller: 'user',
+        action: 'profile'
+    },
 
-  'get /path/my': {
-    controller: 'path',
-    action: 'my'
-  },
+    'get /path/completed': {
+        controller: 'path',
+        action: 'pathsCompleted'
+    },
 
-  'get /path/preview': {
-    controller: 'path',
-    action: 'preview'
-  }
+    'get /path': {
+        controller: 'path',
+        action: 'paths'
+    },
 
-  /***************************************************************************
-  *                                                                          *
-  * Custom routes here...                                                    *
-  *                                                                          *
-  *  If a request to a URL doesn't match any of the custom routes above, it  *
-  * is matched against Sails route blueprints. See `config/blueprints.js`    *
-  * for configuration options and examples.                                  *
-  *                                                                          *
-  ***************************************************************************/
+    'get /path/my': {
+        controller: 'path',
+        action: 'my'
+    },
+
+    'get /path/preview': {
+        controller: 'path',
+        action: 'preview'
+    },
+
+    'get /migrate': {
+        controller: 'path',
+        action: 'migrate'
+    },
+
+    'get /clean': {
+        controller: 'path',
+        action: 'clean'
+    },
+
+    'get /walk/:path': {
+        controller: 'path',
+        action: 'walk'
+    },
+
+    'get /walk/:path/:step': {
+        controller: 'path',
+        action: 'walk'
+    },
+
+    /***************************************************************************
+     *                                                                          *
+     * Custom routes here...                                                    *
+     *                                                                          *
+     *  If a request to a URL doesn't match any of the custom routes above, it  *
+     * is matched against Sails route blueprints. See `config/blueprints.js`    *
+     * for configuration options and examples.                                  *
+     *                                                                          *
+     ***************************************************************************/
 
 };

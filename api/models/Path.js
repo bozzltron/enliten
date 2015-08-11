@@ -28,7 +28,12 @@ module.exports = {
         user: {
           type: 'string',
           required: true
-        }
+      },
+
+      steps:{
+          collection: 'step',
+          via: 'path'
+      }
 
     }
 

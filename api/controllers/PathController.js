@@ -21,31 +21,63 @@ var request = require('request');
 
 module.exports = {
 
+	home: function(req, res) {
 
-	pathsCompleted: function (req, res) {
+		Path.find({
+			published: true,
+			limit: 10
+		}).exec(function(err, paths) {
 
-		if(!req.session.user) {
+			// we now have a model with instance methods attached
+			if (err) res.json({
+				status: "ok",
+				message: err
+			});
+
+			res.locals.layout = 'vortex';
+			res.view('homepage', {
+				paths: paths
+			});
+
+		});
+
+	},
+
+	pathsCompleted: function(req, res) {
+
+		if (!req.session.user) {
 
 			res.json({});
 
 		} else {
 
-			Status.find({user: req.session.user, isCompleted:true}).exec(function(err, completed) {
+			Status.find({
+				user: req.session.user,
+				isCompleted: true
+			}).exec(function(err, completed) {
 
-				if(err) res.json({status:"ok", message: err});
+				if (err) res.json({
+					status: "ok",
+					message: err
+				});
 
 				var paths = [];
-				completed.forEach(function(path){
-					paths.push( path.id );
+				completed.forEach(function(path) {
+					paths.push(path.id);
 				});
 
 				console.log(paths);
-				Path.find({ id: paths}).exec(function(err, status) {
+				Path.find({
+					id: paths
+				}).exec(function(err, status) {
 
-				  // we now have a model with instance methods attached
-				  if(err) res.json({status:"ok", message: err});
+					// we now have a model with instance methods attached
+					if (err) res.json({
+						status: "ok",
+						message: err
+					});
 
-				  res.json(status);
+					res.json(status);
 
 				});
 
@@ -55,14 +87,19 @@ module.exports = {
 
 	},
 
-	paths: function (req, res) {
+	paths: function(req, res) {
 
-		if(!req.session.user) {
+		if (!req.session.user) {
 
-			Path.find({published:true}).exec(function(err, paths) {
+			Path.find({
+				published: true
+			}).exec(function(err, paths) {
 
 				// we now have a model with instance methods attached
-				if(err) res.json({status:"ok", message: err});
+				if (err) res.json({
+					status: "ok",
+					message: err
+				});
 
 				res.json(paths);
 
@@ -70,24 +107,35 @@ module.exports = {
 
 		} else {
 
-			Path.find({published:true}).exec(function(err, paths) {
+			Path.find({
+				published: true
+			}).exec(function(err, paths) {
 
-			  	// we now have a model with instance methods attached
-			 	if(err) res.json({status:"ok", message: err});
+				// we now have a model with instance methods attached
+				if (err) res.json({
+					status: "ok",
+					message: err
+				});
 
-				Status.find({user: req.session.user, isCompleted:true}).exec(function(err, completed) {
+				Status.find({
+					user: req.session.user,
+					isCompleted: true
+				}).exec(function(err, completed) {
 
-					if(err) res.json({status:"ok", message: err});
+					if (err) res.json({
+						status: "ok",
+						message: err
+					});
 
 					var complete = [];
-					completed.forEach(function(path){
-						complete.push( path.path );
+					completed.forEach(function(path) {
+						complete.push(path.path);
 					});
 					console.log(complete);
 
-					paths.forEach(function(path){
+					paths.forEach(function(path) {
 						console.log(path.id);
-						if(_.contains(complete, path.id)){
+						if (_.contains(complete, path.id)) {
 							console.log("completed");
 							path.isCompleted = true;
 						}
@@ -99,20 +147,23 @@ module.exports = {
 
 			});
 
-
-
 		}
 
 	},
 
-	my: function (req, res) {
+	my: function(req, res) {
 
-		if(req.session.user) {
+		if (req.session.user) {
 
-			Path.find({user:req.session.user}).exec(function(err, paths) {
+			Path.find({
+				user: req.session.user
+			}).exec(function(err, paths) {
 
 				// we now have a model with instance methods attached
-				if(err) res.json({status:"failure", message: err});
+				if (err) res.json({
+					status: "failure",
+					message: err
+				});
 
 				res.json(paths);
 
@@ -124,40 +175,129 @@ module.exports = {
 
 	},
 
-	preview: function (req, res) {
+	preview: function(req, res) {
 
 		var https = require("https");
-		var fullUrl = "https://enliten-resizer.herokuapp.com/query?&url=" + req.query.url;
+		var fullUrl = "https://enliten-resizer.herokuapp.com/query?&url=" + req.query
+			.url;
 		var datauri = "";
 
-		request({uri:fullUrl, encoding:null}, function (error, response, body) {
-          if (!error && response.statusCode == 200) {
+		request({
+			uri: fullUrl,
+			encoding: null
+		}, function(error, response, body) {
+			if (!error && response.statusCode == 200) {
 
-                var data_uri_prefix = "data:" + response.headers["content-type"] + ";base64,";
-                //data:image/png;base64,
-                //console.log('body', body);
-                var buf = new Buffer(body, 'binary');
-                var image = buf.toString('base64');
+				var data_uri_prefix = "data:" + response.headers["content-type"] +
+					";base64,";
+				//data:image/png;base64,
+				//console.log('body', body);
+				var buf = new Buffer(body, 'binary');
+				var image = buf.toString('base64');
 
-                image = data_uri_prefix + image;
+				image = data_uri_prefix + image;
 
-                //res.set('Content-Type', 'image/png');
-                res.send(image);
+				//res.set('Content-Type', 'image/png');
+				res.send(image);
 
-          }
-        });
+			}
+		});
 
 	},
 
-  /**
-   * Overrides for the settings in `config/controllers.js`
-   * (specific to PathController)
-   */
-  _config: {
-      rest:true,
-	  shortcuts:true,
-	  actions:true
-  }
+	migrate: function(req, res) {
+
+		Path.find({}).exec(function(err, paths) {
+
+			paths.forEach(function(path) {
+
+				path.steps.forEach(function(step) {
+					console.log(step.name);
+					step.path = path.id;
+					step.user = path.user;
+					Step.create(step).exec(function(err, result) {
+						if (err) console.log("fail");
+						console.log("success");
+					});
+				});
+
+
+			});
+
+			res.send("Done");
+
+		});
+
+	},
+
+	clean: function(req, res) {
+
+		Path.native(function(err, collection) {
+			if (err) return res.serverError(err);
+
+			collection.updateMany({}, {
+				$unset: {
+					steps: ''
+				}
+			});
+
+			res.send("Done");
+
+		});
+
+	},
+
+	walk: function(req, res) {
+
+		Path.findOne({
+			id: req.param("path")
+		}).exec(function(err, path) {
+
+			// we now have a model with instance methods attached
+			if (err) res.json({
+				status: "failure",
+				message: err
+			});
+
+			if (req.param("step")) {
+
+				Step.findOne({
+					id: req.param("step")
+				}).exec(function(err, step) {
+
+					res.locals.layout = 'vortex';
+					res.view('walk', {
+						path: path,
+						step: step
+					});
+
+				});
+
+			} else {
+
+				res.locals.layout = 'vortex';
+				res.view('walk', {
+					path: path,
+					step: null
+				});
+
+			}
+
+
+		});
+
+
+	},
+
+	/**
+	 * Overrides for the settings in `config/controllers.js`
+	 * (specific to PathController)
+	 */
+	_config: {
+		rest: true,
+		shortcuts: true,
+		actions: true
+	}
 
 
 };

@@ -9,12 +9,12 @@
 module.exports = {
 
   attributes: {
-  	
-	  user: {
+
+	user: {
       type: 'string',
       required: true
     },
-    
+
     path: {
       type: 'string',
       required: true,

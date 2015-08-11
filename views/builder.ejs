@@ -1,0 +1,29 @@
+<div class="builder">
+
+    <form class="form">
+        <input type="text" name="q" />
+        <label>Web</label>
+        <input type="radio" name="src" value="web" />
+        <label>News</label>
+        <input type="radio" name="src" value="news" />
+        <label>Topics</label>
+        <input type="radio" name="src" value="topics" />
+        <label>Trends</label>
+        <input type="radio" name="src" value="trends" />
+        <label>Suggest</label>
+        <input type="radio" name="src" value="suggest" />
+        <input type="hidden" name="f" value="json" />
+
+        <button>Search</button>
+    </form>
+
+    <div class="preview">
+
+    </div>
+
+</div>
+
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/underscore/underscore.js"></script>
+<script src="/bower_components/backbone/backbone.js"></script>
+<script src="/js/backbone/views/builder.js"></script>

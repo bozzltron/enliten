@@ -1,25 +1,29 @@
 var module = angular.module('enlighten.controllers.editor', [
 	'enlighten.services.profile',
 	'enlighten.services.path',
+	'enlighten.services.step',
 	'ngRoute',
 	'ui'
-	]);
+]);
 
-module.controller('EditorController', function ($scope, Profile, Path, $routeParams, flash) {
+module.controller('EditorController', function($scope, Profile, Path, Step,
+	$routeParams, flash) {
 
 	$scope.profile = Profile.get();
 
-	if($routeParams.path) {
-		$scope.path = Path.get({id:$routeParams.path});
+	if ($routeParams.path) {
+		$scope.path = Path.get({
+			id: $routeParams.path
+		});
 	}
 
 	// Handle the initial creation of the path
 	this.submit = function(path) {
 
-		if($routeParams.path) {
+		if ($routeParams.path) {
 
 			path.user = $scope.profile.id;
-			Path.update(path, function(res){
+			Path.update(path, function(res) {
 				window.location.hash = '#/editor/summary/' + res.id;
 				flash.success = "Your path has been saved.";
 			});
@@ -27,7 +31,7 @@ module.controller('EditorController', function ($scope, Profile, Path, $routePar
 		} else {
 
 			path.user = $scope.profile.id;
-			Path.save(path, function(res){
+			Path.save(path, function(res) {
 				window.location.hash = '#/editor/step/1/' + res.id;
 				flash.success = "Your path has been saved.";
 			});
@@ -38,50 +42,93 @@ module.controller('EditorController', function ($scope, Profile, Path, $routePar
 
 });
 
-module.controller('EditorStepController', function ($scope, Profile, Path, $routeParams, flash) {
+module.controller('EditorStepController', function($scope, Profile, Path, Step,
+	$routeParams, flash, $http) {
 
 	$scope.profile = Profile.get();
-	$scope.index = parseInt($routeParams.step,10);
-	$scope.path = Path.get({id:$routeParams.path}, function(){
-	console.log('path', $scope.path);
+	$scope.index = parseInt($routeParams.step, 10);
+	$scope.path = Path.get({
+		id: $routeParams.path
+	}, function() {
+		console.log('path', $scope.path);
 
 		// Load existing path
-		if($scope.path.steps && $scope.path.steps[$scope.index - 1]) {
-			$scope.step = $scope.path.steps[$scope.index - 1];
-		}
+		$scope.step = Step.get({
+			order: $scope.index - 1,
+			path: $scope.path.id
+		}, function() {
+			console.log('step', $scope.step);
+		});
 	});
 
 
-	// Handle step create/edit
-	this.submit = function(step) {
 
-		if(!$scope.path.steps){
+	// Handle step create/edit
+	this.save = function(step) {
+
+		if (!$scope.path.steps) {
 			$scope.path.steps = [];
 		}
 
 		$scope.path.steps[$scope.index - 1] = step;
 		console.log("update", $scope.path);
-		Path.update($scope.path, function(res){
+		Path.update($scope.path, function(res) {
 
 			var step = parseInt($scope.index, 10) + 1;
-			window.location.hash = '#/editor/step/' + step +  '/' + $scope.path.id;
+			window.location.hash = '#/editor/step/' + step + '/' + $scope.path.id;
 			flash.success = "Your step has been saved.";
 
 		});
 
 	};
 
-	this.preview = function(url){
+	this.submit = function() {
+
+		// Simple GET request example :
+		var params = {
+			q: $('.search:first').val(),
+			start: 1,
+			length: 10,
+			l: 'en',
+			src: 'web',
+			i: false,
+			f: 'json',
+			key: 'Dt610xc7abKOq36BZXHDgJGNZ3E_'
+		};
+
+		$http.get('http://www.faroo.com/api?' + $.param(params)).
+		then(function(response) {
+			// this callback will be called asynchronously
+			// when the response is available
+			console.log('faroo', response);
+			if (response.data.results.length > 0) {
+				$scope.results = response.data.results;
+			} else {
+				$scope.results = [{
+					title: 'Nothing found.  Keep looking.'
+				}];
+			}
+		}, function(response) {
+			// called asynchronously if an error occurs
+			// or server returns response with an error status.
+		});
 
 
-		if($scope.step.type == "Photo") {
+	};
+
+	this.preview = function(url) {
+
+
+		if ($scope.step.type == "Photo") {
 			$("#preview").html('<img src="' + $scope.step.url + '" />');
 			$scope.step.datauri = null;
 		} else if ($scope.step.type == "Url") {
-			$("#preview").html('<i class="fa fa-cog fa-spin"></i> Capturing screenshot...');
-			$.get("/path/preview?url=" + $scope.step.url, function(datauri){
+			$("#preview").html(
+				'<i class="fa fa-cog fa-spin"></i> Capturing screenshot...');
+			$.get("/path/preview?url=" + $scope.step.url, function(datauri) {
 				$scope.step.datauri = datauri;
-				$("#preview").html('<img class="img-thumbnail img-responsive" src="' + datauri + '" />');
+				$("#preview").html('<img class="img-thumbnail img-responsive" src="' +
+					datauri + '" />');
 			});
 		} else if ($scope.step.type == "Embed code") {
 			$("#preview").html($scope.step.url);
@@ -93,12 +140,12 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 	this.deleteStep = function() {
 
 		var answer = confirm(" Are you sure you want to delete this step ?");
-		if (answer){
+		if (answer) {
 			// Remove this step
 			$scope.path.steps.splice($scope.index - 1, 1);
 
 			// Persist to the server
-			Path.update($scope.path, function(res){
+			Path.update($scope.path, function(res) {
 
 				window.location.hash = '#/editor/summary/' + $scope.path.id;
 				flash.success = "The step has been remove.";
@@ -109,17 +156,20 @@ module.controller('EditorStepController', function ($scope, Profile, Path, $rout
 
 });
 
-module.controller('EditorSummaryController', function ($scope, Profile, Path, $routeParams, flash) {
+module.controller('EditorSummaryController', function($scope, Profile, Path,
+	Step, $routeParams, flash) {
 
 	$scope.profile = Profile.get();
 
-	if($routeParams.path) {
-		$scope.path = Path.get({id:$routeParams.path});
+	if ($routeParams.path) {
+		$scope.path = Path.get({
+			id: $routeParams.path
+		});
 	}
 
 	this.save = function(path) {
 
-		Path.update(path, function(res){
+		Path.update(path, function(res) {
 			flash.success = "Your path has been update.";
 		});
 
@@ -129,8 +179,8 @@ module.controller('EditorSummaryController', function ($scope, Profile, Path, $r
 
 		var answer = confirm("Are you sure you want to delete this path?");
 
-		if(answer) {
-			Path.delete(path, function(res){
+		if (answer) {
+			Path.delete(path, function(res) {
 				flash.success = "Your path has been deleted.";
 				window.location.hash = '#/profile/';
 			});
@@ -141,13 +191,13 @@ module.controller('EditorSummaryController', function ($scope, Profile, Path, $r
 	// Handle the initial creation of the path
 	this.submit = function(path) {
 
-		if(!path.published) {
+		if (!path.published) {
 			path.published = true;
 		} else {
 			path.published = false;
 		}
 
-		Path.update(path, function(res){
+		Path.update(path, function(res) {
 			flash.success = "Your path has been published.";
 		});
 
