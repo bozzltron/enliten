@@ -213,7 +213,7 @@ module.exports = {
 
 				path.steps.forEach(function(step, i) {
 					console.log(step.name);
-					step.path = path._id;
+					step.path = path.id;
 					step.user = path.user;
 					step.order = i + 1;
 					step.url = step.url;
