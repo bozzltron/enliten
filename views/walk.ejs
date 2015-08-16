@@ -60,12 +60,14 @@
                 <div class="row step slideInLeft">
                     <div class="col-sm-12">
 
-                        <a class="slideInLeft" ng-if="step.type == 'Url'" ng-href="{{step.url}}">
+                        <a  target="_blank" class="slideInLeft" ng-if="step.type == 'Url'" ng-href="{{step.url}}">
                             <img ng-if="step.type == 'Url'" class="img-responsive" ng-src="{{step.iurl}}"/>
                         </a>
 
-                        <div ng-if="step.type == 'Embed code'" ng-bind-html="step.url" class="slideInLeft embed-responsive embed-responsive-16by9" ></div>
-                        <a ng-if="step.type == 'Photo'" ng-href="{{step.url}}"><img ng-if="step.type == 'Photo'" class="img-responsive" ng-src="{{step.iurl}}" /></a>
+                        <div ng-if="step.type == 'Embed code'" ng-bind-html="step.url" class="slideInLeft embed-responsive embed-responsive-16by9" >
+    
+                        </div>
+                        <a ng-if="step.type == 'Photo'" ng-href="{{step.url}}" target="_blank"><img ng-if="step.type == 'Photo'" class="img-responsive" ng-src="{{step.iurl}}" /></a>
 
                         <h2 class="slideInLeft">{{step.name}}</h2>
                         <p class="slideInLeft lead">{{step.description}}</p>

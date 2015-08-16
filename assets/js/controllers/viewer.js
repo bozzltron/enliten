@@ -22,6 +22,9 @@ module.controller('ViewerController', function($scope, $http) {
                 $('body').animate({
                     scrollTop: 0
                 });
+            } else if ($scope.index > 1) {
+                // if the path is completed then go back to the home page
+                window.location.href = "/";
             }
         }, function(response) {
             // called asynchronously if an error occurs

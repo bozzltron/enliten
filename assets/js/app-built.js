@@ -26216,6 +26216,7 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 				console.log('set step as ', res.data[0]);
 				$scope.step = res.data[0];
 			}
+
 		}, function(response) {
 			// called asynchronously if an error occurs
 			// or server returns response with an error status.
