@@ -14,6 +14,11 @@ module.exports = {
             required: true
         },
 
+        order: {
+            type: 'integer',
+            required: true
+        },
+
         path: {
             model: 'Path'
         }

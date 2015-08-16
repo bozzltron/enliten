@@ -11,29 +11,28 @@ module.exports = {
     attributes: {
 
         name: {
-          type: 'string',
-          unique: true,
-          required: true
+            type: 'string',
+            unique: true,
+            required: true
         },
 
         description: {
-          type: 'string',
-          required: true
+            type: 'string'
         },
 
         url: {
-          type: 'string'
+            type: 'string'
         },
 
         user: {
-          type: 'string',
-          required: true
-      },
+            type: 'string',
+            required: true
+        },
 
-      steps:{
-          collection: 'step',
-          via: 'path'
-      }
+        steps: {
+            collection: 'step',
+            via: 'path'
+        }
 
     }
 

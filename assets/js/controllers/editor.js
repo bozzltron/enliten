@@ -73,7 +73,11 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 	// Handle step create/edit
 	this.save = function() {
 
+		$scope.step.path = $scope.path.id;
+		$scope.step.user = $scope.profile.id;
+		$scope.step.order = $scope.index;
 		console.log("update", $scope.step);
+
 		if ($scope.step.id) {
 
 			Step.update($scope.step, function(res) {
@@ -139,6 +143,7 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 	this.add = function(result) {
 		console.log("result", result);
 		$scope.step.name = result.title;
+		console.log("path", $scope.path);
 		$scope.step.path = $scope.path.id;
 		$scope.step.user = $scope.profile.id;
 		$scope.step.order = $scope.index;
@@ -191,17 +196,39 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 });
 
 module.controller('EditorSummaryController', function($scope, Profile, Path,
-	Step, $routeParams, flash) {
+	Step, $routeParams, flash, $http) {
 
 	$scope.profile = Profile.get();
 
 	if ($routeParams.path) {
 		$scope.path = Path.get({
 			id: $routeParams.path
+		}, function() {
+
+			$http.get('/step/query?' + $.param({
+				path: $routeParams.path
+			})).then(function(res) {
+				// this callback will be called asynchronously
+				// when the response is available
+				if (res.data.length > 0) {
+					$scope.path.steps = res.data;
+				}
+			}, function(response) {
+				// called asynchronously if an error occurs
+				// or server returns response with an error status.
+			});
+
 		});
 	}
 
 	this.save = function(path) {
+
+		for (var i = 0; i < path.steps.length; i++) {
+			var step = path.steps[i];
+			if (!step.order || step.order !== i + 1) {
+				step.order = i + 1;
+			}
+		}
 
 		Path.update(path, function(res) {
 			flash.success = "Your path has been update.";

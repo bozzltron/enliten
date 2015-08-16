@@ -5,13 +5,8 @@ angular.module('enlighten.services.step', ['ngResource'])
     return $resource('/step/:id/', {
         'id': '@id'
     }, {
-        query: {
-            method: 'GET',
-            params: {
-                path: 'path',
-                order: 'order'
-            },
-            isArray: true
+        update: {
+            method: 'Put'
         }
     });
 });
