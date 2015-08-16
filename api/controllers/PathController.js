@@ -216,7 +216,8 @@ module.exports = {
 					step.path = path._id;
 					step.user = path.user;
 					step.order = i + 1;
-					step.url = step.url || step.datauri;
+					step.url = step.url;
+					step.iurl = step.datauri || step.url;
 					delete step.datauri;
 					Step.create(step).exec(function(err, result) {
 						if (err) console.log("fail");
