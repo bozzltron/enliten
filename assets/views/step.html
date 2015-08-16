@@ -21,10 +21,10 @@
 	  	<a ng-hide="profile" href="/#/login">Login To Track Your Progress</a>
 
 	  	<div class="step-nav step-nav-left">
-	  		<a href="/#/path/{{path.id}}{{ index == 1 ? '' : '/step/' + (index - 1) }}"><i class="fa fa-arrow-left"></i></a>
+	  		<a href="/admin/#/path/{{path.id}}{{ index == 1 ? '' : '/step/' + (index - 1) }}"><i class="fa fa-arrow-left"></i></a>
   		</div>
 	  	<div class="step-nav step-nav-right">
-	  		<a href="/#/path/{{path.id}}{{ index == path.steps.length ? '/completed' : '/step/' + (index + 1)}}"><i class="fa fa-arrow-right"></i></a></div>
+	  		<a href="/admin/#/path/{{path.id}}{{ index == path.steps.length ? '/completed' : '/step/' + (index + 1)}}"><i class="fa fa-arrow-right"></i></a></div>
 
 		<footer>
 		    <div class="navbar navbar-fixed-bottom">

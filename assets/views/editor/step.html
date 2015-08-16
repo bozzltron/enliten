@@ -3,21 +3,50 @@
 
 		<h2>Build your path: {{path.name}} </h2>
 
-		<form ng-show="profile.username && (profile.id == path.user)" class="form" ng-submit="editCtrl.submit(step)">
 			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<label>What are you looking for?</label>
-						<input class="form-control search" required="" type="text" />
-					</div>
-					<button class="btn btn-success" type="submit"><i class="fa fa-search"></i> Search</button>
-				</div>
-			</div>
 
-			<div class="row">
 				<div class="col-md-6">
-					<h2>Search Results</h2>
-					<div id="results">
+
+					<form ng-submit="editCtrl.search()">
+						<div class="form-group">
+							<label>What are you looking for?</label>
+							<input class="form-control search" required="" type="text" />
+						</div>
+						<button class="btn btn-success" type="submit"><i class="fa fa-search"></i> Search</button>
+				  	</form>
+					<br />
+					<form ng-show="profile.username && (profile.id == path.user)" class="form" ng-submit="editCtrl.save(step)">
+						<div class="form-group">
+							<label>What do you call this step? <em>optional</em></label>
+							<input class="form-control" required="" type="text" ng-model="step.name" />
+						</div>
+						<div class="form-group">
+							<label>What kind of content is this?</label>
+							<select class="form-control" ng-model="step.type" placeholder="Content type">
+								<option>Photo</option>
+								<option>Embed code</option>
+								<option>Url</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>What are you talking about?  Enter your {{step.type}}.</label>
+							<input class="form-control" type="text" required="" ng-model="step.url" />
+						</div>
+						<div class="form-group">
+							<a ng-click="editCtrl.preview(step.url)" class="btn btn-default">Preview</a>
+						</div>
+						<div class="form-group">
+							<label>What do you want to say about it?</label>
+							<textarea col="20" row="20" class="form-control" ng-model="step.description"></textarea>
+						</div>
+						<button class="btn btn-success" type="submit"><i class="fa fa-plus-circle"></i> Save and add another step</button>
+					</form>
+				</div>
+
+				<div class="col-md-6">
+
+					<h2 ng-if="results">Search Results</h2>
+					<div ng-if="results" id="results">
 						<div class="row">
 							<div class="col-xs-12">
 								<div ng-repeat="result in results" class="media">
@@ -32,27 +61,24 @@
 									<div ng-if="result.author">Author: {{result.author}}</div>
 									<div ng-if="result.date">Date: {{result.date}}</div>
 									<div ng-if="result.domain">Source: {{result.domain}}</div>
-									<button ng-if="result.url" class="btn btn-success" type="submit"><i class="fa fa-plus-circle"></i> Add To My Path</button>
+									<button ng-if="result.url" class="btn btn-default" ng-click="editCtrl.add(result)"><i class="fa fa-plus-circle"></i> Add This</button>
 								  </div>
 								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-				</div>
-				<div class="col-md-6">
-					<h2>Path</h2>
-					<div id="items"></div>
+
+					<div id="preview"></div>
+
 				</div>
 			</div>
-
+			<hr/>
 			<div class="button-group">
-				<a href="#/editor/info/{{path.id}}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit name and description</a>
-				<button class="btn btn-success" type="submit"><i class="fa fa-plus-circle"></i> Save and add another step</button>
+				<a href="/admin/#/editor/info/{{path.id}}" class="btn btn-warning"><i class="fa fa-pencil"></i> Edit name and description</a>
 				<a class="btn btn-danger" ng-click="editCtrl.deleteStep()"><i class="fa fa-plus-circle"></i> Delete step</a>
-				<a class="btn btn-primary" href="#/editor/summary/{{path.id}}"><i class="fa fa-flag-checkered"></i> View Summary</a>
+				<a class="btn btn-primary" href="/admin/#/editor/summary/{{path.id}}"><i class="fa fa-flag-checkered"></i> View Summary</a>
 			</div>
 
-		</form>
 		<div ng-hide="profile.id == path.user">
 		  	<h2>You can only edit paths that you have created.</h2>
 		</div>

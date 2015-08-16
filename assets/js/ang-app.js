@@ -31,46 +31,46 @@ angular.module('enlighten', [
 
 	// Specify routes to load our partials upon the given URLs
 	$routeProvider.when('/', {
-		templateUrl: 'views/home.html'
+		templateUrl: '/views/home.html'
 	});
 	$routeProvider.when('/path/:id', {
-		templateUrl: 'views/path.html'
+		templateUrl: '/views/path.html'
 	});
 	$routeProvider.when('/path/:id/vertical', {
-		templateUrl: 'views/viewer/vertical.html'
+		templateUrl: '/views/viewer/vertical.html'
 	});
 	$routeProvider.when('/path/:id/:completed', {
-		templateUrl: 'views/path.html'
+		templateUrl: '/views/path.html'
 	});
 	$routeProvider.when('/path/:id/step/complete', {
-		templateUrl: 'views/complete.html'
+		templateUrl: '/views/complete.html'
 	});
 	$routeProvider.when('/path/:id/step/:step', {
-		templateUrl: 'views/step.html'
+		templateUrl: '/views/step.html'
 	});
 	$routeProvider.when('/login', {
-		templateUrl: 'views/login.html'
+		templateUrl: '/views/login.html'
 	});
 	$routeProvider.when('/logout', {
-		templateUrl: 'views/logout.html'
+		templateUrl: '/views/logout.html'
 	});
 	$routeProvider.when('/register', {
-		templateUrl: 'views/register.html'
+		templateUrl: '/views/register.html'
 	});
 	$routeProvider.when('/profile', {
-		templateUrl: 'views/profile.html'
+		templateUrl: '/views/profile.html'
 	});
 	$routeProvider.when('/editor/info/', {
-		templateUrl: 'views/editor/info.html'
+		templateUrl: '/views/editor/info.html'
 	});
 	$routeProvider.when('/editor/info/:path', {
-		templateUrl: 'views/editor/info.html'
+		templateUrl: '/views/editor/info.html'
 	});
 	$routeProvider.when('/editor/step/:step/:path', {
-		templateUrl: 'views/editor/step.html'
+		templateUrl: '/views/editor/step.html'
 	});
 	$routeProvider.when('/editor/summary/:path', {
-		templateUrl: 'views/editor/summary.html'
+		templateUrl: '/views/editor/summary.html'
 	});
 	$routeProvider.otherwise({
 		redirectTo: '/'

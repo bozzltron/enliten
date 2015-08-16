@@ -211,10 +211,13 @@ module.exports = {
 
 			paths.forEach(function(path) {
 
-				path.steps.forEach(function(step) {
+				path.steps.forEach(function(step, i) {
 					console.log(step.name);
-					step.path = path.id;
+					step.path = path._id;
 					step.user = path.user;
+					step.order = i + 1;
+					step.url = step.url || step.datauri;
+					delete step.datauri;
 					Step.create(step).exec(function(err, result) {
 						if (err) console.log("fail");
 						console.log("success");

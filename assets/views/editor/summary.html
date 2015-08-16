@@ -9,7 +9,7 @@
 			<h3>Description</h3>
 			<p>{{path.description}}</p>
 
-			<a class="btn btn-default" href="#/editor/info/{{path.id}}">Edit path information</a>
+			<a class="btn btn-default" href="/admin/#/editor/info/{{path.id}}">Edit path information</a>
 
 			<form ng-submit="editCtrl.submit(path)">
 				<h3 ng-show="path.steps">Steps </h3>
@@ -18,15 +18,15 @@
 						<tr ng-repeat="step in path.steps">
 							<td><i class="fa fa-arrows"></i></td>
 							<td>{{step.name}}</td>
-							<td>{{step.description}}</td>	
-							<td>{{step.url}}</td>
-							<td><a href="#/editor/step/{{$index+1}}/{{path.id}}">edit</a></td>
+							<td>{{step.description}}</td>
+						<td>{{step.url}}</td>
+							<td><a href="/admin/#/editor/step/{{$index+1}}/{{path.id}}">edit</a></td>
 						</tr>
 					</tbody>
 				</table>
 				<div ng-hide="path.steps">No steps <br /><br /></div>
 				<div class="form-group">
-					<a class="btn btn-success" href="#/editor/step/{{path.steps.length + 1}}/{{path.id}}">Add more steps</a>
+					<a class="btn btn-success" href="/admin/#/editor/step/{{path.steps.length + 1}}/{{path.id}}">Add more steps</a>
 					<a class="btn btn-primary" ng-click="editCtrl.save(path)">Save</a>
 					<a class="btn btn-danger" ng-click="editCtrl.delete(path)">Delete</a>
 					<a class="btn btn-warning" href="#/path/{{path.id}}">Preview</a>
@@ -40,6 +40,6 @@
 	  		<h2>You can only edit paths that you have created.</h2>
 	  	</div>
 		<div ng-hide="profile.username">
-			<h2>You must <a href="#/login">Login</a> or <a href="#/register">Register</a> to create a path.</h2>
-		</div>	
-	</div>
+			<h2>You must <a href="#/login">Login</a> or <a href="/admin/#/register">Register</a> to create a path.</h2>
+		</div>
+	</di>

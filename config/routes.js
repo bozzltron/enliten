@@ -115,6 +115,11 @@ module.exports.routes = {
         action: 'walk'
     },
 
+    'get /step/query': {
+        controller: 'step',
+        action: 'query'
+    }
+
     /***************************************************************************
      *                                                                          *
      * Custom routes here...                                                    *

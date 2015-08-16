@@ -28,10 +28,10 @@ module.exports = function(grunt) {
 			// When assets are changed:
 			tasks: ['syncAssets', 'linkAssets']
 		},
-		angular: {
-			files: ['assets/**/*.js'],
-			tasks: ['browserify']
-		}
+		// angular: {
+		// 	files: ['assets/**/*.js'],
+		// 	tasks: ['browserify']
+		// }
 	});
 
 	grunt.loadNpmTasks('grunt-contrib-watch');

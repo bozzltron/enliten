@@ -3,24 +3,24 @@
 	<h1>{{profile.username}}</h1>
 
 	<h2>My paths</h2>
-	<p ng-show="my.length == 0">You have no paths</p> 
+	<p ng-show="my.length == 0">You have no paths</p>
 	<table class="table table-striped">
 		<tr ng-repeat="path in my">
 			<td>
-				<a href="/#/path/{{path.id}}">{{path.name}}</a>
+				<a href="/admin/#/path/{{path.id}}">{{path.name}}</a>
 				<p>{{path.description}}</p>
 			</td>
 			<td>
-				<a href="#/editor/summary/{{path.id}}">edit</a>
+				<a href="/admin/#/editor/summary/{{path.id}}">edit</a>
 			</td>
 		</tr>
-	</table>	
+	</table>
 
 	<h2>{{completed.length}} completed path(s)</h2>
 	  <table class="table table-striped">
 	    <tr ng-repeat="path in completed">
 	    	<td>
-		      <a href="/#/path/{{path.id}}">{{path.name}}</a>
+		      <a href="/admin/#/path/{{path.id}}">{{path.name}}</a>
 		      <p>{{path.description}}</p>
 	      	</td>
 	    </tr>
