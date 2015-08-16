@@ -1,23 +1,18 @@
 $(document).ready(function() {
 
-    function getStep(step) {
-        Rx.getJSON('/step/?order=' + step + '&path=' + window.path)
-            .subscribe(
-                function(data) {
-                    // Log data length
-                    console.log(data, data.length);
+    var step = null;
+    var order = 1;
 
-                },
-                function(err) {
-                    // Log the error
-                }
-            );
-    }
+    $("#continue").click(function() {
 
-    $('#continue').clickAsObservable()
-        .throttle(500 /* ms */ )
-        .map(function(ev) {
-            return getStep($(ev.target).attr("data-step"));
+        $.get('/step/query/?' + $.param({
+            path: path,
+            order: order
+        }), function(step) {
+            console.log('step', step);
         });
+
+    });
+
 
 });
