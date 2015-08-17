@@ -22622,35 +22622,27 @@ module.controller('ViewerController', function($scope, $http) {
 
     $scope.index = 1;
 
-    $scope.init = function() {
+    //$scope.init = function() {
 
-        var controller = this;
-        $('#enliten-viewer').swipe({
-            allowPageScroll: "vertical",
-            //Generic swipe handler for all directions
-            swipe: function(event, direction, distance,
-                duration,
-                fingerCount, fingerData) {
+    var controller = this;
+    console.log("init");
+    $('#enliten-viewer').swipe({
+        allowPageScroll: "vertical",
+        //Generic swipe handler for all directions
+        swipe: function(event, direction, distance,
+            duration,
+            fingerCount, fingerData) {
 
-                $(this).text("You swiped " + direction);
+            if (direction == 'left') {
+                controller.next();
+            } else if (direction == 'right') {
 
-                if (direction == 'down') {
-                    controller.next();
-                } else if (direction == 'up') {
+            }
+        },
+        threshold: 150
+    });
 
-                }
-            },
-            swipeStatus: function(event, phase) {
-                if (phase == "cancel") {
-                    alert(
-                        "you didn't scroll long enough"
-                    );
-                }
-            },
-            threshold: 100
-        });
-
-    };
+    //};
 
 
     // Handle getting the next step

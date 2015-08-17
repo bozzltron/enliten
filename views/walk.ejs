@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="col-sm-4">
-                        <p><button data-step="0" ng-click="vc.next()" type="submit" class="btn btn-g btn-round btn-lg">Continue</button></p>
+                        <p><button data-step="0" ng-click="vc.next()" type="submit" class="pull-right btn btn-g btn-round btn-lg">Continue</button>
                     </div>
 
                     <div class="col-sm-4">
@@ -72,7 +72,9 @@
                         <h2 class="fadeInLeft animated">{{step.name}}</h2>
                         <p class="fadeInLeft animated lead">{{step.description}}</p>
 
-                        <button ng-click="vc.next()" class="fadeInLeft animated btn btn-g btn-round btn-lg">Continue</button>
+                        <div>
+                            <button ng-click="vc.next()" class="pull-right fadeInLeft animated btn btn-g btn-round btn-lg">Continue</button>
+                        </div>
                     </div>
                 </div>
 
