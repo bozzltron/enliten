@@ -1,4 +1,4 @@
-<div ng-app="enliten-viewer">
+<div id="enliten-viewer" ng-app="enliten-viewer">
     <div  ng-controller="ViewerController as vc">
 
         <!-- HERO -->
@@ -57,22 +57,22 @@
 
             <div class="container">
 
-                <div class="row step slideInLeft">
+                <div class="row step fadeInLeft animated">
                     <div class="col-sm-12">
 
-                        <a  target="_blank" class="slideInLeft" ng-if="step.type == 'Url'" ng-href="{{step.url}}">
+                        <a  target="_blank" class="fadeInLeft animated" ng-if="step.type == 'Url'" ng-href="{{step.url}}">
                             <img ng-if="step.type == 'Url'" class="img-responsive" ng-src="{{step.iurl}}"/>
                         </a>
 
-                        <div ng-if="step.type == 'Embed code'" ng-bind-html="step.url" class="slideInLeft embed-responsive embed-responsive-16by9" >
-    
+                        <div ng-if="step.type == 'Embed code'" ng-bind-html="step.url" class="animated fadeInLeft embed-responsive embed-responsive-16by9" >
+
                         </div>
                         <a ng-if="step.type == 'Photo'" ng-href="{{step.url}}" target="_blank"><img ng-if="step.type == 'Photo'" class="img-responsive" ng-src="{{step.iurl}}" /></a>
 
-                        <h2 class="slideInLeft">{{step.name}}</h2>
-                        <p class="slideInLeft lead">{{step.description}}</p>
+                        <h2 class="fadeInLeft animated">{{step.name}}</h2>
+                        <p class="fadeInLeft animated lead">{{step.description}}</p>
 
-                        <button ng-click="vc.next()" class="slideInLeft btn btn-g btn-round btn-lg">Continue</button>
+                        <button ng-click="vc.next()" class="fadeInLeft animated btn btn-g btn-round btn-lg">Continue</button>
                     </div>
                 </div>
 
@@ -88,4 +88,5 @@
     var path = '<%= path.id %>';
 </script>
 <script type="text/javascript" src="/bower_components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="/bower_components/jquery-touchswipe/jquery.touchSwipe.js"></script>
 <script type="text/javascript" src="/js/viewer-built.js"></script>
