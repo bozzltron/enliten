@@ -12,7 +12,7 @@ module.exports = {
 		console.log("query steps for ", req.query);
 
 		if (req.query.order) req.query.order = parseInt(req.query.order, 10);
-		if (req.query.path) req.query.path = new ObjectId(req.query.path);
+		//if (req.query.path) req.query.path = new ObjectId(req.query.path);
 		Step.find({
 			where: req.query,
 			sort: 'order ASC'
