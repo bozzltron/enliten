@@ -121,9 +121,8 @@
             <!-- /ICONS NAVBAR -->
 
             <ul class="extra-navbar nav navbar-nav navbar-right">
-                <li><a href="index.html" title="Home">Home</a></li>
-                <li><a href="about.html" title="About">About</a></li>
-                <li><a href="/admin" title="Contact">Create</a></li>
+                <li><a href="/" title="Home">Home</a></li>
+                <li><a href="/admin#profile" title="Contact">Create</a></li>
             </ul>
 
         </div>
@@ -182,8 +181,8 @@
                     <!-- PORTFOLIO ITEM -->
                     <div class="work-item tall branding">
                         <a href="/walk/<%= path.id %>">
-                            <% if(path.firstImage) { %>
-                                <img src="<%= firstImage %>" alt="">
+                            <% if(path.thumbnail) { %>
+                                <img src="<%= path.thumbnail %>" alt="">
                             <% } else { %>
                                 <img src="http://tampabayparadeofhomes.com/wp-content/uploads/ngg_featured/placeholder-square.jpg" />
                             <% } %>

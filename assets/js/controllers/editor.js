@@ -77,7 +77,7 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 		$scope.step.path = $scope.path.id;
 		$scope.step.user = $scope.profile.id;
 		$scope.step.order = $scope.index;
-		console.log("update", $scope.step);
+		console.log("save", $scope.step);
 
 		if ($scope.step.id) {
 
@@ -159,7 +159,13 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 		// clear search
 		$scope.results = null;
 
-		if ($scope.step.type == "Photo") {
+
+		if ($scope.step.type == "Embed code") {
+			$("#preview").html($scope.step.url);
+			$scope.step.iurl = null;
+		} else if ($scope.step.iurl) {
+			$("#preview").html('<img src="' + $scope.step.iurl + '" />');
+		} else if ($scope.step.type == "Photo") {
 			$("#preview").html('<img src="' + $scope.step.url + '" />');
 			$scope.step.iurl = null;
 		} else if ($scope.step.type == "Url") {
@@ -170,9 +176,6 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 				$("#preview").html('<img class="img-thumbnail img-responsive" src="' +
 					datauri + '" />');
 			});
-		} else if ($scope.step.type == "Embed code") {
-			$("#preview").html($scope.step.url);
-			$scope.step.iurl = null;
 		}
 
 	};

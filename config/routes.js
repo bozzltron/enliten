@@ -94,16 +94,16 @@ module.exports.routes = {
         controller: 'path',
         action: 'preview'
     },
-
-    'get /migrate': {
-        controller: 'path',
-        action: 'migrate'
-    },
-
-    'get /clean': {
-        controller: 'path',
-        action: 'clean'
-    },
+    //
+    // 'get /migrate': {
+    //     controller: 'path',
+    //     action: 'migrate'
+    // },
+    //
+    // 'get /clean': {
+    //     controller: 'path',
+    //     action: 'clean'
+    // },
 
     'get /walk/:path': {
         controller: 'path',

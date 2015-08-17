@@ -177,7 +177,6 @@ module.exports = {
 
 	preview: function(req, res) {
 
-		var https = require("https");
 		var fullUrl = "https://enliten-resizer.herokuapp.com/query?&url=" + req.query
 			.url;
 		var datauri = "";

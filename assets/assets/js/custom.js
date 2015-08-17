@@ -1,4 +1,4 @@
-(function($){
+(function($) {
 
 	"use strict";
 
@@ -17,14 +17,14 @@
 		 * Initialization general scripts for all pages
 		/* ---------------------------------------------- */
 
-		var moduleHero      = $('#hero'),
-			overlayMenu     = $('#overlay-menu'),
-			slider          = $('#slides'),
-			navbar          = $('.navbar-custom'),
-			filters         = $('#filters'),
-			worksgrid       = $('#works-grid'),
-			modules         = $('.module-hero, .module, .module-small'),
-			windowWidth     = Math.max($(window).width(), window.innerWidth),
+		var moduleHero = $('#hero'),
+			overlayMenu = $('#overlay-menu'),
+			slider = $('#slides'),
+			navbar = $('.navbar-custom'),
+			filters = $('#filters'),
+			worksgrid = $('#works-grid'),
+			modules = $('.module-hero, .module, .module-small'),
+			windowWidth = Math.max($(window).width(), window.innerWidth),
 			navbatTrans,
 			mobileTest;
 
@@ -42,7 +42,8 @@
 		 * Mobile detect
 		/* ---------------------------------------------- */
 
-		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+				navigator.userAgent)) {
 			mobileTest = true;
 		} else {
 			mobileTest = false;
@@ -65,7 +66,8 @@
 
 		modules.each(function() {
 			if ($(this).attr('data-background')) {
-				$(this).css('background-image', 'url(' + $(this).attr('data-background') + ')');
+				$(this).css('background-image', 'url(' + $(this).attr(
+					'data-background') + ')');
 			}
 		});
 
@@ -74,7 +76,9 @@
 		/* ---------------------------------------------- */
 
 		if (mobileTest === true) {
-			$('.module-parallax').css({'background-attachment': 'scroll'});
+			$('.module-parallax').css({
+				'background-attachment': 'scroll'
+			});
 		} else {
 			$('#hero.module-parallax').parallax('50%', 0.2);
 		}
@@ -97,7 +101,7 @@
 		 * Youtube video background
 		/* ---------------------------------------------- */
 
-		$(function(){
+		$(function() {
 			$('.video-player').mb_YTPlayer();
 		});
 
@@ -149,7 +153,10 @@
 		});
 
 		function showMenu() {
-			navbar.animate({'opacity': 0, 'top': -80}, {
+			navbar.animate({
+				'opacity': 0,
+				'top': -80
+			}, {
 				duration: 150,
 				easing: 'easeInOutQuart'
 			});
@@ -158,7 +165,10 @@
 		}
 
 		function hideMenu() {
-			navbar.animate({'opacity': 1, 'top': 0}, {
+			navbar.animate({
+				'opacity': 1,
+				'top': 0
+			}, {
 				duration: 150,
 				easing: 'easeInOutQuart'
 			});
@@ -172,12 +182,21 @@
 
 		$('#nav > li.slidedown > a').on('click', function() {
 			if ($(this).attr('class') != 'active') {
-				$('#nav li ul').slideUp({duration: 300, easing: 'easeInOutQuart'});
+				$('#nav li ul').slideUp({
+					duration: 300,
+					easing: 'easeInOutQuart'
+				});
 				$('#nav li a').removeClass('active');
-				$(this).next().slideToggle({duration: 300, easing: 'easeInOutQuart'}).addClass('open');
+				$(this).next().slideToggle({
+					duration: 300,
+					easing: 'easeInOutQuart'
+				}).addClass('open');
 				$(this).addClass('active');
 			} else {
-				$('#nav li ul').slideUp({duration: 300, easing: 'easeInOutQuart'}).removeClass('open');
+				$('#nav li ul').slideUp({
+					duration: 300,
+					easing: 'easeInOutQuart'
+				}).removeClass('open');
 				$(this).removeClass('active');
 			}
 			return false;
@@ -202,28 +221,28 @@
 
 		$(window).on('resize', function() {
 
-			var windowWidth    = Math.max($(window).width(), window.innerWidth),
-				itemWidht      = $('.grid-sizer').width(),
-				itemHeight     = Math.floor(itemWidht * 0.95),
+			var windowWidth = Math.max($(window).width(), window.innerWidth),
+				itemWidht = $('.grid-sizer').width(),
+				itemHeight = Math.floor(itemWidht * 0.95),
 				itemTallHeight = itemHeight;
 
 			if (windowWidth > 500) {
 				$('.work-item', worksgrid).each(function() {
 					if ($(this).hasClass('tall')) {
 						$(this).css({
-							height : itemTallHeight
+							height: itemTallHeight
 						});
 					} else if ($(this).hasClass('wide')) {
 						$(this).css({
-							height : itemHeight
+							height: itemHeight
 						});
 					} else if ($(this).hasClass('wide-tall')) {
 						$(this).css({
-							height : itemTallHeight
+							height: itemTallHeight
 						});
 					} else {
 						$(this).css({
-							height : itemHeight
+							height: itemHeight
 						});
 					}
 				});
@@ -231,19 +250,19 @@
 				$('.work-item', worksgrid).each(function() {
 					if ($(this).hasClass('tall')) {
 						$(this).css({
-							height : itemTallHeight
+							height: itemTallHeight
 						});
 					} else if ($(this).hasClass('wide')) {
 						$(this).css({
-							height : itemHeight / 2
+							height: itemHeight / 2
 						});
 					} else if ($(this).hasClass('wide-tall')) {
 						$(this).css({
-							height : itemHeight
+							height: itemHeight
 						});
 					} else {
 						$(this).css({
-							height : itemHeight
+							height: itemHeight
 						});
 					}
 				});
@@ -277,7 +296,7 @@
 		 * Google Map
 		/* ---------------------------------------------- */
 
-		var mapLocation = new google.maps.LatLng(34.031428,-118.2071542,17);
+		var mapLocation = new google.maps.LatLng(34.031428, -118.2071542, 17);
 
 		var $mapis = $('#map');
 
@@ -285,16 +304,126 @@
 
 			var map;
 			map = new GMaps({
-				streetViewControl : true,
+				streetViewControl: true,
 				overviewMapControl: true,
 				mapTypeControl: true,
-				zoomControl : true,
-				panControl : true,
+				zoomControl: true,
+				panControl: true,
 				scrollwheel: false,
 				center: mapLocation,
 				el: '#map',
 				zoom: 16,
-				styles: [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#000000"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":17}]}]
+				styles: [{
+					"featureType": "all",
+					"elementType": "labels.text.fill",
+					"stylers": [{
+						"saturation": 36
+					}, {
+						"color": "#000000"
+					}, {
+						"lightness": 40
+					}]
+				}, {
+					"featureType": "all",
+					"elementType": "labels.text.stroke",
+					"stylers": [{
+						"visibility": "on"
+					}, {
+						"color": "#000000"
+					}, {
+						"lightness": 16
+					}]
+				}, {
+					"featureType": "all",
+					"elementType": "labels.icon",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "administrative",
+					"elementType": "geometry.fill",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 20
+					}]
+				}, {
+					"featureType": "administrative",
+					"elementType": "geometry.stroke",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 17
+					}, {
+						"weight": 1.2
+					}]
+				}, {
+					"featureType": "landscape",
+					"elementType": "geometry",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 20
+					}]
+				}, {
+					"featureType": "poi",
+					"elementType": "geometry",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 21
+					}]
+				}, {
+					"featureType": "road.highway",
+					"elementType": "geometry.fill",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 17
+					}]
+				}, {
+					"featureType": "road.highway",
+					"elementType": "geometry.stroke",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 29
+					}, {
+						"weight": 0.2
+					}]
+				}, {
+					"featureType": "road.arterial",
+					"elementType": "geometry",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 18
+					}]
+				}, {
+					"featureType": "road.local",
+					"elementType": "geometry",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 16
+					}]
+				}, {
+					"featureType": "transit",
+					"elementType": "geometry",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 19
+					}]
+				}, {
+					"featureType": "water",
+					"elementType": "geometry",
+					"stylers": [{
+						"color": "#000000"
+					}, {
+						"lightness": 17
+					}]
+				}]
 			});
 
 			var image = new google.maps.MarkerImage('assets/images/map-icon.png',
@@ -321,10 +450,10 @@
 		var pageNumber = 0,
 			workNumberToload = 5;
 
-		var doneText    = 'Done',
-			loadText    = 'More works',
+		var doneText = 'Done',
+			loadText = 'More works',
 			loadingText = 'Loading...',
-			errorText   = 'Error! Check the console for more information.';
+			errorText = 'Error! Check the console for more information.';
 
 		/* ---------------------------------------------- /*
 		 * Ajax portfolio
@@ -344,7 +473,8 @@
 
 		function ajaxLoad(workNumberToload, pageNumber) {
 			var $loadButton = $('#show-more');
-			var dataString = 'numPosts=' + workNumberToload + '&pageNumber=' + pageNumber;
+			var dataString = 'numPosts=' + workNumberToload + '&pageNumber=' +
+				pageNumber;
 
 			$.ajax({
 				type: 'GET',
@@ -354,7 +484,7 @@
 				success: function(data) {
 					var $data = $(data);
 					var start_index = (pageNumber - 1) * workNumberToload;
-					var end_index = + start_index + workNumberToload;
+					var end_index = +start_index + workNumberToload;
 
 					if ($data.find('.work-item').slice(start_index).length) {
 						var work = $data.find('.work-item').slice(start_index, end_index);
@@ -369,7 +499,7 @@
 							$loadButton.text(doneText);
 						}, 300);
 
-						setTimeout(function () {
+						setTimeout(function() {
 							$('#show-more').animate({
 								opacity: 0,
 							}).css('display', 'none');
@@ -377,7 +507,7 @@
 					}
 				},
 
-				error: function (jqXHR, textStatus, errorThrown) {
+				error: function(jqXHR, textStatus, errorThrown) {
 					console.log(jqXHR + " :: " + textStatus + " :: " + errorThrown);
 
 					setTimeout(function() {
@@ -404,26 +534,30 @@
 		/* ---------------------------------------------- */
 
 		$('.slider-testimonials').owlCarousel({
-			stopOnHover:     !0,
-			singleItem:      !0,
-			autoHeight:      !0,
-			slideSpeed:      400,
+			stopOnHover: !0,
+			singleItem: !0,
+			autoHeight: !0,
+			slideSpeed: 400,
 			paginationSpeed: 1000,
-			goToFirstSpeed:  2000,
-			autoPlay:        3000,
-			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+			goToFirstSpeed: 2000,
+			autoPlay: 3000,
+			navigationText: ['<i class="fa fa-angle-left"></i>',
+				'<i class="fa fa-angle-right"></i>'
+			],
 		});
 
 		$('.slider-images').owlCarousel({
-			stopOnHover:     !0,
-			singleItem:      !0,
-			autoHeight:      !0,
-			navigation:      !0,
-			slideSpeed:      400,
+			stopOnHover: !0,
+			singleItem: !0,
+			autoHeight: !0,
+			navigation: !0,
+			slideSpeed: 400,
 			paginationSpeed: 1000,
-			goToFirstSpeed:  2000,
-			autoPlay:        3000,
-			navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+			goToFirstSpeed: 2000,
+			autoPlay: 3000,
+			navigationText: ['<i class="fa fa-angle-left"></i>',
+				'<i class="fa fa-angle-right"></i>'
+			],
 		});
 
 		/* ---------------------------------------------- /*
@@ -439,7 +573,7 @@
 			gallery: {
 				enabled: true,
 				navigateByImgClick: true,
-				preload: [0,1]
+				preload: [0, 1]
 			},
 			image: {
 				titleSrc: 'title',
@@ -454,16 +588,30 @@
 		$('.progress-bar').each(function(i) {
 			$(this).appear(function() {
 				var percent = $(this).attr('aria-valuenow');
-				$(this).animate({'width' : percent + '%'});
-				$(this).find('span').animate({'opacity' : 1}, 900);
-				$(this).find('span').countTo({from: 0, to: percent, speed: 900, refreshInterval: 30});
+				$(this).animate({
+					'width': percent + '%'
+				});
+				$(this).find('span').animate({
+					'opacity': 1
+				}, 900);
+				$(this).find('span').countTo({
+					from: 0,
+					to: percent,
+					speed: 900,
+					refreshInterval: 30
+				});
 			});
 		});
 
 		$('.counter-item').each(function(i) {
 			$(this).appear(function() {
 				var number = $(this).find('.counter-number').data('number');
-				$(this).find('.counter-number span').countTo({from: 0, to: number, speed: 1200, refreshInterval: 30});
+				$(this).find('.counter-number span').countTo({
+					from: 0,
+					to: number,
+					speed: 1200,
+					refreshInterval: 30
+				});
 			});
 		});
 
@@ -510,7 +658,9 @@
 		});
 
 		$('a[href="#totop"]').click(function() {
-			$('html, body').animate({ scrollTop: 0 }, 'slow');
+			$('html, body').animate({
+				scrollTop: 0
+			}, 'slow');
 			return false;
 		});
 
