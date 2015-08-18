@@ -30,9 +30,9 @@ var jsFilesToInject = [
   'assets/bootstrap/js/bootstrap.min.js',
 
   // Dependencies like jQuery, or Angular are brought in here
-  'js/dependencies/**/*.js',
+  'js/dependencies/**/*.js'
 
-  'js/viewer-built.js'
+
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
   //'js/**/*.js'
