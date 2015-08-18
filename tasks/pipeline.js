@@ -15,27 +15,33 @@
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'assets/bootstrap/css/bootstrap.min.css',
-  'assets/css/**/*.css'
+  'styles/ux/**/*.css'
 ];
 
 
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
-  
-  // Load sails.io before everything else
-  //'js/dependencies/sails.io.js',
-  'assets/js/jquery-2.1.3.min.js',
-  'assets/bootstrap/js/bootstrap.min.js',
-
-  // Dependencies like jQuery, or Angular are brought in here
-  'js/dependencies/**/*.js'
-
-
-  // All of the rest of your client-side js files
-  // will be injected here in no particular order.
-  //'js/**/*.js'
+  	// non angular - ux js 
+    'js/src/ux/jquery-2.1.3.js',
+	'js/src/ux/bootstrap/js/bootstrap.js',
+	'js/src/ux/jquery.superslides.js',
+	'js/src/ux/jquery.mb.YTPlayer.js',
+	'js/src/ux/jquery.magnific-popup.js',
+	'js/src/ux/owl.carousel.js',
+	'js/src/ux/jquery.simple-text-rotator.js',
+	'js/src/ux/imagesloaded.pkgd.js',
+	'js/src/ux/isotope.pkgd.js',
+	'js/src/ux/packery-mode.pkgd.js',
+	'js/src/ux/appear.js',
+	'js/src/ux/jquery.easing.1.3.js',
+	'js/src/ux/wow.js',
+	'js/src/ux/jqBootstrapValidation.js',
+	'js/src/ux/jquery.fitvids.js',
+	'js/src/ux/jquery.parallax-1.1.3.js',
+	'js/src/ux/smoothscroll.js',
+	'js/src/ux/contact.js',
+	'js/src/ux/custom.js',
 ];
 
 
