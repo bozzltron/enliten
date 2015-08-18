@@ -1,1 +1,1 @@
-web: node app.js --prod
+web: ./node_modules/nodemon/bin/nodemon.js app.js --prod

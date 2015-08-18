@@ -5,8 +5,7 @@ module.exports = function(grunt) {
 		builder: {
 			options: {
 				browserifyOptions: {
-					debug: true,
-					command: 'uglifyjs'
+					debug: true
 				}
 			},
 			// A single entry point for our app
@@ -18,8 +17,7 @@ module.exports = function(grunt) {
 		viewer: {
 			options: {
 				browserifyOptions: {
-					debug: true,
-					command: 'uglifyjs'
+					debug: true
 				}
 			},
 			// A single entry point for our app
