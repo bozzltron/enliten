@@ -7,6 +7,9 @@ angular.module('enlighten.services.step', ['ngResource'])
     }, {
         update: {
             method: 'Put'
+        },
+        delete: {
+        	method: 'Delete'
         }
     });
 });

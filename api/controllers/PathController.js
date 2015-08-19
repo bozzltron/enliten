@@ -177,7 +177,7 @@ module.exports = {
 
 	preview: function(req, res) {
 
-		var fullUrl = "https://enliten-resizer.herokuapp.com/query?&url=" + req.query
+		var fullUrl = "https://enliten-resizer.herokuapp.com/query?width=1280&height=720&url=" + req.query
 			.url;
 		var datauri = "";
 

@@ -73,12 +73,12 @@ module.exports = {
     },
 
     generateThunbnail: function(step, cb) {
-
+        console.log("generating thumbnail");
         // Let's generate a thumbnail for this path
         // if this is step 1
         if (step.order == 1) {
             var thumbnail = null;
-
+            console.log("this is step one");
             // If this step has a thumbnail, lets use that
             if (step.iurl) {
                 thumbnail = step.iurl;
@@ -148,7 +148,10 @@ module.exports = {
                 cb();
             });
 
+        } else {
+            cb();
         }
+
 
     }
 };

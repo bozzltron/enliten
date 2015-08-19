@@ -184,13 +184,15 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 
 		var answer = confirm(" Are you sure you want to delete this step ?");
 		if (answer) {
+
 			// Remove this step
-			$scope.path.steps.splice($scope.index - 1, 1);
+			$scope.index = parseInt($routeParams.step, 10);
+
 
 			// Persist to the server
-			Path.update($scope.path, function(res) {
+			Step.delete($scope.step, function(res) {
 
-				window.location.hash = '#/editor/summary/' + $scope.path.id;
+				window.location.hash = '#/editor/summary/' + $scope.step.id;
 				flash.success = "The step has been remove.";
 
 			});
