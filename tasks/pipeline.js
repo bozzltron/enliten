@@ -15,33 +15,44 @@
 // (if you're using LESS with the built-in default config, you'll want
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
-  'styles/ux/**/*.css'
+    'styles/ux/fonts.css',
+    'styles/ux/bootstrap.css',
+    'styles/ux/font-awesome.css',
+    'styles/ux/ionicons.css',
+    'styles/ux/simpletextrotator.css',
+    'styles/ux/magnific-popup.css',
+    'styles/ux/owl.carousel.css',
+    'styles/ux/superslides.css',
+    'styles/ux/vertical.css',
+    'styles/ux/animate.css',
+    'styles/ux/style.css',
+    'styles/ux/enliten.css'
 ];
 
 
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
-  	// non angular - ux js 
+    // non angular - ux js
     'js/src/ux/jquery-2.1.3.js',
-	'js/src/ux/bootstrap/js/bootstrap.js',
-	'js/src/ux/jquery.superslides.js',
-	'js/src/ux/jquery.mb.YTPlayer.js',
-	'js/src/ux/jquery.magnific-popup.js',
-	'js/src/ux/owl.carousel.js',
-	'js/src/ux/jquery.simple-text-rotator.js',
-	'js/src/ux/imagesloaded.pkgd.js',
-	'js/src/ux/isotope.pkgd.js',
-	'js/src/ux/packery-mode.pkgd.js',
-	'js/src/ux/appear.js',
-	'js/src/ux/jquery.easing.1.3.js',
-	'js/src/ux/wow.js',
-	'js/src/ux/jqBootstrapValidation.js',
-	'js/src/ux/jquery.fitvids.js',
-	'js/src/ux/jquery.parallax-1.1.3.js',
-	'js/src/ux/smoothscroll.js',
-	'js/src/ux/contact.js',
-	'js/src/ux/custom.js',
+    'js/src/ux/bootstrap/js/bootstrap.js',
+    'js/src/ux/jquery.superslides.js',
+    'js/src/ux/jquery.mb.YTPlayer.js',
+    'js/src/ux/jquery.magnific-popup.js',
+    'js/src/ux/owl.carousel.js',
+    'js/src/ux/jquery.simple-text-rotator.js',
+    'js/src/ux/imagesloaded.pkgd.js',
+    'js/src/ux/isotope.pkgd.js',
+    'js/src/ux/packery-mode.pkgd.js',
+    'js/src/ux/appear.js',
+    'js/src/ux/jquery.easing.1.3.js',
+    'js/src/ux/wow.js',
+    'js/src/ux/jqBootstrapValidation.js',
+    'js/src/ux/jquery.fitvids.js',
+    'js/src/ux/jquery.parallax-1.1.3.js',
+    'js/src/ux/smoothscroll.js',
+    'js/src/ux/contact.js',
+    'js/src/ux/custom.js',
 ];
 
 
@@ -55,7 +66,7 @@ var jsFilesToInject = [
 // templates get spit out to the same file.  Be sure and check out `tasks/README.md`
 // for information on customizing and installing new tasks.
 var templateFilesToInject = [
-  //'templates/**/*.html'
+    //'templates/**/*.html'
 ];
 
 
@@ -64,11 +75,11 @@ var templateFilesToInject = [
 // (i.e. where the other Grunt tasks spit them out, or in some cases, where
 // they reside in the first place)
 module.exports.cssFilesToInject = cssFilesToInject.map(function(path) {
-  return '.tmp/public/' + path;
+    return '.tmp/public/' + path;
 });
 module.exports.jsFilesToInject = jsFilesToInject.map(function(path) {
-  return '.tmp/public/' + path;
+    return '.tmp/public/' + path;
 });
 module.exports.templateFilesToInject = templateFilesToInject.map(function(path) {
-  return 'assets/' + path;
+    return 'assets/' + path;
 });

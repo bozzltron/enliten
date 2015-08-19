@@ -16,7 +16,7 @@ footer .progress {
  position:absolute;
  display:inline-block;
  top:32px;
- left:auto;
+ left:42%;
  z-index:1000000;
  padding:5px 10px;
 }
@@ -75,7 +75,7 @@ footer .progress {
 	font-size:30px;
 	color:#a567d6;
 	background-color:#fff;
- 	padding:2px 5px 1px 5px;	
+ 	padding:2px 5px 1px 5px;
 }
 
 .fa-arrow-left {
@@ -103,8 +103,8 @@ footer .progress {
 }
 
 .vertical {
-	
-	
+
+
 }
 
 .vertical-intro{
@@ -127,7 +127,7 @@ footer .progress {
 	border-top:#eee 2px solid;
 	border-bottom:#eee 2px solid;
 	max-height:500px;
-	overflow: scroll;	
+	overflow: scroll;
 }
 
 .vertical-step-menu {
@@ -153,32 +153,32 @@ td {
     -webkit-transition: opacity 0.5s ease-in; //for chrome, safari
     -moz-transition: opacity 0.5s ease-in; //for mozilla firefox
     -ms-transition: opacity 0.5s ease-in;
-    -o-transition: opacity 0.5s ease-in; //for opera   
+    -o-transition: opacity 0.5s ease-in; //for opera
     transition: opacity 0.5s ease-in;
 }
 
 .fadein, .fadein * {
-	opacity: 1;    
+	opacity: 1;
 }
 
 .fadeout, fadeout * {
-	opacity: 0;    
+	opacity: 0;
 }
 
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
- 
+
 .fade-in *  {
 
     -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
     -moz-animation:fadeIn ease-in 1;
     animation:fadeIn ease-in 1;
- 
+
     -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
     -moz-animation-fill-mode:forwards;
     animation-fill-mode:forwards;
- 
+
     -webkit-animation-duration:0.4s;
     -moz-animation-duration:0.4s;
     animation-duration:0.4s;
@@ -187,13 +187,13 @@ td {
 
 @media (min-width: 1200px) {
 	.container {
-		
+
 	}
 }
 
 @media (min-width: 992px) {
 	.container {
-		
+
 	}
 }
 
@@ -205,7 +205,7 @@ td {
 		height:700px;
 	}
 
-}	
+}
 
 @media (min-width: 550px) {
 	.complete-icon {
@@ -220,5 +220,3 @@ td {
 		position: relative;
 	}
 }
-
-
