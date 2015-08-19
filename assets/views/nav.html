@@ -17,14 +17,14 @@
       <img class="gravatar hidden-xs" ng-show="profile.hash" ng-src="http://www.gravatar.com/avatar/{{profile.hash}}" />
       <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
-              <li ng-hide="profile.username"><a class="navbar-close" data-toggle="dropdown" href="/admin/#/login">Log In <b ng-show="profile.username" class="caret"></b></a></li>
+              <li ng-hide="profile.username"><a class="navbar-close" data-toggle="dropdown" href="#/login">Log In <b ng-show="profile.username" class="caret"></b></a></li>
               <li ng-show="profile.username">
                 <a data-toggle="dropdown" href="javascript:;">
                     {{profile.username}} <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
-                    <li class="navbar-close" ng-show="profile.username"><a href="/admin/#/profile">Profile</a></li>
-                    <li class="navbar-close" ng-show="profile.username"><a href="/admin/#/logout">Logout</a>
+                    <li class="navbar-close" ng-show="profile.username"><a href="#/profile">Profile</a></li>
+                    <li class="navbar-close" ng-show="profile.username"><a href="#/logout">Logout</a>
                 </ul>
               </li>
           </li>
