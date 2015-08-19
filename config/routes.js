@@ -41,10 +41,6 @@ module.exports.routes = {
         view: 'admin',
     },
 
-    'get /builder': {
-        view: 'builder'
-    },
-
     'post /login': {
         controller: 'user',
         action: 'login'
@@ -94,16 +90,6 @@ module.exports.routes = {
         controller: 'path',
         action: 'preview'
     },
-    //
-    // 'get /migrate': {
-    //     controller: 'path',
-    //     action: 'migrate'
-    // },
-    //
-    // 'get /clean': {
-    //     controller: 'path',
-    //     action: 'clean'
-    // },
 
     'get /walk/:path': {
         controller: 'path',
