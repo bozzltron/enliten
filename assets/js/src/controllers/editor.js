@@ -24,7 +24,7 @@ module.controller('EditorController', function($scope, Profile, Path, Step,
 
 			path.user = $scope.profile.id;
 			Path.update(path, function(res) {
-				window.location.hash = '/admin/#/editor/summary/' + res.id;
+				window.location.hash = '#/editor/summary/' + res.id;
 				flash.success = "Your path has been saved.";
 			});
 

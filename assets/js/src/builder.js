@@ -1,7 +1,8 @@
 // This will include ./node_modules/angular/angular.js
 // and give us access to the `angular` global object.
 require('./bower_components/jquery/dist/jquery');
-require('./bower_components/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min');
+require(
+	'./bower_components/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min');
 require('./bower_components/bootstrap/dist/js/bootstrap');
 require('./bower_components/angular/angular');
 require('./bower_components/angular-route/angular-route');

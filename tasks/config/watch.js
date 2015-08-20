@@ -15,6 +15,10 @@
 module.exports = function(grunt) {
 
 	grunt.config.set('watch', {
+		angular: {
+			files: ['assets/js/src/**/*.js'],
+			tasks: ['browserify']
+		},
 		api: {
 
 			// API files to watch:
@@ -27,10 +31,6 @@ module.exports = function(grunt) {
 
 			// When assets are changed:
 			tasks: ['syncAssets', 'linkAssets']
-		},
-		angular: {
-			files: ['assets/js/**/*.js'],
-			tasks: ['browserify']
 		}
 	});
 

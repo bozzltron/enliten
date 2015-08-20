@@ -1,5 +1,6 @@
 // Viewer
 require('./bower_components/angular/angular');
+require('./bower_components/angular-cookies/angular-cookies');
 require("./controllers/viewer");
 
 // Create your app

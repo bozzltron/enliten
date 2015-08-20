@@ -32,20 +32,16 @@
                 </div>
                 <!-- /MODULE TITLE -->
 
-                <div class="row multi-columns-row">
-
-                    <div class="col-sm-4">
-
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <p class="text-center"><button data-step="0" ng-click="vc.next()" type="submit" class="btn-block btn btn-g btn-round btn-lg"><i class="fa fa-play"></i> Start</button>
                     </div>
+                </div>
 
-                    <div class="col-sm-4">
-                        <p><button data-step="0" ng-click="vc.next()" type="submit" class="pull-right btn btn-g btn-round btn-lg">Continue</button>
+                <div  ng-if="resume == true" class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <p class="text-center"><button ng-click="vc.resume()" class="btn-block btn btn-g btn-round btn-lg"><i class="fa fa-fast-forward"></i> Pick Up Where You Left Off</button></p>
                     </div>
-
-                    <div class="col-sm-4">
-
-                    </div>
-
                 </div>
 
             </div>
@@ -73,28 +69,7 @@
                         <p class="lead">{{step.description}}</p>
 
                         <div>
-                            <button ng-click="vc.next()" class="pull-right btn btn-g btn-round btn-lg">Continue</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="hidden row step fadeInRight animated">
-                    <div class="col-sm-12">
-
-                        <a target="_blank" ng-if="nextstep.type == 'Url'" ng-href="{{nextstep.url}}">
-                            <img ng-if="step.type == 'Url'" style="margin:auto" class="margin-auto img-responsive" ng-src="{{nextstep.iurl}}"/>
-                        </a>
-
-                        <div ng-if="nextstep.type == 'Embed code'" ng-bind-html="nextstep.url" class="embed-responsive embed-responsive-16by9" >
-
-                        </div>
-                        <a class="text-center" ng-if="nextstep.type == 'Photo'" ng-href="{{nextstep.url}}" target="_blank"><img ng-if="nextstep.type == 'Photo'" class="margin-auto img-responsive" ng-src="{{nextstep.iurl}}" /></a>
-
-                        <h2 class="animated">{{nextstep.name}}</h2>
-                        <p class="lead">{{nextstep.description}}</p>
-
-                        <div>
-                            <button ng-click="vc.next()" class="pull-right btn btn-g btn-round btn-lg">Continue</button>
+                            <button ng-click="vc.next()" class="pull-right btn btn-g btn-round btn-lg"><i class="fa fa-step-forward"></i> Continue</button>
                         </div>
                     </div>
                 </div>
