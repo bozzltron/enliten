@@ -6,8 +6,8 @@
 
 	    <div class="btn-group">
 		    <a ng-show="profile.id == path.user" class="btn btn-warning" href="/admin/#/editor/summary/{{path.id}}">Edit</a>
-			<a class="btn btn-primary" href="/#/path/{{path.id}}/step/1"><i class="fa fa-arrows-h"></i> Slideshow View</a>
-		    <a class="btn btn-success" href="/#/path/{{path.id}}/vertical"><i class="fa fa-arrows-v"></i> Flow View</a>
+			<a class="btn btn-primary" href="/admin/#/path/{{path.id}}/step/1"><i class="fa fa-arrows-h"></i> Slideshow View</a>
+		    <a class="btn btn-success" href="/admin/#/path/{{path.id}}/vertical"><i class="fa fa-arrows-v"></i> Flow View</a>
 	   		<a ng-show="status.step && !status.isCompleted" class="btn btn-primary" href="/#/path/{{path.id}}/step/{{status.step}}">Continue where you left off</a>
 	    </div>
 

@@ -177,7 +177,9 @@ module.exports = {
 
 	preview: function(req, res) {
 
-		var fullUrl = "https://enliten-resizer.herokuapp.com/query?width=1280&height=720&url=" + req.query
+		var fullUrl =
+			"https://enliten-resizer.herokuapp.com/query?width=1280&height=720&url=" +
+			req.query
 			.url;
 		var datauri = "";
 
@@ -250,7 +252,7 @@ module.exports = {
 
 	},
 
-	walk: function(req, res) {
+	explore: function(req, res) {
 
 		Path.findOne({
 			id: req.param("path")
@@ -279,7 +281,7 @@ module.exports = {
 			} else {
 
 				res.locals.layout = 'vortex';
-				res.view('walk', {
+				res.view('explore', {
 					path: path,
 					step: null
 				});

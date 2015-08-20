@@ -91,14 +91,14 @@ module.exports.routes = {
         action: 'preview'
     },
 
-    'get /walk/:path': {
+    'get /explore/:path': {
         controller: 'path',
-        action: 'walk'
+        action: 'explore'
     },
 
-    'get /walk/:path/:step': {
+    'get /explore/:path/:step': {
         controller: 'path',
-        action: 'walk'
+        action: 'explore'
     },
 
     'get /step/query': {
