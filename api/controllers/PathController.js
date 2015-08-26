@@ -251,7 +251,7 @@ module.exports = {
 
 		Path.findOne({
 			id: req.param("path")
-		}).exec(function(err, path) {
+		}).populate('steps', { limit: 100, sort: 'order ASC' }).exec(function(err, path) {
 
 			// we now have a model with instance methods attached
 			if (err) res.json({

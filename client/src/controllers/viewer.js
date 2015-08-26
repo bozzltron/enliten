@@ -5,6 +5,7 @@ var module = angular.module('enliten-viewer.controllers.viewer', [
 module.controller('ViewerController', function($scope, $http, $cookies) {
 
     $scope.index = 1;
+    $scope.resume = false;
 
     var controller = this;
     $('#enliten-viewer').swipe({
@@ -22,6 +23,12 @@ module.controller('ViewerController', function($scope, $http, $cookies) {
         },
         threshold: 150
     });
+
+    // check for a progress cookie
+    var status = $cookies.get(window.path);
+    if (status !== undefined) {
+        $scope.resume = true;
+    }
 
     // Handle getting the next step
     this.next = function() {
@@ -94,12 +101,5 @@ module.controller('ViewerController', function($scope, $http, $cookies) {
         $scope.index = status;
         controller.next();
     };
-
-    $scope.resume = false;
-    // check for a progress cookie
-    var status = $cookies.get(window.path);
-    if (status !== undefined) {
-        $scope.resume = true;
-    }
 
 });

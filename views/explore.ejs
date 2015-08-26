@@ -44,6 +44,31 @@
                     </div>
                 </div>
 
+
+
+                <% _.each(path.steps, function(step) { %>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="media">
+                                      <div ng-if="step.iurl" class="media-left">
+                                        
+                                          <img class="media-object" ng-src="<%=step.iurl %>" alt="...">
+                                        
+                                      </div>
+                                      <div class="media-body">
+                                       
+                                            <h4 class="media-heading"><%= step.name %></h4>
+                                        
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                
+                <% }); %>
+
             </div>
 
         </section>
