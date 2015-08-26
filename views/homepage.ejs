@@ -100,77 +100,53 @@
 </section>
 <!-- /HERO -->
 
-<!-- PORTFOLIO -->
-<section id="portfolio" class="module">
+<!-- BLOG MASONRY -->
+<section class="module">
 
     <div class="container">
 
-        <!-- FILTER -->
-<!--         <div class="row">
+        <div id="posts-masonry" class="row posts-masonry">
 
-            <div class="col-sm-12">
-                <ul id="filters" class="filters font-alt">
-                    <li><a href="#" data-filter="*" class="current">All <sup><small>.355</small></sup></a></li>
-                    <li><a href="#" data-filter=".branding">Branding <sup><small>.78</small></sup></a></li>
-                    <li><a href="#" data-filter=".design">Design <sup><small>.123</small></sup></a></li>
-                    <li><a href="#" data-filter=".photo">Photo <sup><small>.144</small></sup></a></li>
-                    <li><a href="#" data-filter=".web">Web <sup><small>.140</small></sup></a></li>
-                </ul>
-            </div>
 
-        </div> -->
-        <!-- /FILTER -->
-
-        <!-- WORKS GRID -->
-        <div class="row">
-
-            <div id="works-grid" class="works-grid works-hover-w">
-
-                <!-- DO NOT DELETE THIS DIV -->
-                <div class="grid-sizer"></div>
 
                 <% paths.forEach(function(path){  %>
 
-                    <!-- PORTFOLIO ITEM -->
-                    <div class="work-item tall branding">
-                        <a href="/explore/<%= path.id %>">
-                            <% if(path.thumbnail) { %>
-                                <img src="<%= path.thumbnail %>" alt="">
-                            <% } else { %>
-                                <img src="http://tampabayparadeofhomes.com/wp-content/uploads/ngg_featured/placeholder-square.jpg" />
-                            <% } %>
-                            <div class="work-caption font-alt">
-                                <h3 class="work-title"><%= path.name %></h3>
-                                <div class="work-descr">
-                                    <%= path.description %>
-                                </div>
+                    <!-- POST -->
+                    <div class="col-sm-6 col-md-4 col-lg-4 m-b-60">
+                        <div class="post">
+                            <div class="post-media">
+                                <a href="/explore/<%= path.id %>">
+                                    <% if(path.thumbnail) { %>
+                                        <img src="<%= path.thumbnail %>" alt="">
+                                    <% } else { %>
+                                        <img src="http://tampabayparadeofhomes.com/wp-content/uploads/ngg_featured/placeholder-square.jpg" />
+                                    <% } %>
+                                </a>
                             </div>
-                        </a>
+                            <div class="post-meta font-alt">
+                                By <a href="#"><%= path.user %></a> / <%= path.createdAt %>
+                            </div>
+                            <div class="post-header">
+                                <h4 class="post-title font-alt">
+                                    <a href="/explore/<%= path.id %>"><%= path.name %></a>
+                                </h4>
+                            </div>
+                            <div class="post-entry">
+                                <p><%= path.description %></p>
+                            </div>
+                        </div>
                     </div>
-                    <!-- /PORTFOLIO ITEM -->
+                    <!-- /POST -->
+
 
                 <% }); %>
 
-
-            </div>
-
         </div>
-        <!-- /WORKS GRID -->
-
-        <!-- SHOW MORE -->
-<!--         <div class="row m-t-70 text-center wow fadeInUp">
-            <div class="col-sm-12">
-
-                <button id="show-more" class="btn btn-block btn-lg btn-g show-more">More works</button>
-
-            </div>
-        </div> -->
-        <!-- /SHOW MORE -->
 
     </div>
 
-</section>
-<!-- /PORTFOLIO -->
+</div>
+
 
 <!-- FOOTER -->
 <footer class="module bg-light">
@@ -200,22 +176,22 @@
 <a href="#totop"><i class="fa fa-angle-double-up"></i></a>
 </div>
 <!--SCRIPTS-->
-<script src="/js/src/ux/jquery-2.1.3.js"></script>
-<script src="/js/src/ux/jquery.superslides.js"></script>
-<script src="/js/src/ux/jquery.mb.YTPlayer.js"></script>
-<script src="/js/src/ux/jquery.magnific-popup.js"></script>
-<script src="/js/src/ux/owl.carousel.js"></script>
-<script src="/js/src/ux/jquery.simple-text-rotator.js"></script>
-<script src="/js/src/ux/imagesloaded.pkgd.js"></script>
-<script src="/js/src/ux/isotope.pkgd.js"></script>
-<script src="/js/src/ux/packery-mode.pkgd.js"></script>
-<script src="/js/src/ux/appear.js"></script>
-<script src="/js/src/ux/jquery.easing.1.3.js"></script>
-<script src="/js/src/ux/wow.js"></script>
-<script src="/js/src/ux/jqBootstrapValidation.js"></script>
-<script src="/js/src/ux/jquery.fitvids.js"></script>
-<script src="/js/src/ux/jquery.parallax-1.1.3.js"></script>
-<script src="/js/src/ux/smoothscroll.js"></script>
-<script src="/js/src/ux/contact.js"></script>
-<script src="/js/src/ux/custom.js"></script>
+<script src="/js/ux/jquery-2.1.3.js"></script>
+<script src="/js/ux/jquery.superslides.js"></script>
+<script src="/js/ux/jquery.mb.YTPlayer.js"></script>
+<script src="/js/ux/jquery.magnific-popup.js"></script>
+<script src="/js/ux/owl.carousel.js"></script>
+<script src="/js/ux/jquery.simple-text-rotator.js"></script>
+<script src="/js/ux/imagesloaded.pkgd.js"></script>
+<script src="/js/ux/isotope.pkgd.js"></script>
+<script src="/js/ux/packery-mode.pkgd.js"></script>
+<script src="/js/ux/appear.js"></script>
+<script src="/js/ux/jquery.easing.1.3.js"></script>
+<script src="/js/ux/wow.js"></script>
+<script src="/js/ux/jqBootstrapValidation.js"></script>
+<script src="/js/ux/jquery.fitvids.js"></script>
+<script src="/js/ux/jquery.parallax-1.1.3.js"></script>
+<script src="/js/ux/smoothscroll.js"></script>
+<script src="/js/ux/contact.js"></script>
+<script src="/js/ux/custom.js"></script>
 <!--SCRIPTS END-->

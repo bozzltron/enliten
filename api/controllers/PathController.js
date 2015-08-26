@@ -66,7 +66,6 @@ module.exports = {
 					paths.push(path.id);
 				});
 
-				console.log(paths);
 				Path.find({
 					id: paths
 				}).exec(function(err, status) {
@@ -89,11 +88,12 @@ module.exports = {
 
 	paths: function(req, res) {
 
+		req.query = req.query || {};
+		req.query.published = true;
+
 		if (!req.session.user) {
 
-			Path.find({
-				published: true
-			}).exec(function(err, paths) {
+			Path.find(req.query).exec(function(err, paths) {
 
 				// we now have a model with instance methods attached
 				if (err) res.json({
@@ -107,9 +107,7 @@ module.exports = {
 
 		} else {
 
-			Path.find({
-				published: true
-			}).exec(function(err, paths) {
+			Path.find(req.query).exec(function(err, paths) {
 
 				// we now have a model with instance methods attached
 				if (err) res.json({
@@ -131,12 +129,9 @@ module.exports = {
 					completed.forEach(function(path) {
 						complete.push(path.path);
 					});
-					console.log(complete);
 
 					paths.forEach(function(path) {
-						console.log(path.id);
 						if (_.contains(complete, path.id)) {
-							console.log("completed");
 							path.isCompleted = true;
 						}
 					});

@@ -9,7 +9,7 @@ module.exports = function(grunt) {
 				}
 			},
 			// A single entry point for our app
-			src: 'assets/js/src/builder.js',
+			src: 'client/src/builder.js',
 			// Compile to a single file to add a script tag for in your HTML
 			dest: 'assets/js/dist/builder-built.js',
 		},
@@ -21,7 +21,7 @@ module.exports = function(grunt) {
 				}
 			},
 			// A single entry point for our app
-			src: 'assets/js/src/viewer.js',
+			src: 'client/src/viewer.js',
 			// Compile to a single file to add a script tag for in your HTML
 			dest: 'assets/js/dist/viewer-built.js',
 		}

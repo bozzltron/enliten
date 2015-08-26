@@ -11,7 +11,10 @@
 		$('.page-loader').delay(350).fadeOut('slow');
 	});
 
+	var skip = 10;
+
 	$(document).ready(function() {
+
 
 		/* ---------------------------------------------- /*
 		 * Initialization general scripts for all pages
@@ -286,12 +289,72 @@
 		/* ---------------------------------------------- */
 
 		$('#posts-masonry').imagesLoaded(function() {
+
 			$('#posts-masonry').isotope({
 				layoutMode: 'masonry',
-				transitionDuration: '0.3s'
+				transitionDuration: '0.3s',
+				//itemSelector: ".post"
+			});
+
+			$('#posts-masonry').imagesLoaded(function() {
+
+				var gettingStuff = false;
+				$(window).scroll(function() {
+					var getMore = (window.innerHeight + window.scrollY) >= document.body
+						.offsetHeight - 800;
+					console.log(
+						'scroll', getMore
+					);
+
+					if (getMore && !gettingStuff) {
+
+						// set flag
+						gettingStuff = true;
+
+						// you're at the bottom of the page
+						$.get('/path?' + $.param({
+								skip: skip,
+								limit: 10
+							}),
+							function(paths) {
+								
+								console.log('paths', paths);
+								if (paths.length > 0) {
+
+									// inject new paths
+									var html = $("<div>");
+									$.each(paths, function(i, path) {
+
+										var template = $("#posts-masonry").children().first().clone();
+										console.log('template', template);
+										template.attr('style', '');
+										template.find(".post-title a").text(path.name);
+										template.find(".post-entry p").text(path.description);
+										template.find("img").attr('src', path.thumbnail);
+										template.find("a").attr('href', '/explore/' + path.id);
+										//html.append(template);
+										$("#posts-masonry").isotope('insert', $(template) ).resize();
+									});
+
+									//$("#posts-masonry").isotope('insert', $($(html).html()));
+									//$('#posts-masonry').isotope('reloadItems').isotope({ sortBy: 'original-order' });
+									
+									//$("#posts-masonry").isotope('reLayout');
+									//$("#posts-masonry").resize();
+
+									// increase offset
+									skip += 10;
+								}
+
+								// unset flag
+								gettingStuff = false;
+							});
+					}
+				});
+
 			});
 		});
-		
+
 		/* ---------------------------------------------- /*
 		 * Ajax options
 		/* ---------------------------------------------- */
