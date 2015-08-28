@@ -35,10 +35,10 @@
   },
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js server.js --prod",
-    "debug": "node debug app.js",
+    "debug": "node debug server.js",
     "test": "node ./node_modules/jasmine-node/bin/jasmine-node test"
   },
-  "main": "app.js",
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/michael.bosworth/enliten.git"
