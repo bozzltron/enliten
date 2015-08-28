@@ -159,6 +159,10 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 		// clear search
 		$scope.results = null;
 
+		// clear out data urls
+		if($scope.step.iurl.indexOf('base64') !== -1 ) {
+			$scope.step.iurl = null;
+		}
 
 		if ($scope.step.type == "Embed code") {
 			$("#preview").html($scope.step.url);

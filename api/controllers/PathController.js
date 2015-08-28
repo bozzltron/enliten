@@ -172,11 +172,66 @@ module.exports = {
 
 	preview: function(req, res) {
 
-		var fullUrl =
-			"https://enliten-resizer.herokuapp.com/query?width=1280&height=720&url=" +
-			req.query
-			.url;
-		var datauri = "";
+		var AWS = require('aws-sdk'); 
+		var http = require('http');
+		var s3 = new AWS.S3();
+		var fullUrl = "http://enliten-resizer.herokuapp.com/query?width=1280&height=720&url=" + req.query.url;
+		var datauri = "";	
+		var key = new Date().getTime() + '.png';
+
+		var fs = require('fs')
+		  , options
+
+		// options = {
+		//     host: 'enliten-resizer.herokuapp.com'
+		//   , port: 80
+		//   , path: '/query?width=1280&height=720&url=' + req.query.url
+		// }
+
+		// var request = http.get(options, function(res2){
+		//     var imagedata = ''
+		//     res2.setEncoding('binary')
+
+		//     res2.on('data', function(chunk){
+		//         imagedata += chunk
+		//     })
+
+		//     res2.on('end', function(){
+		//         fs.writeFile('.tmp/' + key, imagedata, 'binary', function(err){
+		//             if (err) throw err
+		//             console.log('File saved.');
+
+		// 	        var stream = fs.createReadStream('.tmp/' + key);
+		// 	        var file = fs.statSync('.tmp/' + key);
+		// 			var options = {
+		// 				Bucket: process.env.S3_BUCKET_NAME,
+		// 				Key: key,
+		// 				Body: stream,
+		// 				ACL: 'public-read',
+		// 				ContentType: 'image/png',
+		// 				ContentLength: file.size
+		// 			};
+		// 			console.log('s3 options', options, file);
+
+		// 			// stream the file to amazon
+		// 			s3.putObject(options, function(err, data) {
+		// 				if (err) {
+		// 					console.log("err", err);
+		// 					res.json({
+		// 						result: null,
+		// 						error: err
+		// 					});
+		// 				}
+		// 				console.log("upload results", data);
+		// 				res.send('https://s3-us-west-2.amazonaws.com/enliten/' + key);
+		// 			});
+
+		//         });
+
+
+		//     })
+
+		// })
 
 		request({
 			uri: fullUrl,
@@ -184,17 +239,28 @@ module.exports = {
 		}, function(error, response, body) {
 			if (!error && response.statusCode == 200) {
 
-				var data_uri_prefix = "data:" + response.headers["content-type"] +
-					";base64,";
-				//data:image/png;base64,
-				//console.log('body', body);
-				var buf = new Buffer(body, 'binary');
-				var image = buf.toString('base64');
+				var options = {
+					Bucket: process.env.S3_BUCKET_NAME,
+					Key: key,
+					Body: body,
+					ACL: 'public-read',
+					ContentType: 'image/png'	
+				};
+				console.log('s3 options', options);
 
-				image = data_uri_prefix + image;
-
-				//res.set('Content-Type', 'image/png');
-				res.send(image);
+				// stream the file to amazon
+				s3.putObject(options, function(err, data) {
+					if (err) {
+						console.log("err", err);
+						res.json({
+							result: null,
+							error: err
+						});
+					}
+					console.log("upload results", data);
+					var fileserver = process.env.NODE_ENV == "production" ? 'http://files.enliten.io' :'https://s3-us-west-2.amazonaws.com/enliten/';
+					res.send(fileserver + key);
+				});
 
 			}
 		});
