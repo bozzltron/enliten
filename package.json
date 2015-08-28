@@ -34,7 +34,7 @@
     "underscore": "^1.8.3"
   },
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js app.js --prod",
+    "start": "./node_modules/nodemon/bin/nodemon.js server.js --prod",
     "debug": "node debug app.js",
     "test": "node ./node_modules/jasmine-node/bin/jasmine-node test"
   },
