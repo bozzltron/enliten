@@ -160,7 +160,7 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 		$scope.results = null;
 
 		// clear out data urls
-		if($scope.step && $scope.step.iurl.indexOf('base64') !== -1 ) {
+		if($scope.step.iurl && $scope.step.iurl.indexOf('base64') !== -1 ) {
 			$scope.step.iurl = null;
 		}
 

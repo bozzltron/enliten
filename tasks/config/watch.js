@@ -16,7 +16,7 @@ module.exports = function(grunt) {
 
 	grunt.config.set('watch', {
 		angular: {
-			files: ['client/src/**/*.js'],
+			files: ['client/src/**/*'],
 			tasks: ['browserify']
 		},
 		api: {
