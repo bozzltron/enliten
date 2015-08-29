@@ -174,7 +174,7 @@ module.exports = {
 
 		var AWS = require('aws-sdk'); 
 		var http = require('http');
-		var s3 = new AWS.S3();
+		var s3 = new AWS.S3({endpoint:"https://s3-us-west-2.amazonaws.com"});
 		var fullUrl = "http://enliten-resizer.herokuapp.com/query?width=1280&height=720&url=" + req.query.url;
 		var datauri = "";	
 		var key = new Date().getTime() + '.png';
