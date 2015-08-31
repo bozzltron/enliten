@@ -1,4 +1,5 @@
 var assert = require('assert');
+var Q = require('q');
 
 describe('Step Model', function() {
 
@@ -29,7 +30,7 @@ describe('Step Model', function() {
             	assert.equal(pathResult.steps.length, 1);
         		assert.equal(pathResult.steps[0].order, 1);
         		assert.equal(pathResult.steps[0].name, 'step 2');
-        		var Q = require('q');
+        		
                 return Q.all([
                     Path.destroy({id:path.id}),
                     Step.destroy({id:step2.id})

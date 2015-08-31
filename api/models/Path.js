@@ -36,7 +36,7 @@ module.exports = {
 
     },
 
-    reorder: function(path, cb) {
+    reorder: function(path) {
 
         var toBeSaved = [];
 
@@ -54,31 +54,29 @@ module.exports = {
 
         var Promise = require('q');
 
-        // asynchronously update steps and return a promise
-        return Promise.spread(toBeSaved, function(step) {
-            return Step.update({
-                id: step.id
-            }, step);
-        });
+        if(toBeSaved.length > 0) {
+
+            // asynchronously update steps and return a promise
+            return Promise.spread(toBeSaved, function(step) {
+                return Step.update({
+                    id: step.id
+                }, step);
+            });
+
+        } else {
+            return Promise(undefined);
+        }
 
     },
 
-    cleanUpOrder: function(path, cb) {
+    cleanUpOrder: function(path) {
 
+        var id = typeof(path) == "String" ? path : path.id;
+        
         // Run cleanup and return a promise
-        if (typeof(path) == "String") {
-            return Path
-                .findOne({
-                    id: path
-                })
-                .populate("steps")
-                .then(function(path) {
-                    //act on result
-                    return Path.reorder(path);
-                });
-        } else {
-            return Path.findOne({
-                id: path.id
+        return Path
+            .findOne({
+                id: id
             })
             .populate("steps")
             .then(function(path) {
@@ -86,20 +84,39 @@ module.exports = {
                 return Path.reorder(path);
             });
 
+    },
+
+    saveSteps: function(path) {
+        
+        // handle manual order changes
+        var Promise = require('q');
+
+        if(path.steps) {
+        
+            // asynchronously update steps and return a promise
+            return Promise.spread(path.steps, function(step, i) {
+                console.log("confirm index", i);
+                step.order = i + 1;
+                return Step.update({
+                    id: step.id
+                }, step);   
+            });
+        } else {
+            return Promise(undefined);
         }
 
     },
 
-    saveSteps: function(path, cb) {
-        cb();
-    },
-
     afterUpdate: function(path, cb) {
-        this.saveSteps(path, cb);
-    },
 
-    afterCreate: function(path, cb) {
-        this.saveSteps(path, cb);
+        Path
+            .saveSteps(path)
+            .catch(function(err){
+                console.log(err);
+            })
+            .done(function(){
+                cb();
+            });
     }
 
 };
