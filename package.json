@@ -26,6 +26,7 @@
     "include-all": "~0.1.3",
     "mongodb": "^2.0.41",
     "nodemon": "^1.4.1",
+    "q": "^1.4.1",
     "rc": "~0.5.0",
     "request": "^2.60.0",
     "sails": "~0.11.0",
@@ -36,7 +37,9 @@
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js server.js --prod",
     "debug": "node debug server.js",
-    "test": "node ./node_modules/jasmine-node/bin/jasmine-node test"
+    "test-integration": "node ./node_modules/jasmine-node/bin/jasmine-node test",
+    "test": "mocha test/bootstrap.test.js test/unit/**/*.test.js",
+    "coverage": "istanbul cover -x \"**/config/**\" _mocha -- --timeout 5000 && istanbul report html"
   },
   "main": "server.js",
   "repository": {

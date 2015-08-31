@@ -33,6 +33,10 @@ module.exports.connections = {
       url: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/enliten/',
   },
 
+  test: {
+      adapter: 'sails-mongo',
+      url: process.env.MONGOLAB_URI || 'mongodb://localhost:27017/enliten-test/',
+  },
 
   /***************************************************************************
   *                                                                          *

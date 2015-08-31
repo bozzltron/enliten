@@ -153,5 +153,15 @@ module.exports = {
         }
 
 
+    },
+
+    destroyedRecords: function(destroyedRecords, cb) {
+
+        async.map(destroyedRecords, function(step , callback){
+            Path.cleanUpOrder(step.path, callback);
+        }, function(err, results){
+            cb();
+        })
+
     }
 };
