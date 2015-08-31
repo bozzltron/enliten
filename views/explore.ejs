@@ -88,7 +88,7 @@
                         <div ng-if="step.type == 'Embed code'" ng-bind-html="step.url" class="embed-responsive embed-responsive-16by9" >
 
                         </div>
-                        <a class="text-center" ng-if="step.type == 'Photo'" ng-href="{{step.url}}" target="_blank"><img ng-if="step.type == 'Photo'" class="margin-auto img-responsive" ng-src="{{step.iurl}}" /></a>
+                        <a class="text-center" ng-if="step.type == 'Photo'" ng-href="{{step.url}}" target="_blank"><img ng-if="step.type == 'Photo'" class="margin-auto img-responsive" ng-src="{{step.url}}" /></a>
 
                         <h2 class="animated">{{step.name}}</h2>
                         <p class="lead">{{step.description}}</p>
