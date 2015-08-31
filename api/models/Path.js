@@ -37,52 +37,60 @@ module.exports = {
     },
 
     reorder: function(path) {
-
+        
         var toBeSaved = [];
 
-        console.log("path steps", path.steps);
-        // find steps that need changing
-        path.steps.forEach(function(step, i) {
+        if(path && path.steps) {
 
-            // check for incorrect order
-            if (step.order != i + 1) {
-                step.order = i + 1;
-                toBeSaved.push(step);
+            // find steps that need changing
+            path.steps.forEach(function(step, i) {
+
+                // check for incorrect order
+                if (step.order != i + 1) {
+                    step.order = i + 1;
+                    toBeSaved.push(step);
+                }
+
+            });
+            
+            var Promise = require('q');
+
+            if(toBeSaved.length > 0) {
+
+                // asynchronously update steps and return a promise
+                return Promise.spread(toBeSaved, function(step) {
+                    return Step.update({
+                        id: step.id
+                    }, step);
+                });
+
             }
 
-        });
+        } 
 
-        var Promise = require('q');
-
-        if(toBeSaved.length > 0) {
-
-            // asynchronously update steps and return a promise
-            return Promise.spread(toBeSaved, function(step) {
-                return Step.update({
-                    id: step.id
-                }, step);
-            });
-
-        } else {
-            return Promise(undefined);
-        }
+        return Promise(undefined);
 
     },
 
     cleanUpOrder: function(path) {
+ 
+        if(path) {
 
-        var id = typeof(path) == "String" ? path : path.id;
-        
-        // Run cleanup and return a promise
-        return Path
-            .findOne({
-                id: id
-            })
-            .populate("steps")
-            .then(function(path) {
-                //act on result
-                return Path.reorder(path);
-            });
+            var id = typeof(path) === "string" ? path : path.id;
+            
+            // Run cleanup and return a promise
+            return Path
+                .findOne({ id: id })
+                .populate("steps")
+                .then(function(path) {
+    
+                    //act on result
+                    return Path.reorder(path);
+                });
+
+        } else {
+            return Promise(undefined);
+        }
 
     },
 
@@ -91,11 +99,10 @@ module.exports = {
         // handle manual order changes
         var Promise = require('q');
 
-        if(path.steps) {
+        if(path && path.steps) {
         
             // asynchronously update steps and return a promise
             return Promise.spread(path.steps, function(step, i) {
-                console.log("confirm index", i);
                 step.order = i + 1;
                 return Step.update({
                     id: step.id

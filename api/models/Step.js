@@ -135,7 +135,6 @@ module.exports = {
             }
 
             // we have to have a thumbnail by now, so lets update the Path
-            console.log("updating", step.path, thumbnail);
             Path.update({
                 id: step.path
             }, {
@@ -155,13 +154,26 @@ module.exports = {
 
     },
 
-    destroyedRecords: function(destroyedRecords, cb) {
+    afterDestroy: function(destroyedRecords, cb) {
 
-        async.map(destroyedRecords, function(step , callback){
-            Path.cleanUpOrder(step.path, callback);
-        }, function(err, results){
+        var Promise = require('q');
+
+        if(destroyedRecords) {
+            
+            // asynchronously update steps and return a promise
+            Promise.spread(destroyedRecords, function(step) {
+                return Path.cleanUpOrder(step.path);   
+            })
+            .catch(function(err){
+                console.log(err);
+            })
+            .done(function(){
+                cb();
+            }); 
+            
+        } else {
             cb();
-        })
+        }
 
     }
 };

@@ -31,9 +31,6 @@ describe('Path Model', function() {
                 ]);
 
             })
-            .catch(function(err){
-                console.log(err);
-            })
             .done(function(){
                 done();
             });
@@ -67,9 +64,6 @@ describe('Path Model', function() {
                     Step.destroy({id:path.steps[0].id}),
                     Step.destroy({id:path.steps[1].id})
                 ]);
-            })
-            .catch(function(err){
-                console.log(err);
             })
             .done(function(){
                 done();

@@ -25,6 +25,8 @@ before(function(done) {
 });
 
 after(function(done) {
+    //Path.destroy({});
+    //Step.destroy({});
     // here you can clear fixtures, etc.
     Sails.lower(done);
 });
