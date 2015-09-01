@@ -4,6 +4,7 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/#!documentation/models
  */
+var Promise = require('q');
 
 module.exports = {
 
@@ -154,15 +155,55 @@ module.exports = {
 
     },
 
-    afterDestroy: function(destroyedRecords, cb) {
+    deleteS3Image: function(step){
 
-        var Promise = require('q');
+        var AWS = require('aws-sdk'); 
+        var s3 = new AWS.S3({endpoint:"https://s3-us-west-2.amazonaws.com"});
+        
+
+        if(step.iurl) {
+
+            var urlParts = step.iurl.split('/');
+            var key = urlParts[urlParts.length-1];
+            console.log("delete", key);
+            if(urlParts.length > 0 ) {
+
+                var options = {
+                    Bucket: process.env.S3_BUCKET_NAME,
+                    Key: urlParts[urlParts.length-1] 
+                };
+                console.log('s3 options', options);
+
+                // stream the file to amazon
+                s3.deleteObject(options, function(err, data) {
+                    if (err) console.log("err", err);
+
+                    return Promise(undefined);
+                });
+
+            } else {
+                return Promise(undefined);
+            }
+
+        } else {
+            return Promise(undefined);
+        }
+
+    },
+
+    afterDestroy: function(destroyedRecords, cb) {
 
         if(destroyedRecords) {
             
-            // asynchronously update steps and return a promise
+            // fix holes in the order after deletion
             Promise.spread(destroyedRecords, function(step) {
-                return Path.cleanUpOrder(step.path);   
+                return [destroyedRecords, Path.cleanUpOrder(step.path)];   
+            })
+            // clean up s3 images
+            .spread(function(destroyedRecords) {
+                return Promise.spread(destroyedRecords, function(step) {
+                    return [destroyedRecords, Step.deleteS3Image(step)];   
+                })
             })
             .catch(function(err){
                 console.log(err);

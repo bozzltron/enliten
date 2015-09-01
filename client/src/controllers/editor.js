@@ -196,8 +196,8 @@ module.controller('EditorStepController', function($scope, Profile, Path, Step,
 			// Persist to the server
 			Step.delete($scope.step, function(res) {
 
-				window.location.hash = '#/editor/summary/' + $scope.step.id;
-				flash.success = "The step has been remove.";
+				window.location.hash = '#/editor/summary/' + $scope.path.id;
+				flash.success = "The step has been removed.";
 
 			});
 		}
