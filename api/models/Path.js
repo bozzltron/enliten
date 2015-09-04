@@ -102,13 +102,18 @@ module.exports = {
         if(path && path.steps) {
         
             // asynchronously update steps and return a promise
-            return Promise.spread(path.steps, function(step, i) {
+            var toBeSaved = [];
+
+            path.steps.forEach(function(step, i) {
                 step.order = i + 1;
                 console.log("saving ", step);
-                return Step.update({
+                toBeSaved.push( Step.update({
                     id: step.id
-                }, step);   
+                }, step));  
             });
+
+            return Promise.all(toBeSaved);
+            
         } else {
             return Promise(undefined);
         }

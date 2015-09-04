@@ -46,18 +46,21 @@ describe('Path Model', function() {
                 return Path.update({id:path.id}, {
                     steps:[
                         {name:'step 1', order: 1, path:path.id, url: "1"},
-                        {name:'step 2', order: 2, path:path.id, url: "1"}
+                        {name:'step 2', order: 2, path:path.id, url: "2"},
+                        {name:'step 3', order: 3, path:path.id, url: "3"}
                     ]});
             })
             .then(function(path){
                 return Path.findOne({id:path[0].id}).populate('steps');
             })
             .then(function(path){
-                assert.equal(path.steps.length, 2);
+                assert.equal(path.steps.length, 3);
                 assert.equal(path.steps[0].order, 1);
                 assert.equal(path.steps[0].name, 'step 1');
                 assert.equal(path.steps[1].order, 2);
                 assert.equal(path.steps[1].name, 'step 2');
+                assert.equal(path.steps[2].order, 3);
+                assert.equal(path.steps[2].name, 'step 3');
 
                 return Q.all([
                     Path.destroy({id:path.id}),
