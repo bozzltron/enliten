@@ -37,7 +37,7 @@ module.exports = {
     },
 
     reorder: function(path) {
-        
+        console.log('beforeFixing', path.steps);
         var toBeSaved = [];
 
         if(path && path.steps) {
@@ -48,21 +48,21 @@ module.exports = {
                 // check for incorrect order
                 if (step.order != i + 1) {
                     step.order = i + 1;
-                    toBeSaved.push(step);
+
+                    // Add promise to array
+                    toBeSaved.push(Step.update({
+                        id: step.id
+                    }, step));
                 }
 
             });
             
             var Promise = require('q');
-
+            console.log('toBeSaved', toBeSaved);
             if(toBeSaved.length > 0) {
 
                 // asynchronously update steps and return a promise
-                return Promise.spread(toBeSaved, function(step) {
-                    return Step.update({
-                        id: step.id
-                    }, step);
-                });
+                return Promise.all(toBeSaved);
 
             }
 
@@ -104,6 +104,7 @@ module.exports = {
             // asynchronously update steps and return a promise
             return Promise.spread(path.steps, function(step, i) {
                 step.order = i + 1;
+                console.log("saving ", step);
                 return Step.update({
                     id: step.id
                 }, step);   

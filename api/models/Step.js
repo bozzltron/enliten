@@ -66,6 +66,7 @@ module.exports = {
     },
 
     afterUpdate: function(step, cb) {
+        console.log("afterUpdate", step);
         Step.generateThunbnail(step, cb);
     },
 
@@ -194,9 +195,10 @@ module.exports = {
     afterDestroy: function(destroyedRecords, cb) {
 
         if(destroyedRecords) {
-            
+            console.log("destroyedRecords", destroyedRecords);
             // fix holes in the order after deletion
             Promise.spread(destroyedRecords, function(step) {
+                console.log("fix this", step.path);
                 return [destroyedRecords, Path.cleanUpOrder(step.path)];   
             })
             // clean up s3 images
