@@ -52,7 +52,7 @@ var jsFilesToInject = [
     'js/ux/jquery.parallax-1.1.3.js',
     'js/ux/smoothscroll.js',
     'js/ux/contact.js',
-    'js/ux/custom.js',
+    'js/ux/custom.js'
 ];
 
 

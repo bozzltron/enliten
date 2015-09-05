@@ -24,6 +24,19 @@ module.exports = function(grunt) {
 			src: 'client/src/viewer.js',
 			// Compile to a single file to add a script tag for in your HTML
 			dest: 'assets/js/dist/viewer-built.js',
+		},
+
+
+		maker: {
+			options: {
+				browserifyOptions: {
+					debug: true
+				}
+			},
+			// A single entry point for our app
+			src: 'client/src/maker.js',
+			// Compile to a single file to add a script tag for in your HTML
+			dest: 'assets/js/dist/maker-built.js',
 		}
 
 	});

@@ -104,7 +104,18 @@ module.exports.routes = {
     'get /step/query': {
         controller: 'step',
         action: 'query'
-    }
+    },    
+
+    'get /make': {
+        view: 'make',
+        locals: {
+          layout: 'vortex',
+          path: {
+            steps: []
+          },
+          results: []
+        }
+    },
 
     /***************************************************************************
      *                                                                          *

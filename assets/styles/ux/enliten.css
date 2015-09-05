@@ -1,3 +1,39 @@
 .margin-auto {
 	margin:auto;
 }
+
+/*
+ * Maker
+ */
+#enliten-maker {
+	postition:relative;
+}
+
+#enliten-maker .drawer{
+ 	position:fixed;
+ 	width:100%;
+ 	max-width:300px;
+ 	border-right:1px solid #ccc;
+ 	transition: 0.4s ease all;
+ 	-moz-transition: 0.4s ease all;
+ 	-op-transition: 0.4s ease all;
+ 	-webkit-transition: 0.4s ease all;
+ 	display:block;
+ 	height:100%;
+ 	left:-3000;
+ 	overflow:hidden;
+ 	box-shadow: 0 0 5px grey;
+ 	background-color:#eee;
+ 	z-index:100;
+}
+
+#enliten-maker .main{
+
+	padding-top:10px;
+	height: :100%;
+	display:block;
+}
+
+#enliten-maker .main .search{
+	width:98%;
+}
