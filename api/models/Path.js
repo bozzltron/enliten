@@ -106,7 +106,6 @@ module.exports = {
 
             path.steps.forEach(function(step, i) {
                 step.order = i + 1;
-                console.log("saving ", step);
                 toBeSaved.push( Step.update({
                     id: step.id
                 }, step));  
@@ -120,8 +119,35 @@ module.exports = {
 
     },
 
+    deleteSteps: function(paths) {
+
+        // handle manual order changes
+        var Promise = require('q');
+
+        if(paths) {
+        
+            // asynchronously update steps and return a promise
+            var toBeDeleted = [];
+
+            paths.forEach(function(path, i) {
+
+                toBeDeleted.push( Step.destroy({
+                    path: path.id
+                }));  
+
+            });
+
+            return Promise.all(toBeDeleted);
+            
+        } else {
+            return Promise(undefined);
+        }
+
+    },
+
     afterUpdate: function(path, cb) {
 
+        // Update steps when the path is updated
         Path
             .saveSteps(path)
             .catch(function(err){
@@ -130,6 +156,20 @@ module.exports = {
             .done(function(){
                 cb();
             });
+    },
+
+    afterDestroy: function(destoryedRecords, cb) {
+
+        // Delete all steps associated with the deleted path
+        Path
+            .deleteSteps(destoryedRecords)
+            .catch(function(err){
+                console.log(err);
+            })
+            .done(function(){
+                cb();
+            });
+
     }
 
 };

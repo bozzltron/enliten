@@ -74,5 +74,34 @@ describe('Path Model', function() {
 
     });
 
+
+    it('.deleteSteps() should delete steps associated with a path', function(done) {
+
+        Path
+            .create({name:'save steps test', user:'boz'})
+            .then(function(path){
+                //since you're returning a promise here, you can use .then after this
+                return Path.update({id:path.id}, {
+                    steps:[
+                        {name:'step 1', order: 1, path:path.id, url: "1"},
+                        {name:'step 2', order: 2, path:path.id, url: "2"},
+                        {name:'step 3', order: 3, path:path.id, url: "3"}
+                    ]});
+            })
+            .then(function(path){
+                return Path.destroy({id:path[0].id});
+            })
+            .then(function(destroyedRecords){
+                return Step.find({path:destroyedRecords[0].id});
+            })
+            .then(function(steps){
+                assert.equal(steps.length, 0);
+            })
+            .done(function(){
+                done();
+            });
+
+    });
+
 });
 
