@@ -37,3 +37,8 @@
 #enliten-maker .main .search{
 	width:98%;
 }
+
+.drawer .container {
+	width:100%;
+	padding:0;
+}

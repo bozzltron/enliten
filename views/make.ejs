@@ -22,28 +22,25 @@
 		    <!-- /NAVIGATION -->
 
 			<div class="container">
-                <% _.each(path.steps, function(step) { %>
-                    <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="media">
-                                      <div ng-if="step.iurl" class="media-left">
-                                        
-                                          <img class="media-object" ng-src="<%=step.iurl %>" alt="...">
-                                        
-                                      </div>
-                                      <div class="media-body">
-                                       
-                                            <h4 class="media-heading"><%= step.name %></h4>
-                                        
-                                      </div>
-                                    </div>
-                                </div>
+        
+                    <div class="panel panel-default" ng-repeat="step in path.steps" >
+                        <div class="panel-body">
+                            <div class="media">
+                              <div ng-if="step.iurl" class="media-left">
+                                
+                                  <img class="media-object" ng-src="{{step.iurl}}" alt="...">
+                                
+                              </div>
+                              <div class="media-body">
+                               
+                                    <h4 class="media-heading">{{step.name}}</h4>
+                                
+                              </div>
                             </div>
                         </div>
-                    </div>                
-                <% }); %>
+                    </div>
+                  
+     
             </div>
 
 		</section>
@@ -65,7 +62,7 @@
 				<div ng-if="results" id="results">
 					<div class="row">
 						<div class="col-xs-12">
-							<div ng-repeat="result in results" class="media">
+							<div class="media" ng-repeat="result in results">
 							  <div class="media-left">
 							    <a href="#">
 							      <img width="100px" class="media-object" ng-if="result.iurl" ng-src="{{result.iurl}}">

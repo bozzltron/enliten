@@ -1,9 +1,15 @@
 var module = angular.module('enliten-maker.controllers.maker', [
+    'enlighten.services.profile',
     'ngCookies'
 ]);
 
-module.controller('MakerController', function($scope, $http, $cookies) {
+module.controller('MakerController', function($scope, $http, $cookies, Profile) {
 
+    $scope.path = {
+        steps: []
+    };
+
+    $scope.profile = Profile.get();
 
     var controller = this;
     $('#enliten-maker').swipe({
@@ -72,15 +78,18 @@ module.controller('MakerController', function($scope, $http, $cookies) {
 
     this.add = function(result) {
         console.log("result", result);
-        $scope.step.name = result.title;
+        var step = {};
+        step.name = result.title;
         console.log("path", $scope.path);
-        $scope.step.path = $scope.path.id;
-        $scope.step.user = $scope.profile.id;
-        $scope.step.order = $scope.index;
-        $scope.step.description = result.kwic;
-        $scope.step.iurl = result.iurl;
-        $scope.step.url = result.url;
-        $scope.step.type = 'Url';
+        step.user = $scope.profile.id;
+        step.order = $scope.index;
+        step.description = result.kwic;
+        step.iurl = result.iurl;
+        step.url = result.url;
+        step.type = 'Url';
+
+        $scope.path.steps.push(step);
+        console.log("added", $scope.path);
     };
 
     // Handle step create/edit

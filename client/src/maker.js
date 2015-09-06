@@ -1,7 +1,10 @@
 // Maker
 require('./bower_components/angular/angular');
 require('./bower_components/angular-cookies/angular-cookies');
+require('./bower_components/angular-resource/angular-resource');
+
 require("./controllers/maker");
+require("./services/profile");
 
 // Create your app
 angular.module('enliten-maker', [
